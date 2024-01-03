@@ -1,16 +1,32 @@
+GENERAL NOTES
+	have a good error handler
+	what to do with global variable
+	how to recreate heredoc
+
+
+
 pre input
-
 	env to linked list
+		what to keep in linked list ?
 
+INPUT HAPPENS HERE
+	put cmd in history
+		linked list perhaps ?
+			i dunno man i love linked lists
 
 lexer
+	tokenise
+		the words of the input string
 
 parser
+	abstract syntax tree
 
 expander
+	expand executables to full path
+	variables expanden if quotes allow it
 
 executor
-
+	exit codes
 
 post input
-``
+	memory free
