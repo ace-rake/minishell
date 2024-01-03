@@ -1,0 +1,15 @@
+HOW TO USE THE MAKEFILE TO TEST
+
+step 1
+	make sure that the source code you want to test is in this branch
+
+step 2
+	create a *test.c file in the ./test/ folder
+	the test.c file needs to contain the main, and should return a non 0 if anything goes wrong
+
+step 3
+	run the cmd you want to run
+		make test 
+			runs all the tests and run valgrind
+		make test_out
+			same as test but stores all the logs in a log file inside of ./test/log/
