@@ -2,6 +2,7 @@ GENERAL NOTES
 	have a good error handler
 	what to do with global variable
 	how to recreate heredoc
+	difference export env
 
 
 
