@@ -1,3 +1,11 @@
+GENERAL RULES
+	GIT
+		make small commits with good commit-messages
+		always pull before you commit to master to prevent merge conflicts of master
+		when you fuck up, immediately communicate said fuck up
+
+
+
 GENERAL NOTES
 	have a good error handler
 	what to do with global variable
