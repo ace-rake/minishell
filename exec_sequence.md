@@ -18,6 +18,7 @@
 > > creates a pipe()
 > > sets the output of its left node to be that of the pipe()
 > > sets the input of its right node to be that of the pipe()
+
 > ">"
 > > truncate to 0/create the file to its right
 > > there cant already be a file of that name without writing permissions
