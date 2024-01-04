@@ -45,11 +45,13 @@ WHITE := 		\e[97m
 
 #Progress bar rules and generic compilation and build rules
 
-NAME := TEMPLATE
+NAME := minishell
 
 OBJDIR := obj
 SRCS := $(shell find src -type f -name "*.c") $(shell find . -maxdepth 1 -type f -name "main.c")
+TEST_SRCS := $(shell find src -type f -name "*.c") $(shell find . -maxdepth 1 -type f -name "test_main.c")
 OBJS := $(SRCS:%.c=$(OBJDIR)/%.o)
+TEST_OBJS := $(TEST_SRCS:%.c=$(OBJDIR)/%.o)
 TOTAL_TASKS:= $(words $(SRCS))
 CURRENT_TASK:= 0
 PROGRESS_FILE:= .progress
@@ -106,7 +108,10 @@ pre_build:
 
 $(NAME): $(OBJS)
 	cc $(OBJS) -o $(NAME)
-	echo "$(RED_BACK)MAKE YOUR OWN (NAME) RULE$(BLACK_BACK)"
+
+bt:		$(TEST_OBJS)
+	cc $(TEST_OBJS) -o test
+	./test
 
 post_build:
 	echo "$(CLEAR)$(GREEN)Created $(NAME)$(WHITE)"
