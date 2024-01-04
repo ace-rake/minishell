@@ -40,6 +40,11 @@
 > > will use the node to the right as its arguments should it exist
 > > > should these arguments exist then they overrule any input fd that was given prior to the execution of this command
 
+> ***edgecase***
+> > what if only a option is given as argument
+> > > Man does it even realy fucking matter ? If any arg is given, i just give it to execve then execve can decide wheter or not it needs anything more
+
+
 > argument
 > > these are needed for everything else to work
 
