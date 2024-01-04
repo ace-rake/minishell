@@ -34,6 +34,7 @@
 
 > *<<*
 > > heredoc stuff
+
 > command
 > > will execute the command to the left
 > > will use the node to the right as its arguments should it exist
