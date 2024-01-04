@@ -39,3 +39,34 @@ executor
 
 post input
 	memory free
+
+
+
+
+//warre
+
+https://www.gnu.org/software/bash/manual/bash.html#Shell-Operation
+
+1 read input
+	use readline
+
+2 tokenize input --- https://www.gnu.org/software/bash/manual/bash.html#Quoting
+	breaks line into tokens (words and operators)
+	consider quoting rules
+
+3 parse tokens --- https://www.gnu.org/software/bash/manual/bash.html#Shell-Commands
+	construct AST
+	TODO: clearly define node structure and execution rules
+
+4 shell expansions --- https://www.gnu.org/software/bash/manual/bash.html#Shell-Expansions
+	expand environment variables
+	add filename expansion if we do bonus (*)
+
+5 execute commands --- https://www.gnu.org/software/bash/manual/bash.html#Executing-Commands
+	traverse AST to execute commands
+	make sure to create subshells for each simple command with fork
+
+6 handle exit status --- https://www.gnu.org/software/bash/manual/bash.html#Exit-Status
+	implement functionality to capture and handle exit status ($?)
+
+x handle signals
