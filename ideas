@@ -6,17 +6,19 @@ GENERAL RULES
 
 
 
+
 GENERAL NOTES
 	have a good error handler
 	what to do with global variable
 	how to recreate heredoc
 	difference export env
-
+	
 
 
 pre input
 	env to linked list
 		what to keep in linked list ?
+	what is current working directory
 
 INPUT HAPPENS HERE
 	put cmd in history
