@@ -1,6 +1,6 @@
 # Execute sequence
  
-## Purpose
+### Purpose
 > Trying to figure out in what pattern/sequence the syntax tree should be executed
 
 ### Notes
@@ -18,7 +18,7 @@
 > > creates a pipe()
 > > sets the output of its left node to be that of the pipe()
 > > sets the input of its right node to be that of the pipe()
-> *>*
+> ">"
 > > truncate to 0/create the file to its right
 > > there cant already be a file of that name without writing permissions
 > > sets the output of its left node to the fd of the file to its right node
