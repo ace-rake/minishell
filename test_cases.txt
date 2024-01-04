@@ -16,3 +16,5 @@ echo "text" > "path/to/file.txt"
 cat "file" | ls -l
 
 cat "file" > file | ls -l
+
+wc -l
