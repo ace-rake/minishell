@@ -1,0 +1,18 @@
+NOTES TO SELF
+	pipes
+	redirections
+
+
+
+cat "path/to/file.txt"
+	check if "path/to/file.txt" exists
+	output entire "file.txt"
+
+echo "text" > "path/to/file.txt"
+	if not created, create "path/to/file.txt"
+	empty "file.txt"
+	write the echo into file.txt
+
+cat "file" | ls -l
+
+cat "file" > file | ls -l
