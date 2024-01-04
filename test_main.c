@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 char	*get_dir(void)
 {
@@ -35,8 +37,19 @@ void	dir_open_test()
 
 }
 
-int	main(void)
+void	execve_test_with_option_no_arg(char *env[])
 {
-	dir_open_test();
+	int fd = open("test_main.c", O_RDONLY);
+	dup2(fd, 0);
+	char *path = "/bin/wc";
+	char *args[] = {"wc","-l",  NULL};
+
+	execve(path, args, env);
+}
+
+int	main(int argc, char *argv[], char *env[])
+{
+	execve_test_with_option_no_arg(env);
+
 	return (0);
 }
