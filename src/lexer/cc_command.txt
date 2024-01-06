@@ -1,0 +1,2 @@
+cc -I libft/inc/ -o tokenizer tokenizer.c tokenizer_handlers.c libft/libft.a
+
