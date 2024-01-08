@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 11:33:53 by wdevries          #+#    #+#             */
-/*   Updated: 2023/04/08 14:45:10 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:33:35 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 t_list	*ft_lstnew(void *content)
 {

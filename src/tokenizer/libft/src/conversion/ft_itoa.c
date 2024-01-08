@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 11:29:37 by wdevries          #+#    #+#             */
-/*   Updated: 2023/04/26 11:26:09 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:34:55 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 static size_t	get_number_len(int n)
 {

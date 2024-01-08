@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 14:58:25 by wdevries          #+#    #+#             */
-/*   Updated: 2023/05/13 15:31:15 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:42:55 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {

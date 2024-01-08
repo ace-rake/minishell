@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 14:13:52 by wdevries          #+#    #+#             */
-/*   Updated: 2023/04/06 13:47:34 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:25:44 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 void	ft_bzero(void *s, size_t n)
 {

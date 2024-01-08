@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:11:51 by wdevries          #+#    #+#             */
-/*   Updated: 2023/04/07 14:58:28 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:40:41 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 void	ft_putendl_fd(char *s, int fd)
 {
