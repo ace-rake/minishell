@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:15:56 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/06 12:23:27 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/08 09:17:12 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_token	**add_token(t_tokenizer_utils *u, char *token_value)
 	int	i;
 	t_token	**new_tokens;
 
-	if (u->size >= u->capacity)
+	if (u->size + 1 >= u->capacity)
 	{
 		new_capacity = u->capacity * 2;
 		new_tokens = (t_token **)malloc(new_capacity * sizeof(t_token *));
@@ -61,6 +61,7 @@ t_token	**add_token(t_tokenizer_utils *u, char *token_value)
 	}
 	u->tokens[u->size] = create_token(u, token_value);
 	(u->size)++;
+	u->tokens[u->size] = NULL;
 	return (u->tokens);
 }
 
