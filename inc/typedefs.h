@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 08:37:31 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/05 12:47:57 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/08 10:58:59 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef enum e_quoting_status
 // @left		left child node
 // @right		right child node
 // @parent		parent node
+// @input		takes input from..
+// @output		sends output to..
 typedef struct s_token
 {
 	t_token_type	type;
@@ -58,6 +60,8 @@ typedef struct s_token
 	struct s_token	*left;
 	struct s_token	*right;
 	struct s_token	*parent;
+	short			input;
+	short			output;
 }					t_token;
 
 typedef struct s_tokenizer_utils
