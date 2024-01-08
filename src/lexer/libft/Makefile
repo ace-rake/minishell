@@ -81,6 +81,7 @@ SRC_FILES += string/ft_strlcpy.c
 SRC_FILES += string/ft_strlen.c
 SRC_FILES += string/ft_strmapi.c
 SRC_FILES += string/ft_strncmp.c
+SRC_FILES += string/ft_strcmp.c
 SRC_FILES += string/ft_strnstr.c
 SRC_FILES += string/ft_strrchr.c
 SRC_FILES += string/ft_strtrim.c
