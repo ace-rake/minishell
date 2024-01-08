@@ -5,16 +5,23 @@ NOTES TO SELF
 
 
 cat "path/to/file.txt"
-	check if "path/to/file.txt" exists
-	output entire "file.txt"
 
 echo "text" > "path/to/file.txt"
-	if not created, create "path/to/file.txt"
-	empty "file.txt"
-	write the echo into file.txt
 
 cat "file" | ls -l
 
 cat "file" > file | ls -l
 
 wc -l
+
+< file.txt cat
+
+> file.txt cat
+
+ls > file1.txt > file2.txt
+
+wc < test1.test > wc4.test < test1.test > wc5.test < test1.test
+
+wc < test1.test > wc4.test < test1.test > wc5.test < test1.test | < cat1.test
+
+ls | var=val
