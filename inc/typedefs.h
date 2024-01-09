@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 08:37:31 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 10:58:59 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:34:55 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TYPEDEFS_H
 
 //// TYPES OF TOKENS
+// @UNDEFINED		not yet set
 // @PIPE			|
 // @REDIR_IN		<
 // @REDIR_OUT		>
@@ -23,6 +24,7 @@
 // @ARGUMENT		all other
 typedef enum e_token_type
 {
+	UNDEFINED,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
