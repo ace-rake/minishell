@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:24:40 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:41:05 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/05/08 11:29:52 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/get_next_line.h"
+#include "get_next_line.h"
 
 static int	ft_read(int fd, char **line_parse)
 {

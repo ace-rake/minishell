@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:07:34 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:38:57 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/06 12:26:33 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define TOKENIZER_H
 
 # include "../../inc/typedefs.h"
-# include "libft/inc/libft.h"
+# include "libft.h"
 
 //tokenize.c
 int		init_tokenizer_utils(t_tokenizer_utils *u, const char *input);

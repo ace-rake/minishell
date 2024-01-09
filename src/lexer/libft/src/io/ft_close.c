@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 17:27:50 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:40:41 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:31:28 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 void	ft_close(int fd)
 {

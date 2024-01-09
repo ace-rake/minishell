@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:36:02 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:37:20 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/05/13 15:25:29 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 static void	ft_free_split(char **split, size_t i)
 {

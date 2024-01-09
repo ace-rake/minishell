@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 13:06:06 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:41:23 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/04/08 15:20:44 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 void	ft_fill_list(t_list *new_list, t_list *lst, void *(*f)(void *),
 		void(del)(void *))

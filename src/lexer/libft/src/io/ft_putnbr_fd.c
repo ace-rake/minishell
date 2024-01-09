@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:13:56 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:40:41 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:58:50 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 static unsigned int	ft_module(int n)
 {

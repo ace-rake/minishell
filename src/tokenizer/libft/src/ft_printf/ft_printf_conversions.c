@@ -6,11 +6,11 @@
 /*   By: warredevriese <marvin@42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 21:02:16 by warredevriese     #+#    #+#             */
-/*   Updated: 2024/01/08 13:28:45 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:35:59 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/ft_printf.h"
+#include "ft_printf.h"
 
 int	ft_handle_signed(int n)
 {

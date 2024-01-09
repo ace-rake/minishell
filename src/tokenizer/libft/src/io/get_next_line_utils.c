@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:25:06 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:36:33 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:56:15 by warredevriese    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/get_next_line.h"
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *s)
 {

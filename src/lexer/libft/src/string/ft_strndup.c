@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 12:38:20 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:42:56 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/05 11:25:48 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 char	*ft_strndup(const char *s, size_t n)
 {

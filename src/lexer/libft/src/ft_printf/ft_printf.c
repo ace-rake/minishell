@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:55:19 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:27:29 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/05/13 21:45:04 by warredevriese    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/ft_printf.h"
+#include "ft_printf.h"
 
 static int	ft_parse(const char *ptr, va_list *args)
 {

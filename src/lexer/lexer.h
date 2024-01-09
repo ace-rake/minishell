@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:39:29 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/08 10:16:33 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LEXER_H
 
 # include "../../inc/typedefs.h"
-# include "libft/inc/libft.h"
+# include "libft.h"
 # include "../tokenizer/tokenizer.h"
 
 #endif

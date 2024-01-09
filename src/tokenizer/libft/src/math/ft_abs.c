@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:57:16 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:36:47 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/05/16 09:04:23 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 int	ft_abs(int n)
 {

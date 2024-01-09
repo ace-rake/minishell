@@ -6,11 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:00:44 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 13:36:47 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/06/03 12:58:58 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/libft.h"
+#include "libft.h"
 
 long long	ft_max(long long a, long long b)
 {
