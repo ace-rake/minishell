@@ -6,12 +6,14 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 08:37:31 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 10:58:59 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:42:04 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPEDEFS_H
 # define TYPEDEFS_H
+
+#include <stdbool.h>
 
 //// TYPES OF TOKENS
 // @PIPE			|
@@ -74,5 +76,12 @@ typedef struct s_tokenizer_utils
 	t_quoting_status quoting_status;
 	t_token **tokens;
 }					t_tokenizer_utils;
+
+typedef	struct	s_env_list
+{
+	bool	exported;
+	char *var;
+	char *val;
+}				t_env_list;
 
 #endif
