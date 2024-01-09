@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 08:37:31 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/09 12:44:10 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:45:44 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef	struct	s_env_list
 	bool	exported;
 	char *var;
 	char *val;
-	s_env_list *next;
+	struct s_env_list *next;
 }				t_env_list;
 
 #endif
