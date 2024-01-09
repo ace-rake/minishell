@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/08 14:44:09 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:47:18 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../inc/typedefs.h"
+
+#include <string.h>
+//delete
 
 //this token is the first ARG token
 //converts the chain of token ARGS to a single array

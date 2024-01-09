@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/08 14:44:10 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:09:52 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,56 @@ char **token_chain_to_array(t_token *token) {
 	}
 	return (result);
 }
+
+char *return_env_val(t_env_list *env, char *var)
+{
+	while (env && strcmp(env->var, var) != 0)
+		env = env->next;
+	if (!env)
+		return (NULL);
+	return (env->val);
+}
+/* return the val of a given var from the env list */
+
+char	*test(char **path_val_src, char *cmd)
+{
+	char *path_val;
+	char *sub;
+	int slash;
+
+	path_val = *path_val_src;
+	slash = strchr(path_val, '\\') - path_val;
+	sub = substr(path_val, 0, slash);
+	path_val += slash;
+	return (sub);
+}
+/*
+ * test next first path and return it if its correct
+ * if the next path wasnt correct, return cmd alone instead
+*/
+
+char *return_full_cmd_path(char *cmd, t_env_list *env)
+{
+	char *path_val;
+	char *retval;
+	char *result;
+
+	path_val = return_env_val(env, "PATH");
+	if (!path_val)
+		return (NULL);
+	retval = test(&path_val, cmd);
+	while (retval)
+	{
+		result = strjoin(retval, cmd);
+		if (access(result, X_OK) == 0)
+			break ;
+		free(result);
+		result = NULL;
+		retval = test(&path_val, cmd);
+	}
+	return (result);
+}
+/*
+ * keep trying pieces of the path val to see if one of them is an actual command
+ * return said command if its found or NULL if not
+ */

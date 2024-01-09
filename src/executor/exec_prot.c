@@ -93,7 +93,7 @@ int	exec_command(t_token *token)
  *		
 */
 
-int	execute(t_token *token)
+int	execute(t_token *token, t_env_list *env)
 {
 	if (token->type == PIPE) // |
 		return (exec_pipe(token));
@@ -110,12 +110,12 @@ int	execute(t_token *token)
 	return (1);
 }
 
-void	exec_token(t_token *token)
+void	exec_token(t_token *token, t_env_list *env)
 {
-	if (execute(token))
+	if (execute(token, env))
 		perror("execute");
 	if (token->left && token->left->type != ARGUMENT)
-		exec_token(token->left);
+		exec_token(token->left, env);
 	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
-		exec_token(token->right);
+		exec_token(token->right, env);
 }
