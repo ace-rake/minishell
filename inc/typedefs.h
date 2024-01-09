@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   typedefs.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 08:37:31 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/09 12:45:44 by vdenisse         ###   ########.fr       */
+/*   Created: 2024/01/09 13:12:17 by vdenisse          #+#    #+#             */
+/*   Updated: 2024/01/09 13:12:22 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef TYPEDEFS_H
 # define TYPEDEFS_H
@@ -16,6 +17,7 @@
 #include <stdbool.h>
 
 //// TYPES OF TOKENS
+// @UNDEFINED		not yet set
 // @PIPE			|
 // @REDIR_IN		<
 // @REDIR_OUT		>
@@ -25,6 +27,7 @@
 // @ARGUMENT		all other
 typedef enum e_token_type
 {
+	UNDEFINED,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,

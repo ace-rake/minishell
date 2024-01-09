@@ -6,73 +6,99 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 10:16:00 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:45:02 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	set_token_type(t_token *token, int *is_command)
+void	mark_metacharacters(t_token **tokens)
 {
-	if (ft_strcmp(token->value, "|") == 0)
+	int	i;
+
+	i = -1;
+	while (tokens[++i] != NULL)
 	{
-		token->type = PIPE;
-		*is_command = 1;
+		if (ft_strcmp(tokens[i]->value, "|") == 0)
+			tokens[i]->type = PIPE;
+		else if (ft_strcmp(tokens[i]->value, ">") == 0)
+			tokens[i]->type = REDIR_OUT;
+		else if (ft_strcmp(tokens[i]->value, ">>") == 0)
+			tokens[i]->type = REDIR_APPEND;
+		else if (ft_strcmp(tokens[i]->value, "<") == 0)
+			tokens[i]->type = REDIR_IN;
+		else if (ft_strcmp(tokens[i]->value, "<<") == 0)
+			tokens[i]->type = REDIR_HEREDOC;
 	}
-	else if (ft_strcmp(token->value, ">") == 0)
-		token->type = REDIR_OUT;
-	else if (ft_strcmp(token->value, ">>") == 0)
-		token->type = REDIR_APPEND;
-	else if (ft_strcmp(token->value, "<") == 0)
-		token->type = REDIR_IN;
-	else if (ft_strcmp(token->value, "<<") == 0)
-		token->type = REDIR_HEREDOC;
-	else
+}
+
+void	set_flags(t_token *token, int *flag_first, int *flag_redirection)
+{
+	if (token->type == PIPE)
 	{
-		if (*is_command == 1)
-			token->type = COMMAND;
+		*flag_first = 1;
+		*flag_redirection = 0;
+	}
+	else
+		*flag_redirection = 1;
+}
+
+void	mark_commands_and_arguments(t_token **tokens)
+{
+	int	flag_first;
+	int	flag_redirection;
+	int	i;
+
+	flag_first = 1;
+	flag_redirection = 0;
+	i = -1;
+	while (tokens[++i] != NULL)
+	{
+		if (tokens[i]->type != UNDEFINED)
+			set_flags(tokens[i], &flag_first, &flag_redirection);
 		else
-			token->type = ARGUMENT;
-		*is_command = 0;
+		{
+			if (flag_first && !flag_redirection)
+			{
+				tokens[i]->type = COMMAND;
+				flag_first = 0;
+			}
+			else
+			{
+				tokens[i]->type = ARGUMENT;
+				flag_redirection = 0;
+			}
+		}
 	}
 }
 
 void	lexer(t_token **tokens)
 {
-	int		is_command;
-	int		i;
-
-	is_command = 1;
-	i = -1;
-	while (tokens[++i] != NULL)
-		set_token_type(tokens[i], &is_command);
+	mark_metacharacters(tokens);
+	mark_commands_and_arguments(tokens);
 }
 
+/* #include <stdio.h> */
+/* #include <stdlib.h> */
 
+/* int main() { */
+/*     const char *test_str = "> output.txt echo hello | cat"; */
 
+/*     t_token **tokens = tokenize(test_str); */
+/*     if (tokens == NULL) { */
+/*         fprintf(stderr, "Tokenization failed.\n"); */
+/*         return (1); */
+/*     } */
 
+/*     lexer(tokens); */
 
-#include <stdio.h>
-#include <stdlib.h>
+/*     for (int i = 0; tokens[i] != NULL; i++) { */
+/*         printf("Token: %s, Type: %d\n", tokens[i]->value,
+		tokens[i]->type); */
+/*         free(tokens[i]->value); */
+/*         free(tokens[i]); */
+/*     } */
+/*     free(tokens); */
 
-int main() {
-    const char *test_str = "echo hello > output.txt | cat";
-
-    t_token **tokens = tokenize(test_str);
-    if (tokens == NULL) {
-        fprintf(stderr, "Tokenization failed.\n");
-        return 1;
-    }
-
-    lexer(tokens);
-
-    for (int i = 0; tokens[i] != NULL; i++) {
-        printf("Token: %s, Type: %d\n", tokens[i]->value, tokens[i]->type);
-        free(tokens[i]->value);
-        free(tokens[i]);
-    }
-    free(tokens);
-
-    return 0;
-}
-
+/*     return (0); */
+/* } */

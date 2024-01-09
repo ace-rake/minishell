@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:15:56 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 10:59:39 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:34:25 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_token	*create_token(t_tokenizer_utils *u, char *token_value)
 	if (!new_token)
 		return (NULL);
 	new_token->quoting_status = u->quoting_status;
+	new_token->type = UNDEFINED;
 	new_token->value = token_value;
 	new_token->left = NULL;
 	new_token->right = NULL;
