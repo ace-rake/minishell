@@ -62,33 +62,59 @@ int	exec_redir_append(t_token *token)
 int	exec_command_builtin(t_token *token)
 {
 
+	return (1);
 }
 
-int	exec_command_file(t_token *token)
+
+int	exec_command_as_is(t_token *token)
+{
+	return (1);
+}
+
+int	exec_redir_heredoc(t_token *token)
 {
 
+	return (1);
 }
 
 char *return_builtin(t_token *token)
 {
 
 
+	return (NULL);
 }
+
+
 /*
  * this function will return a function pointer to the corresponding builtin that need to be executed
 */
 
-int	exec_command(t_token *token)
+int	exec_command(t_token *token, t_env_list *env)
 {
-
+	if (!exec_command_as_is(token))
+		return (0);
+	//try execute as is here
+	//if fail
+	if (!exec_command_builtin(token))
+		return (0);
+	//check built in here
+	//if fail
+	if (!exec_command_file(token, env))
+		return (0);
+	return (NOT_EXECUTABLE);
 }
 /*
  *	if no slashes
- * 		1. attempt to execute as is
+ * 		1. attempt to execute as is, ig to see if that executable just exists in working directory
  * 		2. check if built in
- * 		3. look in path variable
+ * 		3. look in $path
  * 	if any of prev = succes or contains slashes
  * 		execute program is seperate execution env (fork)
+ *
+ * 	im gonna reduce this to
+ * 		1. execute as is
+ * 		2. try execute as builtin
+ * 		3. try execute from $path
  *
  *		
 */
@@ -102,11 +128,11 @@ int	execute(t_token *token, t_env_list *env)
 	else if (token->type == REDIR_OUT) // >
 		return (exec_redir_out(token));
 	else if (token->type == REDIR_HEREDOC) // <<
-		return (exec_redir_heredoc());
+		return (exec_redir_heredoc(token));
 	else if (token->type == REDIR_APPEND) // >>
 		return (exec_redir_append(token));
 	else if (token->type == COMMAND) // CMD arg
-		return (exec_command(token));
+		return (exec_command(token, env));
 	return (1);
 }
 

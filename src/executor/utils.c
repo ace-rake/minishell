@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/09 13:09:52 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:26:45 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int arg_counter(t_token *token)
 {
-	int	argc = 0;
+	int	argc = 1;
 	while (token->right)
 		argc++;
 	return (argc);
@@ -34,13 +34,13 @@ char **token_chain_to_array(t_token *token) {
 	iter = 0;
 	while (token)
 	{
-		result[iter] = token->value;
+		result[iter++] = token->value;
 		token = token->right;
 	}
 	return (result);
 }
 
-char *return_env_val(t_env_list *env, char *var)
+char *get_env_val(t_env_list *env, char *var)
 {
 	while (env && strcmp(env->var, var) != 0)
 		env = env->next;
@@ -50,16 +50,13 @@ char *return_env_val(t_env_list *env, char *var)
 }
 /* return the val of a given var from the env list */
 
-char	*test(char **path_val_src, char *cmd)
+char	*get_next_path(char *path_val, char *cmd)
 {
-	char *path_val;
 	char *sub;
-	int slash;
+	int index;
 
-	path_val = *path_val_src;
-	slash = strchr(path_val, '\\') - path_val;
-	sub = substr(path_val, 0, slash);
-	path_val += slash;
+	index = ft_strchr(path_val, ':') - path_val;
+	sub = ft_substr(path_val, 0, index);
 	return (sub);
 }
 /*
@@ -67,24 +64,40 @@ char	*test(char **path_val_src, char *cmd)
  * if the next path wasnt correct, return cmd alone instead
 */
 
-char *return_full_cmd_path(char *cmd, t_env_list *env)
+char *check_current_path(char *curr_path, char *cmd)          
+{   
+    char *tmp;      
+    
+    tmp = ft_strjoin("/", cmd);                               
+    curr_path = ft_strjoin(curr_path, tmp);                   
+    if (access(curr_path, X_OK) == 0)
+        return (curr_path);                                   
+    return (NULL);                                            
+}   
+
+
+char *get_full_cmd_path(char *cmd, t_env_list *env)
 {
 	char *path_val;
 	char *retval;
 	char *result;
 
-	path_val = return_env_val(env, "PATH");
+	path_val = get_env_val(env, "PATH");
 	if (!path_val)
 		return (NULL);
-	retval = test(&path_val, cmd);
+	retval = get_next_path(path_val, cmd);
 	while (retval)
 	{
-		result = strjoin(retval, cmd);
-		if (access(result, X_OK) == 0)
-			break ;
-		free(result);
-		result = NULL;
-		retval = test(&path_val, cmd);
+		result = check_current_path(retval, cmd);
+		if (result)
+			return (result);
+		while (*path_val != ':' && *path_val)
+			path_val++;
+		if (*path_val == '\0')
+			break;
+		else if (*path_val == ':')
+			path_val++;
+		retval = get_next_path(path_val, cmd);
 	}
 	return (result);
 }
@@ -92,3 +105,14 @@ char *return_full_cmd_path(char *cmd, t_env_list *env)
  * keep trying pieces of the path val to see if one of them is an actual command
  * return said command if its found or NULL if not
  */
+
+/*
+int	main(int argc, char *argv[], char *env[])
+{
+	t_env_list *env_list = env_parser(env);
+	char *cmd = "wc";
+	char *retval = get_full_cmd_path(cmd, env_list);
+	printf("%s\n", retval);
+	free_env(env_list);
+}
+*/
