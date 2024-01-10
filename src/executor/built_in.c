@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 13:34:22 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:42:35 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 /*
 • Your shell must implement the following builtins:
-◦ echo with option -n
+DONE◦ echo with option -n
 DONE◦ cd with only a relative or absolute path
 DONE◦ pwd with no options
 ◦ export with no options 		#need to have variable list for this
 ◦ unset with no options			#need to have variable list for this
-◦ env with no options or arguments	#need to have variable lsit for this
+DONE◦ env with no options or arguments	#need to have variable lsit for this
 ◦ exit with no options
 */
 
