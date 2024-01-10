@@ -6,9 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:34:37 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/10 13:36:41 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:32:17 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "parser.h"
 
 t_token	*parse_pipes(t_token **tokens)
 {

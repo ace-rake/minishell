@@ -6,9 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:35:09 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/10 13:42:06 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:55:08 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "parser.h"
 
 static int	link_redirections(t_token **tokens, t_parser_redir_utils *u, int i)
 {
@@ -41,6 +43,7 @@ t_token	*parse_redirections(t_token **tokens)
 	while (i > 0)
 	{
 		i = link_redirections(tokens, &u, i);
+		//TODO: if = 0?
 		u.pipe = tokens[i];
 		u.pipe->right = u.head;
 		u.head->parent = u.pipe;

@@ -6,9 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:34:57 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/10 13:41:42 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:53:09 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "parser.h"
 
 static void	link_command_arguments(t_token **tokens, int i)
 {
@@ -16,6 +18,7 @@ static void	link_command_arguments(t_token **tokens, int i)
 	{
 		tokens[i]->right = tokens[i + 1];
 		tokens[i + 1]->parent = tokens[i];
+		i++;
 	}
 }
 

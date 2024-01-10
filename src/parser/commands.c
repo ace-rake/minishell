@@ -6,9 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:35:01 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/10 13:42:45 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:54:30 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "parser.h"
 
 static void	link_command(t_token **tokens, int i)
 {
@@ -23,13 +25,14 @@ static void	link_command(t_token **tokens, int i)
 	}
 	else
 	{
-		while (tokens[++i] && tokens[i] != PIPE && !token_is_redirection(tokens[i]));
-		if (tokens[i] == PIPE || token_is_redirection(tokens[i]))
+		while (tokens[++i] && tokens[i]->type != PIPE && !token_is_redirection(tokens[i]));
+		if (tokens[i] && (tokens[i]->type == PIPE || token_is_redirection(tokens[i])))
 		{
 			command->parent = tokens[i];
 			tokens[i]->left = command;
 			return (NULL);
 		}
+		//TODO:does not link in case of input with pipes, without redirections in last simple command
 	}
 	return (command);
 }
