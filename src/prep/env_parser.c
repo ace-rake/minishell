@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 10:58:17 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:51:55 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void env_add_back(t_env_list **head, t_env_list *to_add)
 	tmp->next = to_add;
 	return ;
 }
+/* similar to ft_lstadd_back
+ */
 
 t_env_list *env_parser(char *env[])
 {
@@ -96,3 +98,7 @@ t_env_list *env_parser(char *env[])
 	}
 	return (head);
 }
+/*
+ * parse env into t_env_list linked list structure
+ * still need to check this for error handling
+ */
