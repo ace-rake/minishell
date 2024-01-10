@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:12:17 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/09 13:12:22 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:01:48 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ typedef struct s_tokenizer_utils
 	t_quoting_status quoting_status;
 	t_token **tokens;
 }					t_tokenizer_utils;
+
+typedef struct s_parser_redir_utils
+{
+	t_token *head;
+	t_token	*prev_redir;
+	t_token	*pipe;
+}					t_parser_redir_utils;
+
 
 typedef	struct	s_env_list
 {
