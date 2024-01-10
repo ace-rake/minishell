@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 11:37:37 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 13:06:24 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,8 @@ int	exec_command_file(t_token *token, t_env_list *env);
 
 char *get_full_cmd_path(char *cmd, t_env_list *env);
 
+
+void	env_builtin(t_token *token, t_env_list *env);
+
+char *get_env_val(t_env_list *env, char *var);
 #endif

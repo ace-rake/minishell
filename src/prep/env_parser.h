@@ -5,6 +5,7 @@
 #include "../../inc/typedefs.h"
 #include <stdlib.h>
 #include <string.h>
+#include "../executor/executor.h"
 
 
 #include "../lexer/libft/inc/libft.h"
