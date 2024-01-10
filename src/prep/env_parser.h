@@ -12,5 +12,6 @@
 
 
 t_env_list *env_parser(char *env[]);
+void	free_env(t_env_list *env);
 
 #endif

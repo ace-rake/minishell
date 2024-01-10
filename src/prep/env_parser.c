@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/09 15:50:43 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 10:58:17 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ t_env_list	*env_line_parser(char *env_line)
 	char *val;
 	short index;
 
-	new = (t_env_list *)malloc((1) * (sizeof(t_env_list *)));
+	new = (t_env_list *)malloc((1) * (sizeof(t_env_list)));
 	if (!new)
 		return (NULL);
-	val = strchr(env_line, '=');
+	val = ft_strchr(env_line, '=');
 	if (!val)
 	{
 		free(new);
