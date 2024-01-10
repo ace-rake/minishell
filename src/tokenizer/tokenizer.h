@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:07:34 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/06 12:26:33 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/10 08:30:11 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int		init_tokenizer_utils(t_tokenizer_utils *u, const char *input);
 t_token	*create_token(t_tokenizer_utils *u, char *token_value);
 t_token	**add_token(t_tokenizer_utils *u, char *token_value);
-t_token **tokenize(const char *input);
+t_token **tokenizer(const char *input);
 
 //tokenize_handlers.c
 void	handle_special_char(const char *input, t_tokenizer_utils *u);

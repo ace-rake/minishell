@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:15:56 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/09 11:34:25 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/10 08:30:23 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_token	**add_token(t_tokenizer_utils *u, char *token_value)
 	return (u->tokens);
 }
 
-t_token **tokenize(const char *input)
+t_token **tokenizer(const char *input)
 {
 	t_tokenizer_utils u;
 
