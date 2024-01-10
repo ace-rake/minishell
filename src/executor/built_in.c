@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/08 14:43:29 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:54:14 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@ DONE◦ pwd with no options
 ◦ exit with no options
 */
 
+/*
+ * still need to add all the dup2's to correctly take input and redirect output
+ */
+
 void	cd_builtin(t_token *token)//this token is still the command token
 {
 	int retval;
 
-	retval = chdir(token->left->value);
+	retval = chdir(token->right->value);
 	if (retval != 0)
 		perror("cd_builtin");
 }
@@ -47,5 +51,33 @@ void	pwd_builtin(void)
 
 void	echo_builtin(t_token *token)
 {
+	char **token_chain = token_chain_to_array(token->right);
+	//can fail
+	int iter = 0;
+	while (token_chain[iter])
+		ft_putstr_fd(token_chain[iter], token->output);
+}
 
+void	env_builtin(t_token *token, t_env_list *env)
+{
+	while (env)
+	{
+		ft_putstr_fd(env->var, token->output);
+		ft_putchar_fd('=', token->output);
+		ft_putendl_fd(env->var, token->output);
+		env = env->next;
+	}
+}
+
+int	main(int argc, char *argv[], char *env[])
+{
+	t_env_list *envl = env_parser(env);
+	t_token *token = malloc(sizeof(t_token));
+	token->type = COMMAND;
+	token->value = "env";
+	token->output = 1;
+	token->input = 0;
+//	env_builtin(token, envl);
+	for (int i = 0; env[i]; ++i)
+		printf("%s\n", env[i]);
 }
