@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 11:26:45 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:16:00 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,12 @@ char *check_current_path(char *curr_path, char *cmd)
     
     tmp = ft_strjoin("/", cmd);                               
     curr_path = ft_strjoin(curr_path, tmp);                   
+	free(tmp);
     if (access(curr_path, X_OK) == 0)
+	{
         return (curr_path);                                   
+	}
+	free(curr_path);
     return (NULL);                                            
 }   
 

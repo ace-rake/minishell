@@ -37,25 +37,35 @@ int	exec_pipe(t_token *token)
 
 int	exec_redir_in(t_token *token)
 {
+	char *file;
+
+	file = token->right->value;
 	while (token->type != COMMAND)
 		token = token->left;
-	token->input = open(token->right->value, O_RDONLY);
+	token->input = open(file, O_RDONLY);
 	return (token->left->input);
 }
+//KEEP ORIGINAL TOKEN AS TMP
 
 int	exec_redir_out(t_token *token)
 {
+	char *file;
+
+	file = token->right->value;
 	while (token->type != COMMAND)
 		token = token->left;
-	token->output = open(token->right->value, O_WRONLY|O_CREAT|O_TRUNC);
+	token->output = open(file, O_WRONLY|O_CREAT|O_TRUNC);
 	return (token->left->output);
 }
 
 int	exec_redir_append(t_token *token)
 {
+	char *file;
+
+	file = token->right->value;
 	while (token->type != COMMAND)
 		token = token->left;
-	token->output = open(token->right->value, O_WRONLY|O_APPEND|O_CREAT);
+	token->output = open(file, O_WRONLY|O_APPEND|O_CREAT);
 	return (token->left->output);
 }
 
