@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 13:51:55 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:13:16 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,15 @@ void	free_env(t_env_list *env)
 	}
 }
 
-t_env_list	*env_line_parser(char *env_line)
+t_env_list	*env_node_con(char *var, char *val)
 {
 	t_env_list *new;
-	char *val;
-	short index;
 
 	new = (t_env_list *)malloc((1) * (sizeof(t_env_list)));
 	if (!new)
 		return (NULL);
-	val = ft_strchr(env_line, '=');
-	if (!val)
-	{
-		free(new);
-		return (NULL);
-	}
-	index = val - env_line;
-	val++;
 	new->val = ft_strdup(val);
-	new->var = ft_substr(env_line, 0, index);
+	new->var = ft_strdup(var);
 	new->next = NULL;
 	new->exported = true;
 	if (!new->val || !new->var)
@@ -61,6 +51,24 @@ t_env_list	*env_line_parser(char *env_line)
 		free_env_node(new);
 		return (NULL);
 	}
+	return (new);
+}
+
+t_env_list	*env_line_parser(char *env_line)
+{
+	t_env_list *new;
+	char *val;
+	char *var;
+	short index;
+
+	val = ft_strchr(env_line, '=');
+	if (!val)
+		return (NULL);
+	index = val - env_line;
+	val++;
+	var = ft_substr(env_line, 0, index);
+	new = env_node_con(var, val);
+	free(var);
 	return (new);
 }
 
