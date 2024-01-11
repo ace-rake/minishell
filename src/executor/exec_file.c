@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 11:37:28 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:19:54 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,16 @@ int	exec_child(t_token *token, char *cmd_path, char **args)
 	exit(1);
 }
 
+
 int	exec_command_file(t_token *token, t_env_list *env)
 {
+	char *cmd_path;
 
 	//used for execve and child
-	char *cmd_path = get_full_cmd_path(token->value, env);
+	if (ft_strchr(token->value, '/') == NULL)
+		cmd_path = get_full_cmd_path(token->value, env);
+	else
+		cmd_path = token->value;
 	char **args = token_chain_to_array(token);
 
 

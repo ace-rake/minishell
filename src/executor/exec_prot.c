@@ -45,7 +45,6 @@ int	exec_redir_in(t_token *token)
 	token->input = open(file, O_RDONLY);
 	return (token->left->input);
 }
-//KEEP ORIGINAL TOKEN AS TMP
 
 int	exec_redir_out(t_token *token)
 {
@@ -69,17 +68,13 @@ int	exec_redir_append(t_token *token)
 	return (token->left->output);
 }
 
-int	exec_command_builtin(t_token *token)
-{
-
-	return (1);
-}
-
-
 int	exec_command_as_is(t_token *token)
 {
 	return (1);
 }
+/*
+ * this implies that a path was given indicated by there being a slash in the arg
+ */
 
 int	exec_redir_heredoc(t_token *token)
 {
@@ -87,12 +82,12 @@ int	exec_redir_heredoc(t_token *token)
 	return (1);
 }
 
-char *return_builtin(t_token *token, t_env_list *env)
+int	exec_command_builtin(t_token *token, t_env_list *env)
 {
 	if (strncmp(token->value, "echo\0", 5))
 		echo_builtin(token);
 	else if (strncmp(token->value, "cd\0", 3))
-		cd_builtin(token);
+		cd_builtin(token, env);
 	else if (strncmp(token->value, "pwd\0", 4))
 		pwd_builtin(token);
 	else if (strncmp(token->value, "export\0", 7))
@@ -103,7 +98,7 @@ char *return_builtin(t_token *token, t_env_list *env)
 		env_builtin(token, env);
 	else if (strncmp(token->value, "exit\0", 5))
 		exit_builtin(token);
-	return (NULL);
+	return (0);
 }
 
 
@@ -117,7 +112,7 @@ int	exec_command(t_token *token, t_env_list *env)
 		return (0);
 	//try execute as is here
 	//if fail
-	if (!exec_command_builtin(token))
+	if (!exec_command_builtin(token, env))
 		return (0);
 	//check built in here
 	//if fail

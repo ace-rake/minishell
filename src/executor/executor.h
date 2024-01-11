@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 10:03:29 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 12:04:24 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char *get_full_cmd_path(char *cmd, t_env_list *env);
 
 
 void	env_builtin(t_token *token, t_env_list *env);
-void	cd_builtin(t_token *token);
+void	cd_builtin(t_token *token, t_env_list *env);
 void	pwd_builtin(t_token *token);
 void	echo_builtin(t_token *token);
 void	exit_builtin(t_token *token);
