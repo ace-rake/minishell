@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 11:49:36 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 11:58:18 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_env(t_env_list *env)
 
 t_env_list	*get_env_node(t_env_list *head, char *var)
 {
-	while (head && head->var != var)
+	while (head && strncmp(head->var, var, ft_strlen(var)))
 		head = head->next;
 	return (head);
 }
