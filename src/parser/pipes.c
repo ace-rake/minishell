@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:34:37 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/10 14:32:17 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:26:28 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_token	*parse_pipes(t_token **tokens)
 
 	head = NULL;
 	prev_pipe = NULL;
-	i = 0;
-	while (tokens[i++]);
-	while (i--)
+	i = -1;
+	while (tokens[++i]);
+	while (--i)
 	{
 		if (tokens[i]->type == PIPE)
 		{
