@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 11:14:49 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 11:49:36 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,53 @@ void	free_env(t_env_list *env)
 		env = tmp;	
 	}
 }
+
+t_env_list	*get_env_node(t_env_list *head, char *var)
+{
+	while (head && head->var != var)
+		head = head->next;
+	return (head);
+}
+/* searches through env_list head until either head->var is equal to var
+ * or until head == NULL
+ * either way it return head
+ * 		which will either be null or the found node
+ */
+
+t_env_list	*del_node(t_env_list **head, t_env_list *to_del)
+{
+	t_env_list *tmp;
+	t_env_list *prev;
+
+	if (!to_del || !head)
+		return (NULL);
+	tmp = *head;
+	if (to_del == tmp)
+	{
+		*head = (*head)->next;
+		free_env_node(tmp);
+	}
+	else
+	{
+		while (tmp != to_del)
+		{
+			prev = tmp;
+			tmp = tmp->next;
+		}
+		if (tmp == to_del)
+		{
+			prev->next = tmp->next;
+			free_env_node(tmp);
+		}
+		else
+			return (NULL);
+	}
+	return (*head);
+}
+/*
+ * delete to_del from env_list
+ * if to_del is head then set head to be next first node
+ */
 
 t_env_list	*env_node_con(char *var, char *val, bool exported)
 {
