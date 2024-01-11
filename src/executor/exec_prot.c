@@ -87,10 +87,22 @@ int	exec_redir_heredoc(t_token *token)
 	return (1);
 }
 
-char *return_builtin(t_token *token)
+char *return_builtin(t_token *token, t_env_list *env)
 {
-
-
+	if (strncmp(token->value, "echo\0", 5))
+		echo_builtin(token);
+	else if (strncmp(token->value, "cd\0", 3))
+		cd_builtin(token);
+	else if (strncmp(token->value, "pwd\0", 4))
+		pwd_builtin(token);
+	else if (strncmp(token->value, "export\0", 7))
+		export_builtin(token, env);
+	else if (strncmp(token->value, "unset\0", 6))
+		unset_builtin(token, env);
+	else if (strncmp(token->value, "env\0", 4))
+		env_builtin(token, env);
+	else if (strncmp(token->value, "exit\0", 5))
+		exit_builtin(token);
 	return (NULL);
 }
 

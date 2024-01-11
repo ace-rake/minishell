@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 13:42:35 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 10:07:46 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,30 @@ DONE◦ env with no options or arguments	#need to have variable lsit for this
 ◦ exit with no options
 */
 
-int	set_fd(t_token *token)
+static int	set_fd(t_token *token)
 {
 	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output, STDOUT_FILENO) == -1)
 		return (1);
 	return (0);
 }
 
-void	cd_builtin(t_token *token)//this token is still the command token
+void	export_builtin(t_token *token, t_env_list *env)
+{
+	//check if no args
+
+}
+
+void	unset_builtin(t_token *token, t_env_list *env)
+{
+
+}
+
+void	exit_builtin(t_token *token)
+{
+
+}
+
+void	cd_builtin(t_token *token)
 {
 	int retval;
 
