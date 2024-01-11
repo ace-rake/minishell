@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 10:13:16 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 11:14:49 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_env(t_env_list *env)
 	}
 }
 
-t_env_list	*env_node_con(char *var, char *val)
+t_env_list	*env_node_con(char *var, char *val, bool exported)
 {
 	t_env_list *new;
 
@@ -45,7 +45,7 @@ t_env_list	*env_node_con(char *var, char *val)
 	new->val = ft_strdup(val);
 	new->var = ft_strdup(var);
 	new->next = NULL;
-	new->exported = true;
+	new->exported = exported;
 	if (!new->val || !new->var)
 	{
 		free_env_node(new);
@@ -67,7 +67,7 @@ t_env_list	*env_line_parser(char *env_line)
 	index = val - env_line;
 	val++;
 	var = ft_substr(env_line, 0, index);
-	new = env_node_con(var, val);
+	new = env_node_con(var, val, true);
 	free(var);
 	return (new);
 }
