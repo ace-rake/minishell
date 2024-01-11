@@ -45,7 +45,6 @@ int	exec_redir_in(t_token *token)
 	token->input = open(file, O_RDONLY);
 	return (token->left->input);
 }
-//KEEP ORIGINAL TOKEN AS TMP
 
 int	exec_redir_out(t_token *token)
 {
@@ -92,7 +91,7 @@ char *return_builtin(t_token *token, t_env_list *env)
 	if (strncmp(token->value, "echo\0", 5))
 		echo_builtin(token);
 	else if (strncmp(token->value, "cd\0", 3))
-		cd_builtin(token);
+		cd_builtin(token, env);
 	else if (strncmp(token->value, "pwd\0", 4))
 		pwd_builtin(token);
 	else if (strncmp(token->value, "export\0", 7))
