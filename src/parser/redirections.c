@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:35:09 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/10 14:55:08 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/11 08:51:19 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ t_token	*parse_redirections(t_token **tokens)
 
 	i = 0;
 	while (tokens[i++]);
+	i = link_redirections(tokens, &u, i);
 	while (i > 0)
 	{
-		i = link_redirections(tokens, &u, i);
-		//TODO: if = 0?
 		u.pipe = tokens[i];
 		u.pipe->right = u.head;
 		u.head->parent = u.pipe;
+		i = link_redirections(tokens, &u, i);
 	}
 	if (u.pipe)
 	{
