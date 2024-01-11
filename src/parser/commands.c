@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:35:01 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/11 09:20:50 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/11 09:51:42 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_token *link_command2(t_token **tokens, int i)
 	if (tokens[i] && (tokens[i]->type == PIPE || token_is_redirection(tokens[i])))
 	{
 		if (tokens[i]->type == PIPE)
-			*last_pipe = tokens[i];
+			last_pipe = tokens[i];
 		command->parent = tokens[i];
 		tokens[i]->left = command;
 		return (NULL);
@@ -54,19 +54,17 @@ t_token	*parse_commands(t_token **tokens)
 	t_token *head;
 	t_token *command;
 	
-	last_pipe = NULL;
 	i = -1;
-	while (token[++i])
+	while (tokens[++i])
 	{
-		if (token[i]->type == COMMAND)
+		if (tokens[i]->type == COMMAND)
 		{
 			if (i >= 2 && tokens[i - 1]->type == ARGUMENT && token_is_redirection(tokens[i - 2]))
 				head = link_command1(tokens, i);
 			else
-				head = link_command2(tokens, i, &last_pipe);
+				head = link_command2(tokens, i);
 		}
 	}
-		if (token[i]->type == COMMAND)
 	return (head);
 }
 
