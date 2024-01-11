@@ -72,6 +72,9 @@ int	exec_command_as_is(t_token *token)
 {
 	return (1);
 }
+/*
+ * this implies that a path was given indicated by there being a slash in the arg
+ */
 
 int	exec_redir_heredoc(t_token *token)
 {
