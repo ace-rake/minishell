@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/15 11:49:41 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:51:09 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ DONE◦ pwd with no options
 DONE◦ export with no options 		#need to have variable list for this
 DONE◦ unset with no options			#need to have variable list for this
 DONE◦ env with no options or arguments	#need to have variable lsit for this
-◦ exit with no options man i dunno
+DONE◦ exit with no options man i dunno
 */
 
 static int	set_fd(t_token *token)
