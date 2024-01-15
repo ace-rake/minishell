@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/15 10:54:42 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/15 10:58:32 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ int	exec_child(t_token *token, char *cmd_path, char **args)
 	exit(1);
 }
 
+
+int check_child(int *child_status)                                    
+{
+    if (WIFEXITED(*child_status))
+    {
+        *child_status = WEXITSTATUS(*child_status);
+        if (*child_status != 0)
+            return (1);
+    }
+    return (0);
+}
 
 int	exec_command_file(t_token *token, t_env_list *env)
 {
@@ -52,5 +63,10 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	child = fork();
 	if (child == 0)
 		exec_child(token, cmd_path, args);
+	int status;
+	waitpid(child, &status, 0);
+	if (check_child(&status))
+		return (status);
 	return (1);
 }
+
