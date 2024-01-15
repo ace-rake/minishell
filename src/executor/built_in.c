@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/15 10:59:44 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:45:45 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,19 @@ void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 
 void	exit_builtin(t_token *token, t_env_list *env)
 {
-
+	while (token->parent)
+		token = token->parent;
+	//it doesnt matter if im on the left or right side, if i just go up until im at the origin token i can just check that token to see if there were any pipes at all
+	//this also resets the token to the origin because im assuming the free_tokens command will take that token
+	if (token->type != PIPE)
+		return ;
+	free_env(env);
+	//free_tokens(token);
+	exit(0);
 }
+//this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
+//exit doesnt do anything if there is a pipe somewhere
+//everything else works as expected me thinks
 
 void	cd_builtin(t_token *token, t_env_list *env)
 {

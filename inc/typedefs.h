@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:12:17 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 11:01:48 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:44:51 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*left;
 	struct s_token	*right;
-	struct s_token	*parent;
+	struct s_token	*parent;// im using this one for exit
 	short			input;
 	short			output;
 }					t_token;
