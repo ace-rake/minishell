@@ -94,7 +94,7 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 	else if (strncmp(token->value, "env\0", 4))
 		env_builtin(token, env);
 	else if (strncmp(token->value, "exit\0", 5))
-		exit_builtin(token);
+		exit_builtin(token, env);
 	return (0);
 }
 

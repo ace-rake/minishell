@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 15:33:50 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/15 10:59:44 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 //TODO this doesnt actually do anything if there is a pipe behind this cmd
 //this also count for export
 
-void	exit_builtin(t_token *token)
+void	exit_builtin(t_token *token, t_env_list *env)
 {
 
 }
