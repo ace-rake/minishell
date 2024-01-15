@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/15 11:45:45 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:49:41 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ void	print_export(t_token *token, t_env_list *env)
 
 void	export_builtin(t_token *token, t_env_list *env)
 {
+	t_token *tmp;
+
+	tmp = token;
+	while (tmp->parent)
+		tmp = tmp->parent;
+	if (tmp->type != PIPE)
+		return ;
 	if (!token->right)
 		print_export(token, env);
 	else
@@ -85,7 +92,13 @@ void	export_builtin(t_token *token, t_env_list *env)
 void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 {
 	t_env_list *to_del;
-	
+	t_token *tmp;
+
+	tmp = token;
+	while (tmp->parent)
+		tmp = tmp->parent;
+	if (tmp->type != PIPE)
+		return ;
 	while (token->right)
 	{
 		token = token->right;
@@ -97,6 +110,7 @@ void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 }
 //TODO this doesnt actually do anything if there is a pipe behind this cmd
 //this also count for export
+//fix added check to see if top token is pipe, if so dont execute at all
 
 void	exit_builtin(t_token *token, t_env_list *env)
 {
