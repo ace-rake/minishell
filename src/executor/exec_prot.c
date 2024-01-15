@@ -135,17 +135,17 @@ int	exec_command(t_token *token, t_env_list *env)
 
 int	execute(t_token *token, t_env_list *env)
 {
-	if (token->type == PIPE) // |
+	if (token->type == PIPE)				// |
 		return (exec_pipe(token));
-	else if (token->type == REDIR_IN) // <
+	else if (token->type == REDIR_IN)		// <
 		return (exec_redir_in(token));
-	else if (token->type == REDIR_OUT) // >
+	else if (token->type == REDIR_OUT)		// >
 		return (exec_redir_out(token));
-	else if (token->type == REDIR_HEREDOC) // <<
+	else if (token->type == REDIR_HEREDOC)	// <<
 		return (exec_redir_heredoc(token));
-	else if (token->type == REDIR_APPEND) // >>
+	else if (token->type == REDIR_APPEND)	// >>
 		return (exec_redir_append(token));
-	else if (token->type == COMMAND) // CMD arg
+	else if (token->type == COMMAND)		// CMD
 		return (exec_command(token, env));
 	return (1);
 }

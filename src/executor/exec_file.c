@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 15:19:54 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/15 10:54:42 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	else
 		cmd_path = token->value;
     /*                                                            
-     * check if the given token->value has a slash, if so we must 
-use that as the command as is                                     
-     * else we will try to find a suitable path in the $path shoul
-d it (and $path) exist                                            
+     * check if the given token->value has a slash, if so we must use that as the command as is                                     
+     * else we will try to find a suitable path in the $path should it (and $path) exist                                            
      */                                                           
     t_token token_tmp;                                            
     token_tmp.value = cmd_path;                                   
@@ -44,11 +42,9 @@ d it (and $path) exist
     /*                                                            
      * these will be our execve arguments                         
      * these start from the command itself cuz we need that       
-     * TODO actually this is still kinda fucked because the first 
-argument should be the full path to the command but as it stands i
-t always uses the token->value of the command                     
-     * TMP_FIX: create tmp token with full path to replace the act
-ual command token                                                 
+     * TODO actually this is still kinda fucked because the first argument should be the full path to the command but as it stands it always uses the token->value of the command                     
+     * TMP_FIX: create tmp token with full path to replace the actual command token                                                 
+	 * token doesnt need freeing ig
      */                                                           
 
 	pid_t child;
