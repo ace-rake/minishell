@@ -5,6 +5,7 @@
 //need to make sure to close fds if they would be overwritten
 //need to see what can go wrong, and what should happen if something does go wrong
 
+//TODO when to close fd's
 int	exec_pipe(t_token *token)
 {
 	int	filedes[2];
