@@ -79,6 +79,14 @@ int	exec_redir_heredoc(t_token *token)
 
 	return (1);
 }
+/*
+ *	I think heredoc should be done before executing
+ *	Reason : 
+ *		if you run "cat << EOF > outfile"
+ *		according to execution rules, outfile should be generated before the heredoc is initiated
+ *		However
+ *		If you cancel heredoc with control + c then you can see that the outfile is in fact not generated yet
+ */
 
 int	exec_command_builtin(t_token *token, t_env_list *env)
 {

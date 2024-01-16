@@ -9,6 +9,7 @@
 
 
 #include "../lexer/libft/inc/libft.h"
+#include "../lexer/libft/inc/get_next_line.h"
 
 
 
