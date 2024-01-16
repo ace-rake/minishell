@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/15 10:58:32 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/16 13:57:07 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	waitpid(child, &status, 0);
 	if (check_child(&status))
 		return (status);
-	return (1);
+	return (0);
 }
 

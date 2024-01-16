@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/15 11:51:09 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:46:08 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	exit_builtin(t_token *token, t_env_list *env)
 		token = token->parent;
 	//it doesnt matter if im on the left or right side, if i just go up until im at the origin token i can just check that token to see if there were any pipes at all
 	//this also resets the token to the origin because im assuming the free_tokens command will take that token
-	if (token->type != PIPE)
+	if (token->type == PIPE)
 		return ;
 	free_env(env);
 	//free_tokens(token);
@@ -163,22 +163,28 @@ void	pwd_builtin(t_token *token)
 	free(retval);
 }
 
-void	echo_builtin(t_token *token)
+int	echo_builtin(t_token *token)
 {
 	bool	option;
 
 	set_fd(token);
 	option = false;
-	if (ft_strncmp(token->right->value, "-n\0", 3) == 0)
+	if (token->right && ft_strncmp(token->right->value, "-n\0", 3) == 0)
 	{
 		option = true;
 		token = token->right;
 	}
-	char **token_chain = token_chain_to_array(token->right);
+	if (token->right)
+	{
+		char **token_chain = token_chain_to_array(token->right);
 	//can fail
-	int iter = 0;
-	while (token_chain[iter])
-		ft_putstr_fd(token_chain[iter], token->output);
+		int iter = 0;
+		while (token_chain[iter])
+			ft_putstr_fd(token_chain[iter++], token->output);
+	}
+	if (!option)
+		write(1, "\n", token->output);
+	return (0);
 }
 //still need to add the optional option check for -n
 

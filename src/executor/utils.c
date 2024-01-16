@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 14:16:00 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:57:50 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int arg_counter(t_token *token)
 {
 	int	argc = 1;
 	while (token->right)
+	{
 		argc++;
+		token = token->right;
+	}
 	return (argc);
 }
 
