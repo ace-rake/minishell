@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/16 14:46:08 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:01:13 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,8 @@ int	echo_builtin(t_token *token)
 	return (0);
 }
 //still need to add the optional option check for -n
+//TODO need to put spaces in between all the arguments
+//except when there is no space but quotes
 
 void	env_builtin(t_token *token, t_env_list *env)
 {
