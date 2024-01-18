@@ -68,6 +68,8 @@ int	exec_redir_append(t_token *token)
 	token->output = open(file, O_WRONLY|O_APPEND|O_CREAT);
 	return (token->left->output);
 }
+
+//TODO: make all the redirection tokens also have the filedes that they opened
 /*
 int	exec_command_as_is(t_token *token)
 {
