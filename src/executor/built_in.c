@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/16 15:01:13 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:32:28 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,10 @@ int	echo_builtin(t_token *token)
 	//can fail
 		int iter = 0;
 		while (token_chain[iter])
+		{
 			ft_putstr_fd(token_chain[iter++], token->output);
+			ft_putchar_fd(' ', token->output);
+		}
 	}
 	if (!option)
 		write(1, "\n", token->output);
