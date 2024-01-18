@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/18 14:32:28 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:12:39 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	exit_builtin(t_token *token, t_env_list *env)
 }
 //this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
 //exit doesnt do anything if there is a pipe somewhere
+//TODO free_tokens fucntions ig
 //everything else works as expected me thinks
 
 void	cd_builtin(t_token *token, t_env_list *env)
@@ -176,21 +177,23 @@ int	echo_builtin(t_token *token)
 	}
 	if (token->right)
 	{
-		char **token_chain = token_chain_to_array(token->right);
+		char **token_chain = NULL;
+		token_chain = token_chain_to_array(token->right);
 	//can fail
 		int iter = 0;
-		while (token_chain[iter])
+		while (token_chain && token_chain[iter])
 		{
 			ft_putstr_fd(token_chain[iter++], token->output);
 			ft_putchar_fd(' ', token->output);
 		}
+		free(token_chain);
 	}
 	if (!option)
 		write(1, "\n", token->output);
 	return (0);
 }
 //still need to add the optional option check for -n
-//TODO need to put spaces in between all the arguments
+//DONE need to put spaces in between all the arguments
 //except when there is no space but quotes
 
 void	env_builtin(t_token *token, t_env_list *env)
