@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:12:17 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/10 11:01:48 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/18 11:44:20 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef enum e_quoting_status
 typedef struct s_token
 {
 	t_token_type	type;
-	t_quoting_status	quoting_status;
 	char			*value;
 	struct s_token	*left;
 	struct s_token	*right;
@@ -80,12 +79,12 @@ typedef struct s_tokenizer_utils
 	t_token **tokens;
 }					t_tokenizer_utils;
 
-typedef struct s_parser_redir_utils
+typedef struct s_parser_utils_redir
 {
-	t_token *head;
-	t_token	*prev_redir;
+	t_token	*last_redirection;
+	t_token	*first_redirection;
 	t_token	*pipe;
-}					t_parser_redir_utils;
+}					t_parser_utils_redir;
 
 
 typedef	struct	s_env_list
