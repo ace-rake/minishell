@@ -75,5 +75,6 @@ non_existing_file
 file1 >file2 -> create both files
 echo > file1 > file2 -> create both files and write in lastone
 ""<<123
-
 echo test"test"
+cat"""<<""" EOF
+cat "existing_file" ">" file
