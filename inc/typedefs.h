@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   typedefs.h                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 13:12:17 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/18 11:44:20 by wdevries         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
 #ifndef TYPEDEFS_H
 # define TYPEDEFS_H
 
@@ -63,7 +50,7 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*left;
 	struct s_token	*right;
-	struct s_token	*parent;
+	struct s_token	*parent;// im using this one for exit
 	short			input;
 	short			output;
 }					t_token;

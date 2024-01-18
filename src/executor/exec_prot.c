@@ -5,6 +5,7 @@
 //need to make sure to close fds if they would be overwritten
 //need to see what can go wrong, and what should happen if something does go wrong
 
+//TODO when to close fd's
 int	exec_pipe(t_token *token)
 {
 	int	filedes[2];
@@ -67,38 +68,43 @@ int	exec_redir_append(t_token *token)
 	token->output = open(file, O_WRONLY|O_APPEND|O_CREAT);
 	return (token->left->output);
 }
-
+/*
 int	exec_command_as_is(t_token *token)
 {
 	return (1);
 }
-/*
- * this implies that a path was given indicated by there being a slash in the arg
- */
-
+*/
 int	exec_redir_heredoc(t_token *token)
 {
 
 	return (1);
 }
+/*
+ *	I think heredoc should be done before executing
+ *	Reason : 
+ *		if you run "cat << EOF > outfile"
+ *		according to execution rules, outfile should be generated before the heredoc is initiated
+ *		However
+ *		If you cancel heredoc with control + c then you can see that the outfile is in fact not generated yet
+ */
 
 int	exec_command_builtin(t_token *token, t_env_list *env)
 {
-	if (strncmp(token->value, "echo\0", 5))
-		echo_builtin(token);
-	else if (strncmp(token->value, "cd\0", 3))
+	if (strncmp(token->value, "echo\0", 5) == 0)
+		return (echo_builtin(token));
+	else if (strncmp(token->value, "cd\0", 3) == 0)
 		cd_builtin(token, env);
-	else if (strncmp(token->value, "pwd\0", 4))
+	else if (strncmp(token->value, "pwd\0", 4) == 0)
 		pwd_builtin(token);
-	else if (strncmp(token->value, "export\0", 7))
+	else if (strncmp(token->value, "export\0", 7) == 0)
 		export_builtin(token, env);
-	else if (strncmp(token->value, "unset\0", 6))
+	else if (strncmp(token->value, "unset\0", 6) == 0)
 		unset_builtin(token, env);
-	else if (strncmp(token->value, "env\0", 4))
+	else if (strncmp(token->value, "env\0", 4) == 0)
 		env_builtin(token, env);
-	else if (strncmp(token->value, "exit\0", 5))
-		exit_builtin(token);
-	return (0);
+	else if (strncmp(token->value, "exit\0", 5) == 0)
+		exit_builtin(token, env);
+	return (1);
 }
 
 
@@ -108,11 +114,11 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 
 int	exec_command(t_token *token, t_env_list *env)
 {
-	if (!exec_command_as_is(token))
+/*	if (!exec_command_as_is(token))
 		return (0);
 	//try execute as is here
 	//if fail
-	if (!exec_command_builtin(token, env))
+*/	if (!exec_command_builtin(token, env))
 		return (0);
 	//check built in here
 	//if fail
@@ -138,17 +144,17 @@ int	exec_command(t_token *token, t_env_list *env)
 
 int	execute(t_token *token, t_env_list *env)
 {
-	if (token->type == PIPE) // |
+	if (token->type == PIPE)				// |
 		return (exec_pipe(token));
-	else if (token->type == REDIR_IN) // <
+	else if (token->type == REDIR_IN)		// <
 		return (exec_redir_in(token));
-	else if (token->type == REDIR_OUT) // >
+	else if (token->type == REDIR_OUT)		// >
 		return (exec_redir_out(token));
-	else if (token->type == REDIR_HEREDOC) // <<
+	else if (token->type == REDIR_HEREDOC)	// <<
 		return (exec_redir_heredoc(token));
-	else if (token->type == REDIR_APPEND) // >>
+	else if (token->type == REDIR_APPEND)	// >>
 		return (exec_redir_append(token));
-	else if (token->type == COMMAND) // CMD arg
+	else if (token->type == COMMAND)		// CMD
 		return (exec_command(token, env));
 	return (1);
 }

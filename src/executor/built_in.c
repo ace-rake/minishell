@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 15:33:50 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:01:13 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ DONE◦ pwd with no options
 DONE◦ export with no options 		#need to have variable list for this
 DONE◦ unset with no options			#need to have variable list for this
 DONE◦ env with no options or arguments	#need to have variable lsit for this
-◦ exit with no options man i dunno
+DONE◦ exit with no options man i dunno
 */
 
 static int	set_fd(t_token *token)
@@ -50,6 +50,13 @@ void	print_export(t_token *token, t_env_list *env)
 
 void	export_builtin(t_token *token, t_env_list *env)
 {
+	t_token *tmp;
+
+	tmp = token;
+	while (tmp->parent)
+		tmp = tmp->parent;
+	if (tmp->type != PIPE)
+		return ;
 	if (!token->right)
 		print_export(token, env);
 	else
@@ -85,7 +92,13 @@ void	export_builtin(t_token *token, t_env_list *env)
 void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 {
 	t_env_list *to_del;
-	
+	t_token *tmp;
+
+	tmp = token;
+	while (tmp->parent)
+		tmp = tmp->parent;
+	if (tmp->type != PIPE)
+		return ;
 	while (token->right)
 	{
 		token = token->right;
@@ -97,11 +110,23 @@ void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 }
 //TODO this doesnt actually do anything if there is a pipe behind this cmd
 //this also count for export
+//fix added check to see if top token is pipe, if so dont execute at all
 
-void	exit_builtin(t_token *token)
+void	exit_builtin(t_token *token, t_env_list *env)
 {
-
+	while (token->parent)
+		token = token->parent;
+	//it doesnt matter if im on the left or right side, if i just go up until im at the origin token i can just check that token to see if there were any pipes at all
+	//this also resets the token to the origin because im assuming the free_tokens command will take that token
+	if (token->type == PIPE)
+		return ;
+	free_env(env);
+	//free_tokens(token);
+	exit(0);
 }
+//this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
+//exit doesnt do anything if there is a pipe somewhere
+//everything else works as expected me thinks
 
 void	cd_builtin(t_token *token, t_env_list *env)
 {
@@ -138,24 +163,32 @@ void	pwd_builtin(t_token *token)
 	free(retval);
 }
 
-void	echo_builtin(t_token *token)
+int	echo_builtin(t_token *token)
 {
 	bool	option;
 
 	set_fd(token);
 	option = false;
-	if (ft_strncmp(token->right->value, "-n\0", 3) == 0)
+	if (token->right && ft_strncmp(token->right->value, "-n\0", 3) == 0)
 	{
 		option = true;
 		token = token->right;
 	}
-	char **token_chain = token_chain_to_array(token->right);
+	if (token->right)
+	{
+		char **token_chain = token_chain_to_array(token->right);
 	//can fail
-	int iter = 0;
-	while (token_chain[iter])
-		ft_putstr_fd(token_chain[iter], token->output);
+		int iter = 0;
+		while (token_chain[iter])
+			ft_putstr_fd(token_chain[iter++], token->output);
+	}
+	if (!option)
+		write(1, "\n", token->output);
+	return (0);
 }
 //still need to add the optional option check for -n
+//TODO need to put spaces in between all the arguments
+//except when there is no space but quotes
 
 void	env_builtin(t_token *token, t_env_list *env)
 {

@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/11 12:04:24 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:09:02 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "../../inc/typedefs.h"
 #include "../prep/env_parser.h"
 #include <errno.h>
+#include <sys/wait.h>
 
 #include <string.h>
 //delete
@@ -36,12 +37,13 @@ int	exec_command_file(t_token *token, t_env_list *env);
 
 char *get_full_cmd_path(char *cmd, t_env_list *env);
 
+void	exec_token(t_token *token, t_env_list *env);
 
 void	env_builtin(t_token *token, t_env_list *env);
 void	cd_builtin(t_token *token, t_env_list *env);
 void	pwd_builtin(t_token *token);
-void	echo_builtin(t_token *token);
-void	exit_builtin(t_token *token);
+int		echo_builtin(t_token *token);
+void	exit_builtin(t_token *token, t_env_list *env);
 void	unset_builtin(t_token *token, t_env_list *env);
 void	export_builtin(t_token *token, t_env_list *env);
 
