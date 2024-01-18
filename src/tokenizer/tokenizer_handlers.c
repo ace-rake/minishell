@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:14:54 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/06 12:24:57 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:27:04 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,40 +39,39 @@ void	handle_whitespace(const char *input, t_tokenizer_utils *u)
 void	handle_single_quote(const char *input, t_tokenizer_utils *u)
 {
 	if (u->quoting_status == SINGLE_QUOTED)
-	{
-		if (u->current > u->start + 1)
-			add_token(u, ft_strndup(input + u->start + 1, u->current - u->start - 1));
-		u->start = u->current + 1;
 		u->quoting_status = UNQUOTED;
-	}
 	else if (u->quoting_status == UNQUOTED)	
 		u->quoting_status = SINGLE_QUOTED; 
 }
 
-void	handle_double_quote(const char *input, t_tokenizer_utils *u)
+	void	handle_double_quote(const char *input, t_tokenizer_utils *u)
 {
 	if (u->quoting_status == DOUBLE_QUOTED)
-	{
-		if (u->current > u->start + 1)
-			add_token(u, ft_strndup(input + u->start + 1, u->current - u->start - 1));
-		u->start = u->current + 1;
 		u->quoting_status = UNQUOTED;
-	}
 	else if (u->quoting_status == UNQUOTED)	
 		u->quoting_status = DOUBLE_QUOTED; 
 }
 
 void	handle_last_token(const char *input, t_tokenizer_utils *u)
 {
+	char	*token_str;
+
 	if (u->quoting_status == UNQUOTED)
 		add_token(u, ft_strndup(input + u->start, u->current - u->start));
 	else
 	{
+		token_str = ft_strndup(input + u->start, u->current - u->start);
 		if (u->quoting_status == SINGLE_QUOTED)
+		{
 			printf("> '\n");
+			add_token(u, ft_strjoin(token_str, "\'"));
+		}
 		else if (u->quoting_status == DOUBLE_QUOTED)
+		{
 			printf("> \"\n");
-		add_token(u, ft_strndup(input + u->start + 1, u->current - u->start - 1));
+			add_token(u, ft_strjoin(token_str, "\""));
+		}
+		free(token_str);
 	}
 }
 

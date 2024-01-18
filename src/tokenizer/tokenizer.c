@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:15:56 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/10 08:30:23 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:25:49 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_token	*create_token(t_tokenizer_utils *u, char *token_value)
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->quoting_status = u->quoting_status;
 	new_token->type = UNDEFINED;
 	new_token->value = token_value;
 	new_token->left = NULL;
@@ -92,18 +91,18 @@ t_token **tokenizer(const char *input)
     return (u.tokens);
 }
 
-/* int main() { */
-/*     const char *input = "echo 'Hello 'World>> 'output.txt"; */
-/*     t_token **tokens = tokenize(input); */
+int main() {
+    const char *input = "echo Hello'World";
+    t_token **tokens = tokenizer(input);
 
-/*     int i = 0; */
-/*     while (tokens[i] != NULL) { */
-/*         printf("Token: %s\n", tokens[i]->value); */
-/*         free(tokens[i]->value); */
-/*         free(tokens[i]); */
-/*         i++; */
-/*     } */
-/*     free(tokens); */
-/*     return 0; */
-/* } */
+    int i = 0;
+    while (tokens[i] != NULL) {
+        printf("Token: %s\n", tokens[i]->value);
+        free(tokens[i]->value);
+        free(tokens[i]);
+        i++;
+    }
+    free(tokens);
+    return 0;
+}
 
