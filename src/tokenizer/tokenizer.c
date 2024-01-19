@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:15:56 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/18 12:25:49 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:15:38 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,18 @@ t_token **tokenizer(const char *input)
     return (u.tokens);
 }
 
-int main() {
-    const char *input = "echo Hello'World";
-    t_token **tokens = tokenizer(input);
+/* int main() { */
+/*     const char *input = "echo Hello'World"; */
+/*     t_token **tokens = tokenizer(input); */
 
-    int i = 0;
-    while (tokens[i] != NULL) {
-        printf("Token: %s\n", tokens[i]->value);
-        free(tokens[i]->value);
-        free(tokens[i]);
-        i++;
-    }
-    free(tokens);
-    return 0;
-}
+/*     int i = 0; */
+/*     while (tokens[i] != NULL) { */
+/*         printf("Token: %s\n", tokens[i]->value); */
+/*         free(tokens[i]->value); */
+/*         free(tokens[i]); */
+/*         i++; */
+/*     } */
+/*     free(tokens); */
+/*     return 0; */
+/* } */
 
