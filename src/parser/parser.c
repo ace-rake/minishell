@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 08:29:23 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/11 10:10:49 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:54:22 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void print_ast(t_token *node, int level) {
     print_ast(node->right, level + 1);
 }
 
-
+/*
 int main(int argc, char **argv) {
     if (argc != 2) {
         fprintf(stderr, "Usage: %s 'command'\n", argv[0]);
@@ -72,4 +72,4 @@ int main(int argc, char **argv) {
     print_ast(ast_head, 0);
     return 0;
 }
-
+*/
