@@ -20,4 +20,7 @@ t_env_list	*get_env_node(t_env_list *head, char *var);
 void env_add_back(t_env_list **head, t_env_list *to_add);
 t_env_list	*env_node_con(char *var, char *val, bool exported);
 
+
+
+int	read_heredoc(t_token *token);
 #endif
