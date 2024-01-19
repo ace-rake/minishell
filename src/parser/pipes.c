@@ -5,36 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 13:34:37 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/11 10:26:28 by wdevries         ###   ########.fr       */
+/*   Created: 2024/01/12 12:41:24 by wdevries          #+#    #+#             */
+/*   Updated: 2024/01/18 13:23:15 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_token	*parse_pipes(t_token **tokens)
+t_token *parse_pipes(t_token **tokens)
 {
-	t_token *head;
-	t_token	*prev_pipe;
-	int		i;
+	t_token *pipe;
+	int	i;
 
-	head = NULL;
-	prev_pipe = NULL;
+	pipe = NULL;
 	i = -1;
-	while (tokens[++i]);
-	while (--i)
+	while (tokens[++i])
 	{
 		if (tokens[i]->type == PIPE)
 		{
-			if (head == NULL)
-				head = tokens[i];
-			else
+			if (pipe)
 			{
-				tokens[i]->parent = prev_pipe;
-				prev_pipe->left = tokens[i];
+				tokens[i]->left = pipe;
+				pipe->parent = tokens[i];
 			}
-			prev_pipe = tokens[i];
+			pipe = tokens[i];
 		}
 	}
-	return (head);
+	return (pipe);
 }

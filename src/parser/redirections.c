@@ -5,56 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 13:35:09 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/11 12:12:14 by wdevries         ###   ########.fr       */
+/*   Created: 2024/01/18 13:24:44 by wdevries          #+#    #+#             */
+/*   Updated: 2024/01/19 11:22:53 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static int	link_redirections(t_token **tokens, t_parser_redir_utils *u, int i)
+t_token *parse_redirections(t_token **tokens)
 {
-	u->head = NULL;
-	u->prev_redir = NULL;
-	while (--i && tokens[i]->type != PIPE)
+	t_parser_utils_redir	u;
+	int i;
+
+	u.last_redirection = NULL;
+	u.first_redirection = NULL;
+	u.pipe = NULL;
+	i = -1;
+	while (tokens[++i])
 	{
 		if (token_is_redirection(tokens[i]))
 		{
-			if (u->prev_redir)
+			if (u.last_redirection)
 			{
-				tokens[i]->left = u->prev_redir;
-				u->prev_redir->parent = tokens[i];
+				tokens[i]->parent = u.last_redirection;
+				u.last_redirection->left = tokens[i];
 			}
-			u->prev_redir = tokens[i];
-			u->head = tokens[i];
+			else
+				u.first_redirection = tokens[i];
+			u.last_redirection = tokens[i];
 		}
-	}
-	if (tokens[i] && tokens[i]->type == PIPE)
-		u->pipe = tokens[i];
-	return (i);
-}
-
-t_token	*parse_redirections(t_token **tokens)
-{
-	t_parser_redir_utils	u;
-	int	i;
-
-	u.pipe = NULL;
-	i = -1;
-	while (tokens[++i]);
-	while (i > 0)
-	{
-		i = link_redirections(tokens, &u, i);
-		if (u.head && u.pipe)
+		else if (tokens[i]->type == PIPE)
 		{
-			u.pipe->right = u.head;
-			u.head->parent = u.pipe;
+			if (u.pipe && u.first_redirection)
+			{
+				u.pipe->right = u.first_redirection;
+				u.first_redirection->parent = u.pipe;
+			}
+			else if (!u.pipe && u.first_redirection)
+			{
+				u.pipe = tokens[i];
+				u.pipe->left = u.first_redirection;
+				u.first_redirection->parent = u.pipe;
+			}
+			u.last_redirection = NULL;
+			u.first_redirection = NULL;
 		}
 	}
-	if (u.pipe)
-		return NULL;
-	else 
-		return (u.head);
+	if (u.first_redirection && u.pipe)
+	{
+		u.pipe->right = u.first_redirection;
+		u.first_redirection->parent = u.pipe;
+	}
+	return (u.first_redirection);
 }
-
-
