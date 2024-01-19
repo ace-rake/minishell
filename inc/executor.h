@@ -6,22 +6,22 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/19 15:24:19 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:44:40 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
+#include "libft.h"
+#include "typedefs.h"
+#include "env_parser.h"
+#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include "typedefs.h"
-#include "env_parser.h"
 #include <errno.h>
 #include <sys/wait.h>
-
 #include <string.h>
 //delete
 

@@ -1,5 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g 
+#TODO: add readline
 NAME = minishell
 
 # Header files directory
