@@ -1,0 +1,1 @@
+cc -o prep_test test_main.c -lreadline  read_input.c libft.a -g

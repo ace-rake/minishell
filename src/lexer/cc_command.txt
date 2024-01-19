@@ -1,0 +1,1 @@
+cc -I libft/inc/ -o lexer lexer.c ../tokenizer/tokenizer.c ../tokenizer/tokenizer_handlers.c test_main.c -lreadline -g libft/libft.a; ./lexer
