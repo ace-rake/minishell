@@ -47,7 +47,7 @@ int	exec_redir_in(t_token *token)
 		token = token->left;
 	token->input = open(file, O_RDONLY);
 	redir->input = token->input;
-	return (token->left->input);
+	return (token->input);
 }
 
 int	exec_redir_out(t_token *token)
@@ -61,7 +61,7 @@ int	exec_redir_out(t_token *token)
 		token = token->left;
 	token->output = open(file, O_WRONLY|O_CREAT|O_TRUNC);
 	redir->output = token->output;
-	return (token->left->output);
+	return (token->output);
 }
 
 int	exec_redir_append(t_token *token)
@@ -75,7 +75,7 @@ int	exec_redir_append(t_token *token)
 		token = token->left;
 	token->output = open(file, O_WRONLY|O_APPEND|O_CREAT);
 	redir->output = token->output;
-	return (token->left->output);
+	return (token->output);
 }
 
 /*
