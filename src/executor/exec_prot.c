@@ -39,35 +39,45 @@ int	exec_pipe(t_token *token)
 int	exec_redir_in(t_token *token)
 {
 	char *file;
+	t_token *redir;
 
+	redir = token;
 	file = token->right->value;
 	while (token->type != COMMAND)
 		token = token->left;
 	token->input = open(file, O_RDONLY);
+	redir->input = token->input;
 	return (token->left->input);
 }
 
 int	exec_redir_out(t_token *token)
 {
 	char *file;
+	t_token *redir;
 
+	redir = token;
 	file = token->right->value;
 	while (token->type != COMMAND)
 		token = token->left;
 	token->output = open(file, O_WRONLY|O_CREAT|O_TRUNC);
+	redir->output = token->output;
 	return (token->left->output);
 }
 
 int	exec_redir_append(t_token *token)
 {
 	char *file;
+	t_token *redir;
 
+	redir = token;
 	file = token->right->value;
 	while (token->type != COMMAND)
 		token = token->left;
 	token->output = open(file, O_WRONLY|O_APPEND|O_CREAT);
+	redir->output = token->output;
 	return (token->left->output);
 }
+
 /*
 int	exec_command_as_is(t_token *token)
 {
@@ -76,6 +86,12 @@ int	exec_command_as_is(t_token *token)
 */
 int	exec_redir_heredoc(t_token *token)
 {
+	t_token *redir;
+
+	redir = token;
+	while (token->type != COMMAND)
+		token = token->left;
+	token->input = redir->input;
 
 	return (1);
 }
@@ -86,6 +102,8 @@ int	exec_redir_heredoc(t_token *token)
  *		according to execution rules, outfile should be generated before the heredoc is initiated
  *		However
  *		If you cancel heredoc with control + c then you can see that the outfile is in fact not generated yet
+ *
+ *		if heredoc happens in a previous step, it would be logical to store the fd from which i need to reed inside of the heredoc token, so i can just copy that into the correct token
  */
 
 int	exec_command_builtin(t_token *token, t_env_list *env)

@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/16 14:57:50 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:19:56 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char *get_full_cmd_path(char *cmd, t_env_list *env)
 	while (retval)
 	{
 		result = check_current_path(retval, cmd);
+		free(retval);
 		if (result)
 			return (result);
 		while (*path_val != ':' && *path_val)
@@ -112,14 +113,3 @@ char *get_full_cmd_path(char *cmd, t_env_list *env)
  * keep trying pieces of the path val to see if one of them is an actual command
  * return said command if its found or NULL if not
  */
-
-/*
-int	main(int argc, char *argv[], char *env[])
-{
-	t_env_list *env_list = env_parser(env);
-	char *cmd = "wc";
-	char *retval = get_full_cmd_path(cmd, env_list);
-	printf("%s\n", retval);
-	free_env(env_list);
-}
-*/

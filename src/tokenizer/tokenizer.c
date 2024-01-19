@@ -6,7 +6,6 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:15:56 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/18 14:15:38 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +89,6 @@ t_token **tokenizer(const char *input)
 		handle_last_token(input, &u);
     return (u.tokens);
 }
-
 /* int main() { */
 /*     const char *input = "echo Hello'World"; */
 /*     t_token **tokens = tokenizer(input); */
