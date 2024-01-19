@@ -2,8 +2,8 @@
 #include "tokenizer.h"
 #include "lexer.h"
 #include "parser.h"
-#include "executor.h"
-#include "env_parser.h"
+#include "src/executor/executor.h"
+#include "src/prep/env_parser.h"
 
 int main(int argc, char **argv, char *envs[]) {
     if (argc != 2) {
@@ -20,7 +20,7 @@ int main(int argc, char **argv, char *envs[]) {
     ast_head = parser(tokens);
 
 	t_env_list *env = env_parser(envs);
-	execute_token(ast_head, env);	
+	exec_token(ast_head, env);	
     return 0;
 }
 
