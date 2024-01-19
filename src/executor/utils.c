@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/18 15:19:56 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:04:27 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char **token_chain_to_array(t_token *token) {
 		result[iter++] = token->value;
 		token = token->right;
 	}
+	result[iter] = NULL;
 	return (result);
 }
 
