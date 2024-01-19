@@ -1,0 +1,1 @@
+cc  -o executor built_in.c exec_file.c exec_prot.c test_main.c utils.c ../prep/env_parser.c  libft.a -g
