@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:34:57 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/11 09:48:16 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:34:24 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*parse_arguments(t_token **tokens)
 	int	i;
 
 	if (tokens[0] && !tokens[1] && tokens[0]->type == ARGUMENT)
-		return (tokens[i]);
+		return (tokens[0]);
 	i = -1;	
 	while (tokens[++i])
 	{

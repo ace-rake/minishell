@@ -71,6 +71,7 @@ typedef struct s_parser_utils_redir
 	t_token	*last_redirection;
 	t_token	*first_redirection;
 	t_token	*pipe;
+	int		i;
 }					t_parser_utils_redir;
 
 

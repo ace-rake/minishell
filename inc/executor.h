@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/19 11:17:33 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:24:19 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../inc/typedefs.h"
-#include "../prep/env_parser.h"
+#include "typedefs.h"
+#include "env_parser.h"
 #include <errno.h>
 #include <sys/wait.h>
 

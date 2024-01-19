@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   ft_free_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/08 10:16:33 by wdevries         ###   ########.fr       */
+/*   Created: 2023/05/19 11:27:42 by wdevries          #+#    #+#             */
+/*   Updated: 2023/11/06 14:14:29 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "libft.h"
 
-# include "../../inc/typedefs.h"
-# include "libft.h"
-# include "../tokenizer/tokenizer.h"
-
-#endif
+void	ft_free_array(char **array, size_t size)
+{
+	if (!array)
+		return ;
+	while (size--)
+	{
+		if (array[size] != NULL)
+		{
+			free(array[size]);
+			array[size] = NULL;
+		}
+	}
+	free(array);
+}

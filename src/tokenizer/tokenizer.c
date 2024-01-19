@@ -11,7 +11,7 @@
 
 #include "tokenizer.h"
 
-int	init_tokenizer_utils(t_tokenizer_utils *u, const char *input)
+int	init_tokenizer_utils(t_tokenizer_utils *u)
 {
 	u->size = 0;
 	u->capacity = 10;
@@ -24,7 +24,7 @@ int	init_tokenizer_utils(t_tokenizer_utils *u, const char *input)
 	return (1);
 }
 
-t_token	*create_token(t_tokenizer_utils *u, char *token_value)
+t_token	*create_token(char *token_value)
 {
 	t_token *new_token;
 
@@ -38,7 +38,7 @@ t_token	*create_token(t_tokenizer_utils *u, char *token_value)
 	new_token->parent = NULL;
 	new_token->input = 0;
 	new_token->output = 1;
-	return new_token;
+	return (new_token);
 }
 
 t_token	**add_token(t_tokenizer_utils *u, char *token_value)
@@ -60,7 +60,7 @@ t_token	**add_token(t_tokenizer_utils *u, char *token_value)
 		u->tokens = new_tokens;
 		u->capacity = new_capacity;
 	}
-	u->tokens[u->size] = create_token(u, token_value);
+	u->tokens[u->size] = create_token(token_value);
 	(u->size)++;
 	u->tokens[u->size] = NULL;
 	return (u->tokens);
@@ -70,7 +70,7 @@ t_token **tokenizer(const char *input)
 {
 	t_tokenizer_utils u;
 
-	if (!init_tokenizer_utils(&u, input))
+	if (!init_tokenizer_utils(&u))
 		return NULL;
 	while (input[u.current])
 	{
