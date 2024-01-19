@@ -111,15 +111,15 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 	if (strncmp(token->value, "echo\0", 5) == 0)
 		return (echo_builtin(token));
 	else if (strncmp(token->value, "cd\0", 3) == 0)
-		cd_builtin(token, env);
+		return (cd_builtin(token, env));
 	else if (strncmp(token->value, "pwd\0", 4) == 0)
-		pwd_builtin(token);
+		return (pwd_builtin(token));
 	else if (strncmp(token->value, "export\0", 7) == 0)
-		export_builtin(token, env);
+		return (export_builtin(token, env));
 	else if (strncmp(token->value, "unset\0", 6) == 0)
-		unset_builtin(token, env);
+		return (unset_builtin(token, env));
 	else if (strncmp(token->value, "env\0", 4) == 0)
-		env_builtin(token, env);
+		return (env_builtin(token, env));
 	else if (strncmp(token->value, "exit\0", 5) == 0)
 		exit_builtin(token, env);
 	return (1);

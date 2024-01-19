@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/16 14:09:02 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:17:33 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ char *get_full_cmd_path(char *cmd, t_env_list *env);
 
 void	exec_token(t_token *token, t_env_list *env);
 
-void	env_builtin(t_token *token, t_env_list *env);
-void	cd_builtin(t_token *token, t_env_list *env);
-void	pwd_builtin(t_token *token);
+int	env_builtin(t_token *token, t_env_list *env);
+int	cd_builtin(t_token *token, t_env_list *env);
+int	pwd_builtin(t_token *token);
 int		echo_builtin(t_token *token);
 void	exit_builtin(t_token *token, t_env_list *env);
-void	unset_builtin(t_token *token, t_env_list *env);
-void	export_builtin(t_token *token, t_env_list *env);
+int	unset_builtin(t_token *token, t_env_list *env);
+int	export_builtin(t_token *token, t_env_list *env);
 
 char *get_env_val(t_env_list *env, char *var);
 #endif

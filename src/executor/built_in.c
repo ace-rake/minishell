@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/18 15:12:39 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:19:13 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_export(t_token *token, t_env_list *env)
 	}
 }
 
-void	export_builtin(t_token *token, t_env_list *env)
+int	export_builtin(t_token *token, t_env_list *env)
 {
 	t_token *tmp;
 
@@ -56,7 +56,7 @@ void	export_builtin(t_token *token, t_env_list *env)
 	while (tmp->parent)
 		tmp = tmp->parent;
 	if (tmp->type != PIPE)
-		return ;
+		return (0);
 	if (!token->right)
 		print_export(token, env);
 	else
@@ -79,6 +79,7 @@ void	export_builtin(t_token *token, t_env_list *env)
 			}
 		}
 	}
+	return (0);
 }
 //check if no args
 //try to export for each arg token,
@@ -89,7 +90,7 @@ void	export_builtin(t_token *token, t_env_list *env)
 //	if = is ! found
 //		find env variable by name value and set corresponding export=true
 
-void	unset_builtin(t_token *token, t_env_list *env) //cmd token
+int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 {
 	t_env_list *to_del;
 	t_token *tmp;
@@ -98,7 +99,7 @@ void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 	while (tmp->parent)
 		tmp = tmp->parent;
 	if (tmp->type != PIPE)
-		return ;
+		return (0);
 	while (token->right)
 	{
 		token = token->right;
@@ -107,6 +108,7 @@ void	unset_builtin(t_token *token, t_env_list *env) //cmd token
 		if (to_del)
 			del_node(&env, to_del);
 	}
+	return (0);
 }
 //TODO this doesnt actually do anything if there is a pipe behind this cmd
 //this also count for export
@@ -129,9 +131,8 @@ void	exit_builtin(t_token *token, t_env_list *env)
 //TODO free_tokens fucntions ig
 //everything else works as expected me thinks
 
-void	cd_builtin(t_token *token, t_env_list *env)
+int	cd_builtin(t_token *token, t_env_list *env)
 {
-	int retval;
 	char *path;
 
 	set_fd(token);
@@ -145,12 +146,10 @@ void	cd_builtin(t_token *token, t_env_list *env)
 			ft_putstr_fd("bash : cd: HOME not set", 1);
 		}
 	}
-	retval = chdir(token->right->value);
-	if (retval != 0)
-		perror("cd_builtin");
+	return (chdir(token->right->value));
 }
 
-void	pwd_builtin(t_token *token)
+int	pwd_builtin(t_token *token)
 {
 	char *retval;
 	set_fd(token);
@@ -158,10 +157,11 @@ void	pwd_builtin(t_token *token)
 	if (!retval)
 	{
 		perror("pwd_builtin");
-		return ;
+		return (1) ;
 	}
 	ft_printf("%s\n",retval);
 	free(retval);
+	return (0);
 }
 
 int	echo_builtin(t_token *token)
@@ -196,7 +196,7 @@ int	echo_builtin(t_token *token)
 //DONE need to put spaces in between all the arguments
 //except when there is no space but quotes
 
-void	env_builtin(t_token *token, t_env_list *env)
+int	env_builtin(t_token *token, t_env_list *env)
 {
 	set_fd(token);
 	while (env)
@@ -209,6 +209,7 @@ void	env_builtin(t_token *token, t_env_list *env)
 		}
 		env = env->next;
 	}
+	return (0);
 }
 /*
 */
