@@ -21,6 +21,7 @@ int main(int argc, char **argv, char *envs[]) {
 
 	t_env_list *env = env_parser(envs);
 	exec_token(ast_head, env);	
+	free_env(env);
     return 0;
 }
 
