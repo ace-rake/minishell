@@ -6,17 +6,11 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 08:29:23 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/19 15:41:50 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/20 13:34:19 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-int	token_is_redirection(t_token *token)
-{
-	return (token->type == REDIR_IN || token->type == REDIR_OUT
-			|| token->type == REDIR_HEREDOC || token->type == REDIR_APPEND);
-}
 
 t_token	*parser(t_token **tokens)
 {

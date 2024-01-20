@@ -1,6 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g 
-#TODO: add readline
+CFLAGS = -Wall -Werror -Wextra -g
 NAME = minishell
 
 # Header files directory
@@ -16,7 +15,7 @@ LIBFT_INC = -I $(LIBFT_DIR)inc/
 SRC_DIR = ./src/
 PREP_SRC = $(addprefix $(SRC_DIR)prep/, env_parser.c read_input.c)
 TOKENIZER_SRC = $(addprefix $(SRC_DIR)tokenizer/, tokenizer.c)
-LEXER_SRC = $(addprefix $(SRC_DIR)lexer/, lexer.c) 
+LEXER_SRC = $(addprefix $(SRC_DIR)lexer/, lexer.c syntax_checker.c)
 PARSER_SRC = $(addprefix $(SRC_DIR)parser/, parser.c pipes.c redirections.c commands.c arguments.c)
 EXECUTOR_SRC = $(addprefix $(SRC_DIR)executor/, executor.c exec_file.c built_in.c utils.c)
 MAIN_SRC = $(SRC_DIR)main.c
@@ -30,7 +29,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(LIBFT_LIB) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) -lreadline
 
 %.o : %.c
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIBFT_INC) -c $< -o $@

@@ -6,13 +6,13 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/09 11:45:02 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/20 14:08:13 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-void	mark_metacharacters(t_token **tokens)
+static void	mark_metacharacters(t_token **tokens)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ void	mark_metacharacters(t_token **tokens)
 	}
 }
 
-void	set_flags(t_token *token, int *flag_first, int *flag_redirection)
+static void	set_flags(t_token *token, int *flag_first, int *flag_redirection)
 {
 	if (token->type == PIPE)
 	{
@@ -43,7 +43,7 @@ void	set_flags(t_token *token, int *flag_first, int *flag_redirection)
 		*flag_redirection = 1;
 }
 
-void	mark_commands_and_arguments(t_token **tokens)
+static void	mark_commands_and_arguments(t_token **tokens)
 {
 	int	flag_first;
 	int	flag_redirection;
@@ -72,33 +72,39 @@ void	mark_commands_and_arguments(t_token **tokens)
 	}
 }
 
-void	lexer(t_token **tokens)
+bool	lexer(t_token **tokens)
 {
 	mark_metacharacters(tokens);
 	mark_commands_and_arguments(tokens);
+	return (syntax_ok(tokens));
 }
 
-/* #include <stdio.h> */
-/* #include <stdlib.h> */
+#include <stdio.h>
+#include <stdlib.h>
+#include "tokenizer.h"
 
-/* int main() { */
-/*     const char *test_str = "> output.txt echo hello | cat"; */
+int	main(int argc, char **argv)
+{
+	const char	*test_str;
+	t_token		**tokens;
 
-/*     t_token **tokens = tokenize(test_str); */
-/*     if (tokens == NULL) { */
-/*         fprintf(stderr, "Tokenization failed.\n"); */
-/*         return (1); */
-/*     } */
-
-/*     lexer(tokens); */
-
-/*     for (int i = 0; tokens[i] != NULL; i++) { */
-/*         printf("Token: %s, Type: %d\n", tokens[i]->value,
-		tokens[i]->type); */
-/*         free(tokens[i]->value); */
-/*         free(tokens[i]); */
-/*     } */
-/*     free(tokens); */
-
-/*     return (0); */
-/* } */
+	if (argc != 2)
+		return (1);
+	test_str = argv[1];
+	tokens = tokenizer(test_str);
+	if (tokens == NULL)
+	{
+		fprintf(stderr, "Tokenization failed.\n");
+		return (1);
+	}
+	if (!lexer(tokens))
+		return (1);
+	for (int i = 0; tokens[i] != NULL; i++)
+	{
+		printf("Token: %s, Type: %d\n", tokens[i]->value, tokens[i]->type);
+		free(tokens[i]->value);
+		free(tokens[i]);
+	}
+	free(tokens);
+	return (0);
+}
