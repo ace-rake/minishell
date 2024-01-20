@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:09:40 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/19 11:53:36 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/20 15:23:31 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_token *parse_commands(t_token **tokens)
 			}
 		}
 	}
-	if (pipe && command)
+	if (pipe && command && !command->parent)
 	{
 		pipe->right = command;
 		command->parent = pipe;
