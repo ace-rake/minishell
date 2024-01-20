@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 14:08:13 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/20 14:58:06 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,32 @@ bool	lexer(t_token **tokens)
 	return (syntax_ok(tokens));
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "tokenizer.h"
+/* #include <stdio.h> */
+/* #include <stdlib.h> */
+/* #include "tokenizer.h" */
 
-int	main(int argc, char **argv)
-{
-	const char	*test_str;
-	t_token		**tokens;
+/* int	main(int argc, char **argv) */
+/* { */
+/* 	const char	*test_str; */
+/* 	t_token		**tokens; */
 
-	if (argc != 2)
-		return (1);
-	test_str = argv[1];
-	tokens = tokenizer(test_str);
-	if (tokens == NULL)
-	{
-		fprintf(stderr, "Tokenization failed.\n");
-		return (1);
-	}
-	if (!lexer(tokens))
-		return (1);
-	for (int i = 0; tokens[i] != NULL; i++)
-	{
-		printf("Token: %s, Type: %d\n", tokens[i]->value, tokens[i]->type);
-		free(tokens[i]->value);
-		free(tokens[i]);
-	}
-	free(tokens);
-	return (0);
-}
+/* 	if (argc != 2) */
+/* 		return (1); */
+/* 	test_str = argv[1]; */
+/* 	tokens = tokenizer(test_str); */
+/* 	if (tokens == NULL) */
+/* 	{ */
+/* 		fprintf(stderr, "Tokenization failed.\n"); */
+/* 		return (1); */
+/* 	} */
+/* 	if (!lexer(tokens)) */
+/* 		return (1); */
+/* 	for (int i = 0; tokens[i] != NULL; i++) */
+/* 	{ */
+/* 		printf("Token: %s, Type: %d\n", tokens[i]->value, tokens[i]->type); */
+/* 		free(tokens[i]->value); */
+/* 		free(tokens[i]); */
+/* 	} */
+/* 	free(tokens); */
+/* 	return (0); */
+/* } */

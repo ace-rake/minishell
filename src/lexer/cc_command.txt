@@ -1,11 +1,9 @@
-cc -g -o syntax_checker \
-./src/tokenizer/tokenizer.c \
-./src/lexer/syntax_checker.c \
-./src/tokenizer/tokenizer_handlers.c \
-./src/lexer/lexer.c \
--I ./inc/ \
--I ./libft/inc/ \
--L ./libft -lft
+cc -g -o ast \
+~/42/minishell/src/tokenizer/tokenizer.c \
+~/42/minishell/src/lexer/syntax_checker.c \
+~/42/minishell/src/tokenizer/tokenizer_handlers.c \
+~/42/minishell/src/lexer/lexer.c \
+-I ~/42/minishell/inc/ \
+-I ~/42/minishell/libft/inc/ \
+-L ~/42/minishell/libft -lft
 
-
-EXECUTE IN MINISHELL FOLDER
