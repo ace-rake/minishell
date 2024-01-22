@@ -21,24 +21,28 @@ EXECUTOR_SRC = $(addprefix $(SRC_DIR)executor/, executor.c exec_file.c built_in.
 MAIN_SRC = $(SRC_DIR)main.c
 
 # All source files combined
-SRC = $(TOKENIZER_SRC) $(PARSER_SRC) $(LEXER_SRC) $(EXECUTOR_SRC) $(MAIN_SRC)
+SRC = $(PREP_SRC) $(TOKENIZER_SRC) $(PARSER_SRC) $(LEXER_SRC) $(EXECUTOR_SRC) $(MAIN_SRC)
+
+# Object directory
+OBJ_DIR = ./obj/
 
 # Object files
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 all : $(NAME)
 
 $(NAME) : $(LIBFT_LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) -lreadline
 
-%.o : %.c
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIBFT_INC) -c $< -o $@
 
 $(LIBFT_LIB): FORCE
 	@$(MAKE) -C $(LIBFT_DIR)
 
 clean :
-	rm -f $(OBJ)
+	rm -rf $(OBJ_DIR)
 
 fclean : clean
 	$(MAKE) -s fclean -C $(LIBFT_DIR)
