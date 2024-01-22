@@ -1,6 +1,4 @@
-#include "../../inc/typedefs.h"
-#include "executor.h"
-
+#include "../../inc/minishell.h"
 //long line arguments wil be given in a linked list of tokens
 //need to make sure to close fds if they would be overwritten
 //need to see what can go wrong, and what should happen if something does go wrong
@@ -47,7 +45,9 @@ int	exec_redir_in(t_token *token)
 		token = token->left;
 	token->input = open(file, O_RDONLY);
 	redir->input = token->input;
-	return (token->input);
+	if (redir->output == -1)
+		return (-1);
+	return (0);
 }
 
 int	exec_redir_out(t_token *token)
@@ -59,9 +59,11 @@ int	exec_redir_out(t_token *token)
 	file = token->right->value;
 	while (token->type != COMMAND)
 		token = token->left;
-	token->output = open(file, O_WRONLY|O_CREAT|O_TRUNC);
+	token->output = open(file, O_WRONLY|O_CREAT|O_TRUNC, 00644);
 	redir->output = token->output;
-	return (token->output);
+	if (redir->output == -1)
+		return (-1);
+	return (0);
 }
 
 int	exec_redir_append(t_token *token)
@@ -75,7 +77,9 @@ int	exec_redir_append(t_token *token)
 		token = token->left;
 	token->output = open(file, O_WRONLY|O_APPEND|O_CREAT);
 	redir->output = token->output;
-	return (token->output);
+	if (redir->output == -1)
+		return (-1);
+	return (0);
 }
 
 /*
@@ -132,17 +136,19 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 
 int	exec_command(t_token *token, t_env_list *env)
 {
+	int	retval;
 /*	if (!exec_command_as_is(token))
 		return (0);
 	//try execute as is here
 	//if fail
-*/	if (!exec_command_builtin(token, env))
+*/	retval = exec_command_builtin(token, env);
+	if (!retval)
 		return (0);
+	else if (retval != 1)
+		return (retval);
 	//check built in here
 	//if fail
-	if (!exec_command_file(token, env))
-		return (0);
-	return (NOT_EXECUTABLE);
+	return (exec_command_file(token, env));
 }
 /*
  *	if no slashes
@@ -177,12 +183,42 @@ int	execute(t_token *token, t_env_list *env)
 	return (1);
 }
 
-void	exec_token(t_token *token, t_env_list *env)
+int	exec_token(t_token *token, t_env_list *env)
 {
-	if (execute(token, env))
-		perror("execute");
+	int	retval;
+	retval = execute(token, env);
+	if (retval)
+	{
+		printf("retval : [%i]\n", retval);
+		exit (retval);
+	}
 	if (token->left && token->left->type != ARGUMENT)
-		exec_token(token->left, env);
+		retval = exec_token(token->left, env);
+	if (retval)
+	{
+		printf("retval : [%i]\n", retval);
+		exit (retval);
+	}
 	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
-		exec_token(token->right, env);
+		retval = exec_token(token->right, env);
+	if (retval)
+	{
+		printf("retval : [%i]\n", retval);
+		exit (retval);
+	}
+	exit (0);
+}
+
+int	executor(t_token *token, t_env_list *env)
+{
+	pid_t child;
+
+	child = fork();
+	if (child == 0)
+		exec_token(token, env);
+	int status;
+	waitpid(child, &status, 0);
+	if (check_child(&status))
+		return (status);
+	return (0);
 }

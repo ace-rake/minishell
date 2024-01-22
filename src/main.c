@@ -14,9 +14,12 @@ int	loop_main(char *envs[])
     t_token *ast_head;
 	t_env_list *env;
 	char *input;
+
+	env = env_parser(envs);
 	while (1)
 	{
 		input = readline("minishell: ");
+		//TODO check for empty input
 		if (!input)
 			return (1);
 		add_history(input);
@@ -28,8 +31,8 @@ int	loop_main(char *envs[])
 		}
    		ast_head = parser(tokens);
 	
-		env = env_parser(envs);
 		exec_token(ast_head, env);	
+		free(input);
 	}
 	free_env(env);
 

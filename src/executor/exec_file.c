@@ -6,11 +6,11 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/18 15:18:17 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:06:02 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../../inc/minishell.h"
 
 int	exec_child(t_token *token, char *cmd_path, char **args)
 {
