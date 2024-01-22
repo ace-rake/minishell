@@ -6,11 +6,11 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/19 11:19:13 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:18:14 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../../inc/minishell.h"
 
 /*
 • Your shell must implement the following builtins:
@@ -55,7 +55,7 @@ int	export_builtin(t_token *token, t_env_list *env)
 	tmp = token;
 	while (tmp->parent)
 		tmp = tmp->parent;
-	if (tmp->type != PIPE)
+	if (tmp->type == PIPE)
 		return (0);
 	if (!token->right)
 		print_export(token, env);
@@ -98,7 +98,7 @@ int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 	tmp = token;
 	while (tmp->parent)
 		tmp = tmp->parent;
-	if (tmp->type != PIPE)
+	if (tmp->type == PIPE)
 		return (0);
 	while (token->right)
 	{
@@ -198,6 +198,8 @@ int	echo_builtin(t_token *token)
 
 int	env_builtin(t_token *token, t_env_list *env)
 {
+	if (get_env_node(env, "PATH") == NULL)
+		return (1);
 	set_fd(token);
 	while (env)
 	{
