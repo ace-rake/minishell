@@ -6,17 +6,14 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 13:35:20 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:25:26 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "libft.h"
-# include "typedefs.h"
-# include "tokenizer.h"
-# include <stdbool.h>
+#include "minishell.h"
 
 bool	lexer(t_token **tokens);
 bool	syntax_ok(t_token **tokens);

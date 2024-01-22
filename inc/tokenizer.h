@@ -1,20 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/06 12:07:34 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/22 11:45:53 by wdevries         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
 # include "typedefs.h"
-# include "libft.h"
+# include "../libft/inc/libft.h"
 # include <stddef.h>
 # include <stdlib.h>
 
