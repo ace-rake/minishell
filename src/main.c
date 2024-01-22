@@ -33,7 +33,7 @@ int	loop_main(char *envs[])
    		ast_head = parser(tokens);
 	
 		int	retval = executor(ast_head,env);
-		printf("retval main : [%i]\n",retval);	
+		/* printf("retval main : [%i]\n",retval); */	
 		if (retval == 7)
 			exit(0);
 	}
