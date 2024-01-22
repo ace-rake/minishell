@@ -80,9 +80,9 @@ t_token **tokenizer(const char *input)
 		else if ((u.c == ' ' || u.c == '\n' || u.c == '\t') && u.quoting_status == UNQUOTED) 
 			handle_whitespace(input, &u);
 		else if (u.c == '\'')
-			handle_single_quote(input, &u);
+			handle_single_quote(&u);
 		else if (u.c == '\"')
-			handle_double_quote(input, &u);
+			handle_double_quote(&u);
 		u.current++;
 	}
 	if (u.start != u.current)
