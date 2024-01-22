@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/19 11:04:27 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/22 10:09:22 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char *get_env_val(t_env_list *env, char *var)
 }
 /* return the val of a given var from the env list */
 
-char	*get_next_path(char *path_val, char *cmd)
+char	*get_next_path(char *path_val)
 {
 	char *sub;
 	int index;
@@ -93,7 +93,7 @@ char *get_full_cmd_path(char *cmd, t_env_list *env)
 	path_val = get_env_val(env, "PATH");
 	if (!path_val)
 		return (NULL);
-	retval = get_next_path(path_val, cmd);
+	retval = get_next_path(path_val);
 	while (retval)
 	{
 		result = check_current_path(retval, cmd);
@@ -106,7 +106,7 @@ char *get_full_cmd_path(char *cmd, t_env_list *env)
 			break;
 		else if (*path_val == ':')
 			path_val++;
-		retval = get_next_path(path_val, cmd);
+		retval = get_next_path(path_val);
 	}
 	return (result);
 }
