@@ -1,7 +1,7 @@
-cc main.c \
--Iinc -Isrc/tokenizer -Isrc/lexer/libft/inc -Isrc/lexer -Isrc/parser -Isrc/executor -Isrc/prep \
+cc src/main.c \
+-Iinc -Ilibft/inc  \
 src/executor/built_in.c src/executor/exec_file.c src/executor/executor.c src/executor/utils.c \
-src/lexer/lexer.c \
+src/lexer/lexer.c src/lexer/syntax_checker.c \
 src/parser/arguments.c src/parser/commands.c src/parser/parser.c src/parser/pipes.c src/parser/redirections.c \
 src/prep/env_parser.c src/prep/read_input.c \
 src/tokenizer/tokenizer.c src/tokenizer/tokenizer_handlers.c \
