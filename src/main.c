@@ -46,6 +46,7 @@ int	loop_main(char *envs[])
 			return (1);
 		add_history(input);
    		tokens = tokenizer(input);
+		free(input);
 		if (!lexer(tokens))
 		{
 			//TODO: free tokens
@@ -53,8 +54,10 @@ int	loop_main(char *envs[])
 		}
    		ast_head = parser(tokens);
 	
-		exec_token(ast_head, env);	
-		free(input);
+		int	retval = executor(ast_head,env);
+		printf("retval main : [%i]\n",retval);	
+		if (retval == 7)
+			exit(0);
 	}
 	free_env(env);
 
