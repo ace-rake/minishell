@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:07:34 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 14:00:50 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:23:27 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define TOKENIZER_H
 
 # include "typedefs.h"
-# include "libft.h"
+# include "../libft/inc/libft.h"
 # include <stddef.h>
 # include <stdlib.h>
 
