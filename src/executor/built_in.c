@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/22 13:18:14 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/22 15:14:03 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	export_builtin(t_token *token, t_env_list *env)
 		{
 			token = token->right;
 			char *val = ft_strchr(token->value, '=');
-			if (val)
+			if (val && get_env_node(env, token->value) == NULL)
 			{
 				char *var = ft_substr(token->value, 0, val - token->value);
 				env_add_back(&env, env_node_con(var,++val,true));
@@ -124,7 +124,7 @@ void	exit_builtin(t_token *token, t_env_list *env)
 		return ;
 	free_env(env);
 	//free_tokens(token);
-	exit(0);
+	exit(7);
 }
 //this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
 //exit doesnt do anything if there is a pipe somewhere
