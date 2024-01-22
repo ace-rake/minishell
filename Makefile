@@ -14,7 +14,7 @@ LIBFT_INC = -I $(LIBFT_DIR)inc/
 # Source files
 SRC_DIR = ./src/
 PREP_SRC = $(addprefix $(SRC_DIR)prep/, env_parser.c read_input.c)
-TOKENIZER_SRC = $(addprefix $(SRC_DIR)tokenizer/, tokenizer.c)
+TOKENIZER_SRC = $(addprefix $(SRC_DIR)tokenizer/, tokenizer.c tokenizer_handlers.c)
 LEXER_SRC = $(addprefix $(SRC_DIR)lexer/, lexer.c syntax_checker.c)
 PARSER_SRC = $(addprefix $(SRC_DIR)parser/, parser.c pipes.c redirections.c commands.c arguments.c)
 EXECUTOR_SRC = $(addprefix $(SRC_DIR)executor/, executor.c exec_file.c built_in.c utils.c)
