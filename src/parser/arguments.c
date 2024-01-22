@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:34:57 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/22 10:06:03 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:30:09 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static void	link_command_arguments(t_token **tokens)
 
 t_token	*parse_arguments(t_token **tokens)
 {
-//	int	i;		UNUSED?
-
 	if (tokens[0] && !tokens[1] && tokens[0]->type == ARGUMENT)
 		return (tokens[0]);
 	link_redirection_arguments(tokens);

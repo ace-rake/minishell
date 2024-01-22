@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:09:40 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 15:23:31 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:30:53 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_token *parse_commands(t_token **tokens)
 			}
 			else
 			{
-				while (tokens[++i] && tokens[i]->type != PIPE)
+				while (tokens[i + 1] && tokens[++i]->type != PIPE)
 				{
 					if (token_is_redirection(tokens[i]) && !tokens[i]->left)
 					{
