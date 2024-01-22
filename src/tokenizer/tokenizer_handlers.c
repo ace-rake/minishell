@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:14:54 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/18 12:27:04 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:44:24 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	handle_whitespace(const char *input, t_tokenizer_utils *u)
 	u->start = u->current + 1;
 }
 
-void	handle_single_quote(const char *input, t_tokenizer_utils *u)
+void	handle_single_quote(t_tokenizer_utils *u)
 {
 	if (u->quoting_status == SINGLE_QUOTED)
 		u->quoting_status = UNQUOTED;
@@ -44,7 +44,7 @@ void	handle_single_quote(const char *input, t_tokenizer_utils *u)
 		u->quoting_status = SINGLE_QUOTED; 
 }
 
-	void	handle_double_quote(const char *input, t_tokenizer_utils *u)
+	void	handle_double_quote(t_tokenizer_utils *u)
 {
 	if (u->quoting_status == DOUBLE_QUOTED)
 		u->quoting_status = UNQUOTED;

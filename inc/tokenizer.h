@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 12:07:34 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 14:00:50 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:45:53 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ t_token **tokenizer(const char *input);
 //tokenize_handlers.c
 void	handle_special_char(const char *input, t_tokenizer_utils *u);
 void	handle_whitespace(const char *input, t_tokenizer_utils *u);
-void	handle_single_quote(const char *input, t_tokenizer_utils *u);
-void	handle_double_quote(const char *input, t_tokenizer_utils *u);
+void	handle_single_quote(t_tokenizer_utils *u);
+void	handle_double_quote(t_tokenizer_utils *u);
 void	handle_last_token(const char *input, t_tokenizer_utils *u);
 
 #endif
