@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:34:57 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/22 11:30:09 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:09:46 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	link_command_arguments(t_token **tokens)
 		if (tokens[i]->type == COMMAND)
 		{
 			parent = tokens[i];
-			while (tokens[++i] && tokens[i]->type != PIPE)
+			while (tokens[i + 1] && tokens[++i]->type != PIPE)
 			{
 				if (tokens[i]->type == ARGUMENT && !tokens[i]->parent)
 				{
