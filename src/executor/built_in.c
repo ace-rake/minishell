@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/23 13:49:23 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:41:39 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	print_export(t_token *token, t_env_list *env)
 	}
 }
 
-static int	append_to_var(t_env_list *env,char *val_to_append, char *var)
+int	append_to_var(t_env_list *env,char *val_to_append, char *var)
 {
 	t_env_list *node;
 	char *tmp;
@@ -153,7 +153,9 @@ int	exit_builtin(t_token *token, t_env_list *env)
 		return (0) ;
 	free_env(env);
 	//free_tokens(token);
-	exit(0);
+	if (!token->right)
+		exit(0);
+	exit(ft_atoi(token->right->value));
 }
 //this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
 //exit doesnt do anything if there is a pipe somewhere
@@ -175,7 +177,9 @@ int	cd_builtin(t_token *token, t_env_list *env)
 			ft_putstr_fd("bash : cd: HOME not set", 1);
 		}
 	}
-	return (chdir(token->right->value));
+	if (chdir(token->right->value) == -1)
+		return (1);
+	return (0);
 }
 
 int	pwd_builtin(t_token *token)
@@ -185,8 +189,7 @@ int	pwd_builtin(t_token *token)
 	retval = getcwd(NULL, 0);
 	if (!retval)
 	{
-		perror("pwd_builtin");
-		return (1) ;
+		return (errno) ;
 	}
 	ft_printf("%s\n",retval);
 	free(retval);
@@ -243,5 +246,3 @@ int	env_builtin(t_token *token, t_env_list *env)
 	}
 	return (0);
 }
-/*
-*/
