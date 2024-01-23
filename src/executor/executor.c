@@ -96,7 +96,8 @@ int	exec_redir_heredoc(t_token *token)
 	while (token->type != COMMAND)
 		token = token->left;
 	token->input = redir->input;
-	return (0);
+
+	return (1);
 }
 /*
  *	I think heredoc should be done before executing
@@ -109,22 +110,23 @@ int	exec_redir_heredoc(t_token *token)
  *		if heredoc happens in a previous step, it would be logical to store the fd from which i need to reed inside of the heredoc token, so i can just copy that into the correct token
  */
 
-void	exec_command_builtin(t_token *token, t_env_list *env)
+int	exec_command_builtin(t_token *token, t_env_list *env)
 {
 	if (strncmp(token->value, "echo\0", 5) == 0)
-		echo_builtin(token);
+		return (echo_builtin(token));
 	else if (strncmp(token->value, "cd\0", 3) == 0)
-		cd_builtin(token, env);
+		return (cd_builtin(token, env));
 	else if (strncmp(token->value, "pwd\0", 4) == 0)
-		pwd_builtin(token);
+		return (pwd_builtin(token));
 	else if (strncmp(token->value, "export\0", 7) == 0)
-		export_builtin(token, env);
+		return (export_builtin(token, env));
 	else if (strncmp(token->value, "unset\0", 6) == 0)
-		unset_builtin(token, env);
+		return (unset_builtin(token, env));
 	else if (strncmp(token->value, "env\0", 4) == 0)
-		env_builtin(token, env);
+		return (env_builtin(token, env));
 	else if (strncmp(token->value, "exit\0", 5) == 0)
 		exit_builtin(token, env);
+	return (1);
 }
 
 
@@ -132,16 +134,21 @@ void	exec_command_builtin(t_token *token, t_env_list *env)
  * this function will return a function pointer to the corresponding builtin that need to be executed
 */
 
-void	exec_command(t_token *token, t_env_list *env)
+int	exec_command(t_token *token, t_env_list *env)
 {
+	int	retval;
 /*	if (!exec_command_as_is(token))
 		return (0);
 	//try execute as is here
 	//if fail
-*/exec_command_builtin(token, env);
+*/	retval = exec_command_builtin(token, env);
+	if (!retval)
+		return (0);
+	else if (retval != 1)
+		return (retval);
 	//check built in here
 	//if fail
-	exec_command_file(token, env);
+	return (exec_command_file(token, env));
 }
 /*
  *	if no slashes
@@ -172,17 +179,34 @@ int	execute(t_token *token, t_env_list *env)
 	else if (token->type == REDIR_APPEND)	// >>
 		return (exec_redir_append(token));
 	else if (token->type == COMMAND)		// CMD
-		exec_command(token, env);
+		return (exec_command(token, env));
 	return (1);
 }
 
-void	exec_token(t_token *token, t_env_list *env)
+int	exec_token(t_token *token, t_env_list *env)
 {
-	execute(token, env);
+	int	retval;
+	retval = execute(token, env);
+	if (retval)
+	{
+		printf("retval : [%i]\n", retval);
+		exit (retval);
+	}
 	if (token->left && token->left->type != ARGUMENT)
-		exec_token(token->left, env);
+		retval = exec_token(token->left, env);
+	if (retval)
+	{
+		printf("retval : [%i]\n", retval);
+		exit (retval);
+	}
 	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
-		exec_token(token->right, env);
+		retval = exec_token(token->right, env);
+	if (retval)
+	{
+		printf("retval : [%i]\n", retval);
+		exit (retval);
+	}
+	exit (0);
 }
 
 int	executor(t_token *token, t_env_list *env)
