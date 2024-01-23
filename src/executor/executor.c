@@ -190,21 +190,21 @@ int	exec_token(t_token *token, t_env_list *env)
 	if (retval)
 	{
 		printf("retval : [%i]\n", retval);
-		exit (retval);
+		return (retval);
 	}
 	if (token->left && token->left->type != ARGUMENT)
 		retval = exec_token(token->left, env);
 	if (retval)
 	{
 		printf("retval : [%i]\n", retval);
-		exit (retval);
+		return (retval);
 	}
 	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
 		retval = exec_token(token->right, env);
 	if (retval)
 	{
 		printf("retval : [%i]\n", retval);
-		exit (retval);
+		return (retval);
 	}
 	return (retval);
 }
