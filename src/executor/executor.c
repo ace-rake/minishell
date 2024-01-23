@@ -206,22 +206,11 @@ int	exec_token(t_token *token, t_env_list *env)
 		printf("retval : [%i]\n", retval);
 		exit (retval);
 	}
-	exit (0);
+	return (retval);
 }
 
 int	executor(t_token *token, t_env_list *env)
 {
-	pid_t child;
-
-	child = fork();
-	if (child == 0)
-	{
-		exec_token(token, env);
-		exit(0);
-	}
-	int status;
-	waitpid(child, &status, 0);
-	if (check_child(&status))
-		return (status);
+	exec_token(token, env);
 	return (0);
 }

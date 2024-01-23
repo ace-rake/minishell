@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/22 15:14:03 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/23 11:25:40 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,14 @@ int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 //this also count for export
 //fix added check to see if top token is pipe, if so dont execute at all
 
-void	exit_builtin(t_token *token, t_env_list *env)
+int	exit_builtin(t_token *token, t_env_list *env)
 {
 	while (token->parent)
 		token = token->parent;
 	//it doesnt matter if im on the left or right side, if i just go up until im at the origin token i can just check that token to see if there were any pipes at all
 	//this also resets the token to the origin because im assuming the free_tokens command will take that token
 	if (token->type == PIPE)
-		return ;
+		return (0) ;
 	free_env(env);
 	//free_tokens(token);
 	exit(7);
