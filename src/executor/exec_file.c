@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/22 16:59:15 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:36:04 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	exec_child(t_token *token, char *cmd_path, char **args)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output, STDOUT_FILENO) == -1 )
 		exit(errno);
 	execve(cmd_path, args,NULL);
@@ -60,15 +62,20 @@ int	exec_command_file(t_token *token, t_env_list *env)
 
 	pid_t child;
 
+	g_in_command = 1;
 	child = fork();
 	if (child == 0)
 		exec_child(token, cmd_path, args);
-	int status;
-	waitpid(child, &status, 0);
-	free(cmd_path);
-	free(args);
-	if (check_child(&status))
-		return (status);
+	else if (child > 0)
+	{
+		int status;
+		waitpid(child, &status, 0);
+		g_in_command = 0;
+		free(cmd_path);
+		free(args);
+		if (check_child(&status))
+			return (status);
+	}
 	return (0);
 }
 
