@@ -4,10 +4,18 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+volatile sig_atomic_t g_in_command = 0;
+
 void	sigint_handler(int signum)
 {
 	(void)signum;
-	write(STDOUT_FILENO, "\nminishell: ", 12);
+	write(STDOUT_FILENO, "\n", 1);
+	if (!g_in_command)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 int	loop_main(char *envs[])
@@ -18,12 +26,17 @@ int	loop_main(char *envs[])
 	char *input;
 
 	env = env_parser(envs);
+
 	while (1)
 	{
 		input = readline("minishell: ");
 		//TODO check for empty input
 		if (!input)
-			return (1);
+		{
+			//ctrl-D
+			printf("exit\n");
+			break ;
+		}
 		add_history(input);
    		tokens = tokenizer(input);
 		free(input);
@@ -43,13 +56,9 @@ int	loop_main(char *envs[])
 }
 
 int main(int argc, char **argv, char *envs[]) {
-	struct sigaction sa;
-
-	sa.sa_handler = sigint_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-
+	/* rl_catch_signals = 0; */
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	return (loop_main(envs));
 	(void)argc;
 	(void)argv;
