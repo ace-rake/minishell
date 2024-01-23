@@ -1,6 +1,8 @@
 #include "../inc/minishell.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 void	sigint_handler(int signum)
 {
@@ -33,12 +35,10 @@ int	loop_main(char *envs[])
    		ast_head = parser(tokens);
 	
 		int	retval = executor(ast_head,env);
+		(void)retval;
 		/* printf("retval main : [%i]\n",retval); */	
-		if (retval == 7)
-			exit(0);
 	}
 	free_env(env);
-
 	return (0);
 }
 
