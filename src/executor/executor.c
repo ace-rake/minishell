@@ -191,7 +191,10 @@ int	executor(t_token *token, t_env_list *env)
 
 	child = fork();
 	if (child == 0)
+	{
 		exec_token(token, env);
+		exit(0);
+	}
 	int status;
 	waitpid(child, &status, 0);
 	if (check_child(&status))
