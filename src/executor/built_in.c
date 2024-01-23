@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/23 11:25:40 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:49:23 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,25 @@ void	print_export(t_token *token, t_env_list *env)
 	}
 }
 
+static int	append_to_var(t_env_list *env,char *val_to_append, char *var)
+{
+	t_env_list *node;
+	char *tmp;
+
+	node = get_env_node(env, var);
+	tmp = node->val;
+	node->val = ft_strjoin(tmp, val_to_append);
+	free(tmp);
+	return (0);
+}
+
 int	export_builtin(t_token *token, t_env_list *env)
 {
 	t_token *tmp;
+	char *val;
+	char *var;
+	int	append;
+	t_env_list *node;
 
 	tmp = token;
 	while (tmp->parent)
@@ -64,16 +80,29 @@ int	export_builtin(t_token *token, t_env_list *env)
 		while (token->right)
 		{
 			token = token->right;
-			char *val = ft_strchr(token->value, '=');
-			if (val && get_env_node(env, token->value) == NULL)
+			val = ft_strchr(token->value, '=');
+			append = 0;
+			if (val - 1 && *(val - 1) == '+')
+				append = 1;
+			if (val)
 			{
-				char *var = ft_substr(token->value, 0, val - token->value);
-				env_add_back(&env, env_node_con(var,++val,true));
+				var = ft_substr(token->value, 0, val - token->value - append);
+				val++;
+				node = get_env_node(env, var);
+				if (!node)
+					env_add_back(&env, env_node_con(var,val,true));
+				else if (append)
+					append_to_var(env, val, var);
+				else
+				{
+					free(node->val);
+					node->val = ft_strdup(val);
+				}
 				free(var);
 			}
 			else
 			{
-				t_env_list *node = get_env_node(env, token->value);
+				node = get_env_node(env, token->value);
 				if (node)
 					node->exported = true;
 			}
@@ -124,7 +153,7 @@ int	exit_builtin(t_token *token, t_env_list *env)
 		return (0) ;
 	free_env(env);
 	//free_tokens(token);
-	exit(7);
+	exit(0);
 }
 //this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
 //exit doesnt do anything if there is a pipe somewhere
@@ -183,8 +212,9 @@ int	echo_builtin(t_token *token)
 		int iter = 0;
 		while (token_chain && token_chain[iter])
 		{
-			ft_putstr_fd(token_chain[iter++], token->output);
-			ft_putchar_fd(' ', token->output);
+			ft_putstr_fd(token_chain[iter], token->output);
+			if (token_chain[++iter])
+				ft_putchar_fd(' ', token->output);
 		}
 		free(token_chain);
 	}
@@ -199,7 +229,7 @@ int	echo_builtin(t_token *token)
 int	env_builtin(t_token *token, t_env_list *env)
 {
 	if (get_env_node(env, "PATH") == NULL)
-		return (1);
+		return (127);
 	set_fd(token);
 	while (env)
 	{
