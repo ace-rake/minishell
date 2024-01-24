@@ -98,8 +98,7 @@ int	exec_redir_heredoc(t_token *token)
 	while (token->type != COMMAND)
 		token = token->left;
 	token->input = redir->input;
-
-	return (1);
+	return (0);
 }
 /*
  *	I think heredoc should be done before executing
@@ -190,29 +189,30 @@ int	exec_token(t_token *token, t_env_list *env)
 	int	retval;
 	retval = execute(token, env);
 	if (retval)
-	{
-		printf("retval : [%i]\n", retval);
 		return (retval);
-	}
 	if (token->left && token->left->type != ARGUMENT)
 		retval = exec_token(token->left, env);
 	if (retval)
-	{
-		printf("retval : [%i]\n", retval);
 		return (retval);
-	}
 	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
 		retval = exec_token(token->right, env);
-	if (retval)
-	{
-		printf("retval : [%i]\n", retval);
-		return (retval);
-	}
 	return (retval);
+}
+
+int	exec_heredocs(t_token *head)
+{
+	if (head->left)
+		exec_heredocs(head->left);
+	if (head->right)
+		exec_heredocs(head->right);
+	if (head->type == REDIR_HEREDOC)
+		read_heredoc(head);
+
+	return (0);
 }
 
 int	executor(t_token *token, t_env_list *env)
 {
-	exec_token(token, env);
-	return (0);
+	exec_heredocs(token);
+	return (exec_token(token, env));
 }
