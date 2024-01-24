@@ -59,11 +59,13 @@ typedef struct s_tokenizer_utils
 {
 	int size;
 	int capacity;
+	int new_capacity;
 	int	start;
 	int	current;
 	char c;
 	t_quoting_status quoting_status;
 	t_token **tokens;
+	t_token **new_tokens;
 }					t_tokenizer_utils;
 
 typedef struct s_parser_utils_redir
