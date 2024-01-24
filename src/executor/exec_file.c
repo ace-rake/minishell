@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/23 14:36:04 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/24 11:32:43 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	{
 		int status;
 		waitpid(child, &status, 0);
+		close(token->input);
+		close(token->output);
 		g_in_command = 0;
 		free(cmd_path);
 		free(args);
