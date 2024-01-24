@@ -1,6 +1,8 @@
 #include "../inc/minishell.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 volatile sig_atomic_t g_in_command = 0;
 
@@ -24,11 +26,12 @@ int	loop_main(char *envs[])
 	char *input;
 	int	retval;
 
-	tokens = NULL;
-	ast_head = NULL;
 	env = env_parser(envs);
 	while (1)
 	{
+		tokens = NULL;
+		ast_head = NULL;
+		retval = 0;
 		input = readline("minishell: ");
 		if (!input) //ctrl-D
 		{
