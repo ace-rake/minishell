@@ -55,7 +55,7 @@ int	loop_main(char *envs[])
 		/* printf("retval main : [%i]\n",retval); */	
 		free_tokens(tokens);
 		ast_head = NULL;
-		if (retval && retval == 7)
+		if (retval == 7)
 			break ;
 	}
 	free_env(env);
