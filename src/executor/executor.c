@@ -188,6 +188,8 @@ int	exec_token(t_token *token, t_env_list *env)
 {
 	int	retval;
 	retval = execute(token, env);
+	if (token->output != 1)
+		close(token->output);
 	if (retval)
 		return (retval);
 	if (token->left && token->left->type != ARGUMENT)
