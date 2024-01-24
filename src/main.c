@@ -26,12 +26,12 @@ int	loop_main(char *envs[])
 	char *input;
 	int	retval;
 
+	retval = 0;
 	env = env_parser(envs);
 	while (1)
 	{
 		tokens = NULL;
 		ast_head = NULL;
-		retval = 0;
 		input = readline("minishell: ");
 		if (!input) //ctrl-D
 		{
@@ -54,8 +54,6 @@ int	loop_main(char *envs[])
 			retval = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
 		free_tokens(tokens);
-		if (retval == 7)
-			break ;
 	}
 	free_env(env);
 	return (0);
