@@ -11,6 +11,22 @@
 
 #include "tokenizer.h"
 
+void	free_tokens(t_token **tokens)
+{
+	int	i;
+
+	if (tokens == NULL)
+		return ;
+	i = 0;
+	while (tokens[i] != NULL)
+	{
+		free(tokens[i]->value);
+		free(tokens[i]);
+		i++;
+	}
+	free(tokens);
+}
+
 int	init_tokenizer_utils(t_tokenizer_utils *u)
 {
 	u->size = 0;

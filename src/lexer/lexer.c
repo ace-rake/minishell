@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 14:58:06 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/24 10:42:04 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,14 @@ static void	mark_commands_and_arguments(t_token **tokens)
 	}
 }
 
-bool	lexer(t_token **tokens)
+t_token	**lexer(t_token **tokens)
 {
 	mark_metacharacters(tokens);
 	mark_commands_and_arguments(tokens);
-	return (syntax_ok(tokens));
+	if  (syntax_ok(tokens))
+		return (tokens);
+	else
+		return (NULL);
 }
 
 /* #include <stdio.h> */
