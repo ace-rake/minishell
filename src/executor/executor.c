@@ -4,6 +4,8 @@
 //need to see what can go wrong, and what should happen if something does go wrong
 
 //TODO when to close fd's
+//1 = write
+//0 = read
 int	exec_pipe(t_token *token)
 {
 	int	filedes[2];
@@ -13,20 +15,20 @@ int	exec_pipe(t_token *token)
 	retval = pipe(filedes);			//create pipe
 	if (retval == -1)
 		return (1);
-
 	tmp = token;
 	token = token->right;			//here we start with setting the right side input
 	while (token->type != COMMAND)	//we search for the command by always going left as the command cant be on the right of a token except if the token is already a command (meaning that we are on the right of a pipe)
 		token = token->left;
 	token->input = filedes[0];		//set the command of the right side of the syntax tree to use the read end of the pipe as input
-
 	token = tmp;
 	token = token->left;			//here we start with setting the output of the left side
 	if (token->type == PIPE)		//if we find a pipe, we need to set the output of the right side of that pipe to be the input of the first pipe
 		token = token->right;
 	while (token->type != COMMAND)	//here we can assume that there are no more pipes to the left, meaning we are in a single command, which we search for by going left
 		token = token->left;
-	token->output = filedes[1];		//we set the write side of this command to be the input of the pipe
+	token->output = filedes[1];		//we set the output side of this command to be the write end of the pipe
+	tmp->input = filedes[0];
+	tmp->output = filedes[1];
 	return (0);
 }
 /*	exec pipe
