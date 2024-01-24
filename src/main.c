@@ -1,8 +1,4 @@
 #include "../inc/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 volatile sig_atomic_t g_in_command = 0;
 

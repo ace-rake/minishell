@@ -1,7 +1,4 @@
-#include "env_parser.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../../inc/minishell.h"
 
 int	read_heredoc(t_token *token)
 {
@@ -18,6 +15,7 @@ int	read_heredoc(t_token *token)
 		str = readline(">");
 	}
 	ft_putchar_fd('\0', filedes[1]);
+	close(filedes[1]);
 	return (0);
 }
 

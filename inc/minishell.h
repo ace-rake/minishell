@@ -16,6 +16,8 @@
 #include <errno.h>
 #include <signal.h>
 #include <unistd.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 extern volatile sig_atomic_t g_in_command;
 
