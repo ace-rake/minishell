@@ -54,7 +54,6 @@ int	loop_main(char *envs[])
 			retval = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
 		free_tokens(tokens);
-		ast_head = NULL;
 		if (retval == 7)
 			break ;
 	}
