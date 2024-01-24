@@ -22,36 +22,40 @@ int	loop_main(char *envs[])
     t_token *ast_head;
 	t_env_list *env;
 	char *input;
+	int	retval;
 
+	tokens = NULL;
+	ast_head = NULL;
 	env = env_parser(envs);
-
 	while (1)
 	{
 		input = readline("minishell: ");
-		//TODO check for empty input
-		if (!input)
+		if (!input) //ctrl-D
 		{
-			//ctrl-D
 			printf("exit\n");
 			break ;
 		}
-		add_history(input);
-   		tokens = tokenizer(input);
-		free(input);
-		if (!lexer(tokens))
+		if (ft_strcmp(input, "") == 0) //empty input
 		{
-			//TODO: free tokens
-			return (1);
+			free(input);
+			continue ;
 		}
-   		ast_head = parser(tokens);
-	
-		int	retval = executor(ast_head,env);
+		add_history(input);
+		tokens = tokenizer(input);
+		free(input);
+		if (tokens)
+			tokens = lexer(tokens);
+		if (tokens)
+			ast_head = parser(tokens);
+		if (ast_head)	
+			retval = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
-		if (retval == 7)
-			exit(0);
+		free_tokens(tokens);
+		ast_head = NULL;
+		if (retval && retval == 7)
+			break ;
 	}
 	free_env(env);
-
 	return (0);
 }
 

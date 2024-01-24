@@ -8,6 +8,7 @@
 # include <stdlib.h>
 
 //tokenize.c
+void	free_tokens(t_token **tokens);
 int		init_tokenizer_utils(t_tokenizer_utils *u);
 t_token	*create_token(char *token_value);
 t_token	**add_token(t_tokenizer_utils *u, char *token_value);

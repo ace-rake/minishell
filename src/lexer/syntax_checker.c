@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:12 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 13:36:10 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/24 10:44:34 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	syntax_ok(t_token **tokens)
 	error_string = check_syntax_errors(tokens);
 	if (error_string)
 	{
-		printf("minishell: syntax error near unexpected token `%s\'",
+		printf("minishell: syntax error near unexpected token `%s\'\n",
 				error_string);
 		return (false);
 	}
