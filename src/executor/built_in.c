@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/23 14:41:39 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/24 15:13:04 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	export_builtin(t_token *token, t_env_list *env)
 //		create new variable with corresponding values and set export=true
 //	if = is ! found
 //		find env variable by name value and set corresponding export=true
+//	TODO: look for syntax errors
 
 int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 {
@@ -142,6 +143,19 @@ int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 //TODO this doesnt actually do anything if there is a pipe behind this cmd
 //this also count for export
 //fix added check to see if top token is pipe, if so dont execute at all
+//	TODO: look for syntax errors
+
+void	free_ast_tree(t_token *token)
+{
+	if (token->left)
+		free_ast_tree(token->left);
+	if (token->right)
+		free_ast_tree(token->right);
+	close(token->input);
+	close(token->output);
+	free(token->value);
+	free(token);
+}
 
 int	exit_builtin(t_token *token, t_env_list *env)
 {
@@ -152,7 +166,7 @@ int	exit_builtin(t_token *token, t_env_list *env)
 	if (token->type == PIPE)
 		return (0) ;
 	free_env(env);
-	//free_tokens(token);
+	free_ast_tree(token);
 	if (!token->right)
 		exit(0);
 	exit(ft_atoi(token->right->value));
@@ -161,6 +175,7 @@ int	exit_builtin(t_token *token, t_env_list *env)
 //exit doesnt do anything if there is a pipe somewhere
 //TODO free_tokens fucntions ig
 //everything else works as expected me thinks
+//	TODO: look for syntax errors
 
 int	cd_builtin(t_token *token, t_env_list *env)
 {
