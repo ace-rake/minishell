@@ -44,8 +44,8 @@ int	loop_main(char *envs[])
 		monitor = tokenizer(input, &tokens);
 		free(input);
 		if (monitor)
-			tokens = lexer(tokens);
-		if (tokens)
+			monitor = lexer(tokens);
+		if (monitor)
 			ast_head = parser(tokens);
 		if (ast_head)	
 			retval = executor(ast_head, env);
