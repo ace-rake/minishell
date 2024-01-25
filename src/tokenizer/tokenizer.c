@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:52:18 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/24 15:45:17 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:12:44 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	init_tokenizer_utils(t_tokenizer_utils *u)
 	u->new_tokens = NULL;
 	u->tokens = (t_token **)malloc(u->capacity * sizeof(t_token *));
 	if (!u->tokens)
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 t_token	*create_token(char *token_value)
@@ -69,7 +69,7 @@ int	manage_token(t_tokenizer_utils *u, char *token_value)
 		u->new_capacity = u->capacity * 2;
 		u->new_tokens = (t_token **)malloc(u->new_capacity * sizeof(t_token *));
 		if (!u->new_tokens)
-			return (1);
+			return (0);
 		i = -1;
 		while (++i < u->size)
 			u->new_tokens[i] = u->tokens[i];
@@ -79,27 +79,27 @@ int	manage_token(t_tokenizer_utils *u, char *token_value)
 	}
 	u->tokens[u->size] = create_token(token_value);
 	if (u->tokens[u->size] == NULL)
-		return (1);
+		return (0);
 	(u->size)++;
 	u->tokens[u->size] = NULL;
-	return (0);
+	return (1);
 }
 
 int	add_token(t_tokenizer_utils *u, char *token_value)
 {
-	if (manage_token(u, token_value) == 1)
+	if (!manage_token(u, token_value))
 	{
 		free_tokens(u->tokens);
-		return (1);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
-t_token	**tokenizer(const char *input)
+int	tokenizer(const char *input)
 {
 	t_tokenizer_utils	u;
 
-	if (init_tokenizer_utils(&u) == 1)
+	if (!init_tokenizer_utils(&u, tokens))
 		return (NULL);
 	while (input[u.current])
 	{
