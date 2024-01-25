@@ -21,6 +21,7 @@ int	loop_main(char *envs[])
 	t_env_list *env;
 	char *input;
 	int	retval;
+	int monitor;
 
 	retval = 0;
 	env = env_parser(envs);
@@ -40,9 +41,9 @@ int	loop_main(char *envs[])
 			continue ;
 		}
 		add_history(input);
-		tokens = tokenizer(input);
+		monitor = tokenizer(input, &tokens);
 		free(input);
-		if (tokens)
+		if (monitor)
 			tokens = lexer(tokens);
 		if (tokens)
 			ast_head = parser(tokens);

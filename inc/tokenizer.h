@@ -13,7 +13,7 @@ int		init_tokenizer_utils(t_tokenizer_utils *u);
 t_token	*create_token(char *token_value);
 int		manage_token(t_tokenizer_utils *u, char *token_value);
 int		add_token(t_tokenizer_utils *u, char *token_value);
-t_token **tokenizer(const char *input);
+int		tokenizer(const char *input, t_token ***tokens);
 
 //tokenize_handlers.c
 int		handle_special_char(const char *input, t_tokenizer_utils *u);

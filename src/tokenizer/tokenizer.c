@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:52:18 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/25 13:12:44 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:08:31 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,21 +95,27 @@ int	add_token(t_tokenizer_utils *u, char *token_value)
 	return (1);
 }
 
-int	tokenizer(const char *input)
+int	tokenizer(const char *input, t_token ***tokens)
 {
 	t_tokenizer_utils	u;
 
-	if (!init_tokenizer_utils(&u, tokens))
-		return (NULL);
+	if (!init_tokenizer_utils(&u))
+		return (0);
 	while (input[u.current])
 	{
 		u.c = input[u.current];
 		if ((u.c == '|' || u.c == '<' || u.c == '>')
 			&& u.quoting_status == UNQUOTED)
-			handle_special_char(input, &u);
+		{
+			if (!handle_special_char(input, &u))
+				return (0);
+		}
 		else if ((u.c == ' ' || u.c == '\n' || u.c == '\t')
 			&& u.quoting_status == UNQUOTED)
-			handle_whitespace(input, &u);
+		{
+			if (!handle_whitespace(input, &u))
+				return (0);
+		}
 		else if (u.c == '\'')
 			handle_single_quote(&u);
 		else if (u.c == '\"')
@@ -117,6 +123,10 @@ int	tokenizer(const char *input)
 		u.current++;
 	}
 	if (u.start != u.current)
-		handle_last_token(input, &u);
-	return (u.tokens);
+	{
+		if (!handle_last_token(input, &u))
+			return (0);
+	}
+	*tokens = u.tokens;
+	return (1);
 }
