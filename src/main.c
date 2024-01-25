@@ -20,10 +20,10 @@ int	loop_main(char *envs[])
     t_token *ast_head;
 	t_env_list *env;
 	char *input;
-	int	retval;
+	int	exit_status;
 	int monitor;
 
-	retval = 0;
+	exit_status = 0;
 	env = env_parser(envs);
 	while (1)
 	{
@@ -42,14 +42,16 @@ int	loop_main(char *envs[])
 		}
 		add_history(input);
 		monitor = tokenizer(input, &tokens);
-		free(input);
 		if (monitor)
 			monitor = lexer(tokens);
 		if (monitor)
-			ast_head = parser(tokens);
-		if (ast_head)	
-			retval = executor(ast_head, env);
+			monitor = parser(tokens, &ast_head);
+		/* if (monitor) */
+			/* monitor = expander(tokens, exit_status); */
+		if (monitor)	
+			exit_status = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
+		free(input);
 		free_tokens(tokens);
 	}
 	free_env(env);
