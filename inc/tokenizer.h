@@ -11,7 +11,6 @@
 void	free_tokens(t_token **tokens);
 int		init_tokenizer_utils(t_tokenizer_utils *u);
 t_token	*create_token(char *token_value);
-int		manage_token(t_tokenizer_utils *u, char *token_value);
 int		add_token(t_tokenizer_utils *u, char *token_value);
 int		tokenizer(const char *input, t_token ***tokens);
 

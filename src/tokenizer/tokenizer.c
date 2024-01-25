@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:52:18 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/25 14:08:31 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:14:33 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_token	*create_token(char *token_value)
 	return (new_token);
 }
 
-int	manage_token(t_tokenizer_utils *u, char *token_value)
+int	add_token(t_tokenizer_utils *u, char *token_value)
 {
 	int		i;
 
@@ -82,16 +82,6 @@ int	manage_token(t_tokenizer_utils *u, char *token_value)
 		return (0);
 	(u->size)++;
 	u->tokens[u->size] = NULL;
-	return (1);
-}
-
-int	add_token(t_tokenizer_utils *u, char *token_value)
-{
-	if (!manage_token(u, token_value))
-	{
-		free_tokens(u->tokens);
-		return (0);
-	}
 	return (1);
 }
 
