@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/24 15:13:04 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:19:15 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,17 +145,6 @@ int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 //fix added check to see if top token is pipe, if so dont execute at all
 //	TODO: look for syntax errors
 
-void	free_ast_tree(t_token *token)
-{
-	if (token->left)
-		free_ast_tree(token->left);
-	if (token->right)
-		free_ast_tree(token->right);
-	close(token->input);
-	close(token->output);
-	free(token->value);
-	free(token);
-}
 
 int	exit_builtin(t_token *token, t_env_list *env)
 {

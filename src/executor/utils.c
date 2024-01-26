@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 10:13:59 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:18:58 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,14 @@ char *get_env_val(t_env_list *env, char *var)
 }
 /* return the val of a given var from the env list */
 
+void	free_ast_tree(t_token *token)
+{
+	if (token->left)
+		free_ast_tree(token->left);
+	if (token->right)
+		free_ast_tree(token->right);
+	close(token->input);
+	close(token->output);
+	free(token->value);
+	free(token);
+}
