@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 10:28:56 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:22:52 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	env_builtin(t_token *token, t_env_list *env)
 	set_fd(token);
 	while (env)
 	{
-		if (env->exported == true)
+		if (env->exported == true && env->val)
 		{
 			ft_putstr_fd(env->var, token->output);
 			ft_putchar_fd('=', token->output);
