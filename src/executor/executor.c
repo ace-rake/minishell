@@ -120,7 +120,7 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 	else if (strncmp(token->value, "pwd\0", 4) == 0)
 		return (pwd_builtin(token));
 	else if (strncmp(token->value, "export\0", 7) == 0)
-		return (export_builtin(token, env));
+		return (export_builtin(token, env, true));
 	else if (strncmp(token->value, "unset\0", 6) == 0)
 		return (unset_builtin(token, env));
 	else if (strncmp(token->value, "env\0", 4) == 0)

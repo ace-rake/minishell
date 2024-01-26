@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 10:28:56 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:28:25 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	pwd_builtin(t_token *token);
 int	echo_builtin(t_token *token);
 int	exit_builtin(t_token *token, t_env_list *env);
 int	unset_builtin(t_token *token, t_env_list *env);
-int	export_builtin(t_token *token, t_env_list *env);
+int	export_builtin(t_token *token, t_env_list *env, bool to_export);
 
 char *get_env_val(t_env_list *env, char *var);
 void	free_ast_tree(t_token *token);
