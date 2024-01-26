@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 08:27:25 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/20 13:35:11 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:15:42 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 
 
-t_token	*parser(t_token **tokens);
+int	parser(t_token **tokens, t_token **ast_head);
 t_token	*parse_pipes(t_token **tokens);
 t_token	*parse_redirections(t_token **tokens);
 t_token	*parse_commands(t_token **tokens);
