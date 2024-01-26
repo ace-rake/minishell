@@ -6,11 +6,11 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/22 10:09:22 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:12:28 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../../inc/minishell.h"
 
 int arg_counter(t_token *token)
 {
