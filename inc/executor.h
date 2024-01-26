@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 10:19:15 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:28:56 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define EXECUTOR_H
 
 #include "minishell.h"
-//delete
 
 #define NOT_EXECUTABLE 129
 
