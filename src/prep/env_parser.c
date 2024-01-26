@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/22 14:42:21 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:12:43 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_env_list	*env_node_con(char *var, char *val, bool exported)
 	new->var = ft_strdup(var);
 	new->next = NULL;
 	new->exported = exported;
-	if (!new->val || !new->var)
+	if (!new->var)
 	{
 		free_env_node(new);
 		return (NULL);
