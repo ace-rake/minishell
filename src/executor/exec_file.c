@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 10:51:17 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:37:09 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	exec_command_file(t_token *token, t_env_list *env)
     /*                                                            
      * these will be our execve arguments                         
      * these start from the command itself cuz we need that       
-     * TODO actually this is still kinda fucked because the first argument should be the full path to the command but as it stands it always uses the token->value of the command                     
+     * DONEZO: actually this is still kinda fucked because the first argument should be the full path to the command but as it stands it always uses the token->value of the command                     
      * TMP_FIX: create tmp token with full path to replace the actual command token                                                 
 	 * token doesnt need freeing ig
      */                                                           
