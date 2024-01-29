@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 10:22:42 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:28:42 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	exec_command_file(t_token *token, t_env_list *env)
 		free(args);
 		check_child(&status);
 	}
-	if (status == 14)
+	if (status == 127)
 		ft_printf("status : [%i]\n%s: command not found\n",status,  token->value);
 	return (status);
 }
