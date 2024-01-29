@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:28:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 11:27:00 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:58:20 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,28 @@ bool	syntax_check(t_token *token)
 {
 	char *valid;
 	int index;
+	bool retval;
 
+	retval = false;
 	if (!token)
-		return (false);
+		return (retval);
 	valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 	if (ft_strchr(valid, token->value[0]) == NULL)
-		return (true);
+		retval = true;
 	valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_123456789";
 	index = 0;
-	while (token->value[++index] && token->value[index] != '=')
+	while (!retval && token->value[++index] && token->value[index] != '=')
 		if (ft_strchr(valid, token->value[index]) == NULL)
-			return (true);
-	return (false);
+			retval = true;
+	if (retval)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(token->parent->value, 2);
+		ft_putstr_fd(": `", 2);
+		ft_putstr_fd(token->value, 2);
+		ft_putstr_fd("\': not a valid identifier\n", 2);
+	}
+	return (retval);
 }
 /*
  * tings to shek
@@ -138,9 +148,6 @@ int	export_builtin(t_token *token, t_env_list *env, bool export)
 		return (0);
 	if (syntax_check(token->right))
 	{
-		ft_putstr_fd("minishell: export: ", 2);
-		ft_putstr_fd(token->right->value, 2);
-		ft_putstr_fd(": not a valid identifier\n", 2);
 		return (1);
 	}
 	type = get_var_and_val(&var, &val, token->right);
