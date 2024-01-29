@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 11:37:09 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:03:31 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,57 +16,49 @@ int	exec_child(t_token *token, char *cmd_path, char **args)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output, STDOUT_FILENO) == -1 )
+	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output,
+			STDOUT_FILENO) == -1)
 		exit(errno);
-	execve(cmd_path, args,NULL);
+	execve(cmd_path, args, NULL);
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(token->value, 2);
 	ft_putstr_fd(": no such file or directory\n", 2);
-
 	exit(127);
 }
 
-
-int check_child(int *child_status)                                    
+int	check_child(int *child_status)
 {
-    if (WIFEXITED(*child_status))
-    {
-        *child_status = WEXITSTATUS(*child_status);
-        if (*child_status != 0)
-            return (1);
-    }
-    return (0);
+	if (WIFEXITED(*child_status))
+	{
+		*child_status = WEXITSTATUS(*child_status);
+		if (*child_status != 0)
+			return (1);
+	}
+	return (0);
+}
+
+int	get_args(t_token *token, t_env_list *env, char **cmd_path, char ***args)
+{
+	t_token	token_tmp;
+
+	if (ft_strchr(token->value, '/') == NULL)
+		*cmd_path = get_full_cmd_path(token->value, env);
+	else
+		*cmd_path = ft_strdup(token->value);
+	token_tmp.value = *cmd_path;
+	token_tmp.right = token->right;
+	*args = token_chain_to_array(&token_tmp);
+	return (0);
 }
 
 int	exec_command_file(t_token *token, t_env_list *env)
 {
-	char *cmd_path;
-	int status;
+	char	*cmd_path;
+	int		status;
+	char	**args;
+	pid_t	child;
 
-	//used for execve and child
-	if (ft_strchr(token->value, '/') == NULL)
-		cmd_path = get_full_cmd_path(token->value, env);
-	else
-		cmd_path = ft_strdup(token->value);
-    /*                                                            
-     * check if the given token->value has a slash, if so we must use that as the command as is                                     
-     * else we will try to find a suitable path in the $path should it (and $path) exist                                            
-     */                                                           
-    t_token token_tmp;                                            
-    token_tmp.value = cmd_path;                                   
-    token_tmp.right = token->right;                               
-                                                                  
-    char **args = token_chain_to_array(&token_tmp);               
-    /*                                                            
-     * these will be our execve arguments                         
-     * these start from the command itself cuz we need that       
-     * DONEZO: actually this is still kinda fucked because the first argument should be the full path to the command but as it stands it always uses the token->value of the command                     
-     * TMP_FIX: create tmp token with full path to replace the actual command token                                                 
-	 * token doesnt need freeing ig
-     */                                                           
-
-	pid_t child;
-
+	get_args(token, env, &cmd_path, &args);
 	status = 127;
 	if (cmd_path)
 	{
@@ -88,4 +80,18 @@ int	exec_command_file(t_token *token, t_env_list *env)
 		ft_printf("%s: command not found\n", token->value);
 	return (status);
 }
-
+/*                                                            
+* check if the given token->value has a slash,
+if so we must use that as the command as is                                     
+   
+* else we will try to find a suitable path in the $path
+* 	should it (and $path) exist                                            
+*/
+/*                                                            
+ * these will be our execve arguments                         
+ * these start from the command itself
+ * 	cuz we need that       
+ * TMP_FIX: create tmp token with full path
+ * 	to replace the actual command token
+ *		 token doesnt need freeing ig
+ */

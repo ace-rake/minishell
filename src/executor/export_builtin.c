@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:28:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 11:58:20 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 12:59:55 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ bool	check_elder_parent(t_token *token)
 
 bool	syntax_check(t_token *token)
 {
-	char *valid;
-	int index;
-	bool retval;
+	char	*valid;
+	int		index;
+	bool	retval;
 
 	retval = false;
 	if (!token)
@@ -82,16 +82,16 @@ int	get_var_and_val(char **var, char **val, t_token *token)
 {
 	int	type;
 
-	type = 2; // default export var=val type
+	type = 2;
 	if (!token)
 		return (0);
 	*val = ft_strchr(token->value, '=');
-	if (!*val) // export var type
+	if (!*val)
 	{
 		*var = ft_strdup(token->value);
 		return (1);
 	}
-	if (*(*val - 1) == '+') // export var+=val type
+	if (*(*val - 1) == '+')
 		type = 3;
 	if (type == 3)
 		*var = ft_substr(token->value, 0, *val - token->value - 1);
@@ -101,10 +101,14 @@ int	get_var_and_val(char **var, char **val, t_token *token)
 	*val = ft_strdup(*val);
 	return (type);
 }
+// export type = 0
+// default export var=val type = 2
+// // export var type = 1
+// // export var+=val type = 3
 
 int	handle_3(t_env_list *node, char *val)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = ft_strjoin(node->val, val);
 	free(node->val);
@@ -118,13 +122,13 @@ int	handle_2(t_env_list *env, t_env_list *node, char *var, char *val)
 	{
 		if (node->val)
 			free(node->val);
-		if (node->var)//node->var shold always exist
+		if (node->var)
 			free(node->var);
 		node->var = ft_strdup(var);
 		node->val = ft_strdup(val);
 	}
 	else
-		env_add_back(&env, env_node_con(var,val,1));
+		env_add_back(&env, env_node_con(var, val, 1));
 	return (0);
 }
 
@@ -133,16 +137,16 @@ int	handle_1(t_env_list *env, t_env_list *node, char *var)
 	if (node)
 		node->exported = true;
 	else
-		env_add_back(&env, env_node_con(var,NULL,1));
+		env_add_back(&env, env_node_con(var, NULL, 1));
 	return (0);
 }
 
-int	export_builtin(t_token *token, t_env_list *env, bool export)
+int	export_builtin(t_token *token, t_env_list *env)
 {
-	char *val;
-	char *var;
-	int	type;
-	t_env_list *node;
+	char		*val;
+	char		*var;
+	int			type;
+	t_env_list	*node;
 
 	if (check_elder_parent(token))
 		return (0);
@@ -164,25 +168,25 @@ int	export_builtin(t_token *token, t_env_list *env, bool export)
 		free(var);
 	if (val)
 		free(val);
-	(void)export;
 	return (0);
 }
 //new plan of action
 //	first things first check the syntax
 //
-//could add a export boolean parameter, that way i could use export for set also
+//could add a export boolean parameter,
+//		that way i could use export for set also
 //
 //all different cases
 //	if elder parent == "|"
 //		do nothing
 //	if = is preset
-//		if  + is before = 
+//		if  + is before =
 //			set append = true
 //		if "var" exists
 //			overwrite or append var with new val
 //		else
 //			create new env_list node
-//	
+//
 //
 
 //check if no args

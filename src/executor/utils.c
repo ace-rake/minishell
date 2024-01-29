@@ -12,9 +12,11 @@
 
 #include "../../inc/minishell.h"
 
-int arg_counter(t_token *token)
+int	arg_counter(t_token *token)
 {
-	int	argc = 1;
+	int	argc;
+
+	argc = 1;
 	while (token->right)
 	{
 		argc++;
@@ -23,16 +25,16 @@ int arg_counter(t_token *token)
 	return (argc);
 }
 
-char **token_chain_to_array(t_token *token) {
-	char **result;
-	int argc;
-	int iter;
-	
+char	**token_chain_to_array(t_token *token)
+{
+	char	**result;
+	int		argc;
+	int		iter;
+
 	argc = arg_counter(token);
 	result = (char **)malloc((argc + 1) * (sizeof(char *)));
 	if (!result)
 	{
-		
 	}
 	iter = 0;
 	while (token)
@@ -44,7 +46,7 @@ char **token_chain_to_array(t_token *token) {
 	return (result);
 }
 
-char *get_env_val(t_env_list *env, char *var)
+char	*get_env_val(t_env_list *env, char *var)
 {
 	while (env && strcmp(env->var, var) != 0)
 		env = env->next;

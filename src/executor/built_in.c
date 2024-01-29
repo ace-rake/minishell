@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 11:58:39 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:01:07 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ DONE◦ exit with no options man i dunno
 
 static int	set_fd(t_token *token)
 {
-	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output, STDOUT_FILENO) == -1)
+	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output,
+			STDOUT_FILENO) == -1)
 		return (1);
 	return (0);
 }
 
-
-int	unset_builtin(t_token *token, t_env_list *env) //cmd token
+int	unset_builtin(t_token *token, t_env_list *env)
 {
-	t_env_list *to_del;
-	t_token *tmp;
+	t_env_list	*to_del;
+	t_token		*tmp;
 
 	if (syntax_check(token->right))
 		return (1);
@@ -58,24 +58,28 @@ int	exit_builtin(t_token *token, t_env_list *env)
 {
 	while (token->parent)
 		token = token->parent;
-	//it doesnt matter if im on the left or right side, if i just go up until im at the origin token i can just check that token to see if there were any pipes at all
-	//this also resets the token to the origin because im assuming the free_tokens command will take that token
 	if (token->type == PIPE)
-		return (0) ;
+		return (0);
 	free_env(env);
 	free_ast_tree(token);
 	if (!token->right)
 		exit(0);
 	exit(ft_atoi(token->right->value));
 }
-//this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
+//it doesnt matter if im on the left or right side,
+//	if i just go up until im at the origin token
+//		i can just check that token to see if there were any pipes at all
+//this also resets the token to the origin
+//	because im assuming the free_tokens command will take that token
+//this function will be made to exit only when the exit command is called,
+//	dont use it for non command-execution reasons
 //exit doesnt do anything if there is a pipe somewhere
 //everything else works as expected me thinks
 //	TODO: look for syntax errors
 
 int	cd_builtin(t_token *token, t_env_list *env)
 {
-	char *path;
+	char	*path;
 
 	set_fd(token);
 	if (token->right)
@@ -95,14 +99,15 @@ int	cd_builtin(t_token *token, t_env_list *env)
 
 int	pwd_builtin(t_token *token)
 {
-	char *retval;
+	char	*retval;
+
 	set_fd(token);
 	retval = getcwd(NULL, 0);
 	if (!retval)
 	{
-		return (errno) ;
+		return (errno);
 	}
-	ft_printf("%s\n",retval);
+	ft_printf("%s\n", retval);
 	free(retval);
 	return (0);
 }
@@ -110,6 +115,8 @@ int	pwd_builtin(t_token *token)
 int	echo_builtin(t_token *token)
 {
 	bool	option;
+	char	**token_chain;
+	int		iter;
 
 	set_fd(token);
 	option = false;
@@ -120,10 +127,9 @@ int	echo_builtin(t_token *token)
 	}
 	if (token->right)
 	{
-		char **token_chain = NULL;
+		token_chain = NULL;
 		token_chain = token_chain_to_array(token->right);
-	//can fail
-		int iter = 0;
+		iter = 0;
 		while (token_chain && token_chain[iter])
 		{
 			ft_putstr_fd(token_chain[iter], token->output);
@@ -136,6 +142,9 @@ int	echo_builtin(t_token *token)
 		write(1, "\n", token->output);
 	return (0);
 }
+//TODO toen_chain_to_array can fail
+//TODO options can be formatted as such "-nnnnn"
+//	but wont do anything if there is another option present eg:"-nnnp"
 //still need to add the optional option check for -n
 //DONE need to put spaces in between all the arguments
 //except when there is no space but quotes

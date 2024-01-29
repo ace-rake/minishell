@@ -19,6 +19,17 @@ int	read_heredoc(t_token *token)
 	return (0);
 }
 
+int	exec_heredocs(t_token *head)
+{
+	if (head->left)
+		exec_heredocs(head->left);
+	if (head->right)
+		exec_heredocs(head->right);
+	if (head->type == REDIR_HEREDOC)
+		read_heredoc(head);
+	return (0);
+}
+
 
 /*
  * read line
