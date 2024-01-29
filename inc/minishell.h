@@ -7,6 +7,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "executor.h"
+#include "expander.h"
 #include "env_parser.h"
 #include "../libft/inc/libft.h"
 

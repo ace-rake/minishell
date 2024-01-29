@@ -18,10 +18,11 @@ TOKENIZER_SRC = $(addprefix $(SRC_DIR)tokenizer/, tokenizer.c tokenizer_handlers
 LEXER_SRC = $(addprefix $(SRC_DIR)lexer/, lexer.c syntax_checker.c)
 PARSER_SRC = $(addprefix $(SRC_DIR)parser/, parser.c pipes.c redirections.c commands.c arguments.c)
 EXECUTOR_SRC = $(addprefix $(SRC_DIR)executor/, executor.c exec_file.c built_in.c utils.c utils_2.c get_cmd_path.c export_builtin.c export_2.c echo_builtin.c redirs.c)
+EXPANDER_SRC = $(addprefix $(SRC_DIR)expander/, expander.c)
 MAIN_SRC = $(SRC_DIR)main.c 
 
 # All source files combined
-SRC = $(PREP_SRC) $(TOKENIZER_SRC) $(PARSER_SRC) $(LEXER_SRC) $(EXECUTOR_SRC) $(MAIN_SRC)
+SRC = $(PREP_SRC) $(TOKENIZER_SRC) $(PARSER_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(EXECUTOR_SRC) $(MAIN_SRC)
 
 # Object directory
 OBJ_DIR = ./obj/
