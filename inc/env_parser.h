@@ -8,6 +8,7 @@
 #include <string.h>
 
 t_env_list *env_parser(char *env[]);
+void	free_env_node(t_env_list *env);
 void	free_env(t_env_list *env);
 t_env_list	*del_node(t_env_list **head, t_env_list *to_del);
 t_env_list	*get_env_node(t_env_list *head, char *var);

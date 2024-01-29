@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_input.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
+/*   Updated: 2024/01/29 13:06:56 by vdenisse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	read_heredoc(t_token *token)
 {
-	char *str;
-	int	filedes[2];
+	char	*str;
+	int		filedes[2];
 
 	if (pipe(filedes) == -1)
 		return (1);
@@ -29,7 +41,6 @@ int	exec_heredocs(t_token *head)
 		read_heredoc(head);
 	return (0);
 }
-
 
 /*
  * read line
