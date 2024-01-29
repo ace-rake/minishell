@@ -6,77 +6,11 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:28:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 12:59:55 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:39:55 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	print_export(t_token *token, t_env_list *env)
-{
-	while (env)
-	{
-		if (env->exported == true)
-		{
-			ft_putstr_fd("declare -x ", token->output);
-			ft_putstr_fd(env->var, token->output);
-			if (env->val != NULL)
-			{
-				ft_putchar_fd('=', token->output);
-				ft_putchar_fd('"', token->output);
-				ft_putstr_fd(env->val, token->output);
-				ft_putchar_fd('"', token->output);
-			}
-			ft_putchar_fd('\n', token->output);
-		}
-		env = env->next;
-	}
-	return (0);
-}
-
-bool	check_elder_parent(t_token *token)
-{
-	while (token->parent)
-		token = token->parent;
-	if (token->type == PIPE)
-		return (true);
-	return (false);
-}
-
-bool	syntax_check(t_token *token)
-{
-	char	*valid;
-	int		index;
-	bool	retval;
-
-	retval = false;
-	if (!token)
-		return (retval);
-	valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-	if (ft_strchr(valid, token->value[0]) == NULL)
-		retval = true;
-	valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_123456789";
-	index = 0;
-	while (!retval && token->value[++index] && token->value[index] != '=')
-		if (ft_strchr(valid, token->value[index]) == NULL)
-			retval = true;
-	if (retval)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(token->parent->value, 2);
-		ft_putstr_fd(": `", 2);
-		ft_putstr_fd(token->value, 2);
-		ft_putstr_fd("\': not a valid identifier\n", 2);
-	}
-	return (retval);
-}
-/*
- * tings to shek
- *		START with beeg or smoll letta or with undascore
- *	after first
- *		can be any letta, numba, undascore
- *
- */
 
 int	get_var_and_val(char **var, char **val, t_token *token)
 {
@@ -106,41 +40,6 @@ int	get_var_and_val(char **var, char **val, t_token *token)
 // // export var type = 1
 // // export var+=val type = 3
 
-int	handle_3(t_env_list *node, char *val)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(node->val, val);
-	free(node->val);
-	node->val = tmp;
-	return (0);
-}
-
-int	handle_2(t_env_list *env, t_env_list *node, char *var, char *val)
-{
-	if (node)
-	{
-		if (node->val)
-			free(node->val);
-		if (node->var)
-			free(node->var);
-		node->var = ft_strdup(var);
-		node->val = ft_strdup(val);
-	}
-	else
-		env_add_back(&env, env_node_con(var, val, 1));
-	return (0);
-}
-
-int	handle_1(t_env_list *env, t_env_list *node, char *var)
-{
-	if (node)
-		node->exported = true;
-	else
-		env_add_back(&env, env_node_con(var, NULL, 1));
-	return (0);
-}
-
 int	export_builtin(t_token *token, t_env_list *env)
 {
 	char		*val;
@@ -151,9 +50,7 @@ int	export_builtin(t_token *token, t_env_list *env)
 	if (check_elder_parent(token))
 		return (0);
 	if (syntax_check(token->right))
-	{
 		return (1);
-	}
 	type = get_var_and_val(&var, &val, token->right);
 	if (type == 0)
 		return (print_export(token, env));
