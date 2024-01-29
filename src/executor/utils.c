@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 13:15:36 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 14:03:25 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ char	**token_chain_to_array(t_token *token)
 	argc = arg_counter(token);
 	result = (char **)malloc((argc + 1) * (sizeof(char *)));
 	if (!result)
-	{
-	}
+		return (0);
 	iter = 0;
 	while (token)
 	{
