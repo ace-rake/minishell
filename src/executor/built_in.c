@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 13:01:07 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:17:38 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,6 @@ DONE◦ unset with no options			#need to have variable list for this
 DONE◦ env with no options or arguments	#need to have variable lsit for this
 DONE◦ exit with no options man i dunno
 */
-
-static int	set_fd(t_token *token)
-{
-	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output,
-			STDOUT_FILENO) == -1)
-		return (1);
-	return (0);
-}
-
 int	unset_builtin(t_token *token, t_env_list *env)
 {
 	t_env_list	*to_del;
@@ -111,43 +102,6 @@ int	pwd_builtin(t_token *token)
 	free(retval);
 	return (0);
 }
-
-int	echo_builtin(t_token *token)
-{
-	bool	option;
-	char	**token_chain;
-	int		iter;
-
-	set_fd(token);
-	option = false;
-	if (token->right && ft_strncmp(token->right->value, "-n\0", 3) == 0)
-	{
-		option = true;
-		token = token->right;
-	}
-	if (token->right)
-	{
-		token_chain = NULL;
-		token_chain = token_chain_to_array(token->right);
-		iter = 0;
-		while (token_chain && token_chain[iter])
-		{
-			ft_putstr_fd(token_chain[iter], token->output);
-			if (token_chain[++iter])
-				ft_putchar_fd(' ', token->output);
-		}
-		free(token_chain);
-	}
-	if (!option)
-		write(1, "\n", token->output);
-	return (0);
-}
-//TODO toen_chain_to_array can fail
-//TODO options can be formatted as such "-nnnnn"
-//	but wont do anything if there is another option present eg:"-nnnp"
-//still need to add the optional option check for -n
-//DONE need to put spaces in between all the arguments
-//except when there is no space but quotes
 
 int	env_builtin(t_token *token, t_env_list *env)
 {

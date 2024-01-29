@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 12:54:17 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:15:45 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ int	exec_redir_heredoc(t_token *token);
 char *get_env_val(t_env_list *env, char *var);
 void	free_ast_tree(t_token *token);
 bool	syntax_check(t_token *token);
+int	set_fd(t_token *token);
 #endif

@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 10:18:58 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:15:36 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,12 @@ void	free_ast_tree(t_token *token)
 	close(token->output);
 	free(token->value);
 	free(token);
+}
+
+int	set_fd(t_token *token)
+{
+	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output,
+			STDOUT_FILENO) == -1)
+		return (1);
+	return (0);
 }
