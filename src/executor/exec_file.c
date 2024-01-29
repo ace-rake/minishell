@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 10:37:50 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:51:17 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	exec_child(t_token *token, char *cmd_path, char **args)
 	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output, STDOUT_FILENO) == -1 )
 		exit(errno);
 	execve(cmd_path, args,NULL);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(token->value, 2);
+	ft_putstr_fd(": no such file or directory\n", 2);
+
 	exit(127);
 }
 
@@ -43,7 +47,7 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	if (ft_strchr(token->value, '/') == NULL)
 		cmd_path = get_full_cmd_path(token->value, env);
 	else
-		cmd_path = token->value;
+		cmd_path = ft_strdup(token->value);
     /*                                                            
      * check if the given token->value has a slash, if so we must use that as the command as is                                     
      * else we will try to find a suitable path in the $path should it (and $path) exist                                            
@@ -66,19 +70,19 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	status = 127;
 	if (cmd_path)
 	{
-	g_in_command = 1;
-	child = fork();
-	status = 0;
-	if (child == 0)
-		exec_child(token, cmd_path, args);
-	else if (child > 0)
-	{
-		waitpid(child, &status, 0);
-		g_in_command = 0;
-		free(cmd_path);
-		free(args);
-		check_child(&status);
-	}
+		g_in_command = 1;
+		child = fork();
+		status = 0;
+		if (child == 0)
+			exec_child(token, cmd_path, args);
+		else if (child > 0)
+		{
+			waitpid(child, &status, 0);
+			g_in_command = 0;
+			free(cmd_path);
+			free(args);
+			check_child(&status);
+		}
 	}
 	else
 		ft_printf("%s: command not found\n", token->value);
