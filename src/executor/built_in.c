@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 13:22:52 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:58:39 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 	t_env_list *to_del;
 	t_token *tmp;
 
+	if (syntax_check(token->right))
+		return (1);
 	tmp = token;
 	while (tmp->parent)
 		tmp = tmp->parent;
@@ -51,11 +53,6 @@ int	unset_builtin(t_token *token, t_env_list *env) //cmd token
 	}
 	return (0);
 }
-//TODO this doesnt actually do anything if there is a pipe behind this cmd
-//this also count for export
-//fix added check to see if top token is pipe, if so dont execute at all
-//	TODO: look for syntax errors
-
 
 int	exit_builtin(t_token *token, t_env_list *env)
 {
@@ -73,7 +70,6 @@ int	exit_builtin(t_token *token, t_env_list *env)
 }
 //this function will be made to exit only when the exit command is called, dont use it for non command-execution reasons
 //exit doesnt do anything if there is a pipe somewhere
-//TODO free_tokens fucntions ig
 //everything else works as expected me thinks
 //	TODO: look for syntax errors
 

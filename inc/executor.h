@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 13:28:25 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:54:49 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ int	export_builtin(t_token *token, t_env_list *env, bool to_export);
 
 char *get_env_val(t_env_list *env, char *var);
 void	free_ast_tree(t_token *token);
+bool	syntax_check(t_token *token);
 #endif
