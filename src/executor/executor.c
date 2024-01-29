@@ -3,7 +3,6 @@
 //need to make sure to close fds if they would be overwritten
 //need to see what can go wrong, and what should happen if something does go wrong
 
-//TODO when to close fd's
 //1 = write
 //0 = read
 int	exec_pipe(t_token *token)
