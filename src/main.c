@@ -46,8 +46,8 @@ int	loop_main(char *envs[])
 			monitor = lexer(tokens);
 		if (monitor)
 			monitor = parser(tokens, &ast_head);
-		/* if (monitor) */
-			/* monitor = expander(tokens, exit_status); */
+		if (monitor)
+			monitor = expander(tokens, env, exit_status);
 		if (monitor)	
 			exit_status = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	

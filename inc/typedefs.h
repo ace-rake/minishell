@@ -55,6 +55,14 @@ typedef struct s_token
 	short			output;
 }					t_token;
 
+typedef	struct	s_env_list
+{
+	bool	exported;
+	char *var;
+	char *val;
+	struct s_env_list *next;
+}				t_env_list;
+
 typedef struct s_tokenizer_utils
 {
 	int size;
@@ -76,13 +84,18 @@ typedef struct s_parser_utils_redir
 	int		i;
 }					t_parser_utils_redir;
 
-
-typedef	struct	s_env_list
+typedef struct	s_expander_utils
 {
-	bool	exported;
-	char *var;
-	char *val;
-	struct s_env_list *next;
-}				t_env_list;
+	t_quoting_status	quoting_status;
+	t_env_list			*env;
+	int					exit_status;
+	int					i;
+	char				*original;
+	char				*result;
+	char				*variable;
+	char				*before;
+	char				*after;
+	char				*temp;
+}				t_expander_utils;	
 
 #endif
