@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 13:03:31 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:33:18 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,37 @@ int	get_args(t_token *token, t_env_list *env, char **cmd_path, char ***args)
 	return (0);
 }
 
+int	create_child(t_token *token, char **args, char *cmd_path)
+{
+	int		status;
+	pid_t	child;
+
+	g_in_command = 1;
+	child = fork();
+	status = 0;
+	if (child == 0)
+		exec_child(token, cmd_path, args);
+	else if (child > 0)
+	{
+		waitpid(child, &status, 0);
+		g_in_command = 0;
+		free(cmd_path);
+		free(args);
+		check_child(&status);
+	}
+	return (status);
+}
+
 int	exec_command_file(t_token *token, t_env_list *env)
 {
 	char	*cmd_path;
 	int		status;
 	char	**args;
-	pid_t	child;
 
 	get_args(token, env, &cmd_path, &args);
 	status = 127;
 	if (cmd_path)
-	{
-		g_in_command = 1;
-		child = fork();
-		status = 0;
-		if (child == 0)
-			exec_child(token, cmd_path, args);
-		else if (child > 0)
-		{
-			waitpid(child, &status, 0);
-			g_in_command = 0;
-			free(cmd_path);
-			free(args);
-			check_child(&status);
-		}
-	}
+		create_child(token, args, cmd_path);
 	else
 		ft_printf("%s: command not found\n", token->value);
 	return (status);
