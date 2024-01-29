@@ -1,0 +1,34 @@
+&& means there are multiple commands which give the same discrepancy
+
+
+Victor
+
+var="< file cat"
+	do we need to handle this ?
+
+cat | cat > file
+	segfault
+
+cd multiple args
+	needs to give error
+
+cd nonexistent_dir
+	need to write err
+
+
+
+
+Warre
+
+cat << | < file && << | < file
+bash
+	shows syntax error near `|'
+mini
+	shows syntax error near `<<'
+
+
+||||
+bash
+	syntax error near '||'
+mini
+	syntax error near '|'
