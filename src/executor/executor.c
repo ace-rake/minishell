@@ -190,13 +190,13 @@ int	exec_token(t_token *token, t_env_list *env)
 	retval = execute(token, env);
 	if (token->output != 1)
 		close(token->output);
-	if (retval)
+/*	if (retval && retval != 1)
 		return (retval);
-	if (token->left && token->left->type != ARGUMENT)
+*/	if (token->left && token->left->type != ARGUMENT)
 		retval = exec_token(token->left, env);
-	if (retval)
+/*	if (retval && retval != 1)
 		return (retval);
-	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
+*/	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
 		retval = exec_token(token->right, env);
 	return (retval);
 }
@@ -215,6 +215,10 @@ int	exec_heredocs(t_token *head)
 
 int	executor(t_token *token, t_env_list *env)
 {
+	int	retval;
+
+
 	exec_heredocs(token);
-	return (exec_token(token, env));
+	retval = exec_token(token, env);
+	return (retval);
 }
