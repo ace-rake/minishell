@@ -1,5 +1,5 @@
 
-#include "executor.h"
+#include "../../inc/minishell.h"
 
 void	func(char *env[])
 {
@@ -87,7 +87,27 @@ void	heredoc_test(char *env[])
 	exec_token(here, envl);
 }
 
+volatile sig_atomic_t g_in_command = 0;
+int	v2(t_token *token, t_env_list *env, bool export);
+
+void	export_test(char *arg_content, t_env_list *env)
+{
+	t_token *token = token_con("export", 1, 0);
+	if (arg_content == NULL)
+		token->right = NULL;
+	else
+		token->right = token_con(arg_content, 1, 0);
+	v2(token, env, false);
+	export_builtin(token->right, env);
+}
+
 int	main(int argc, char *argv[], char *env[])
 {
-	heredoc_test(env);
+	t_env_list *envs = env_parser(env);;
+	if (argc == 1)
+	{
+		export_test(NULL, envs);
+		return (0);
+	}
+export_test(argv[1], envs);
 }

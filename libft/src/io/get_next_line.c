@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 15:24:40 by wdevries          #+#    #+#             */
-/*   Updated: 2023/05/08 11:29:52 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:56:19 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*ft_extract_nl(char **line_parse, char *nl_position)
 		return (NULL);
 	}
 	ft_strlcpy(line_return, *line_parse, nl_position - *line_parse + 2);
-	new_line_parse = ft_strdup(nl_position + 1);
+	new_line_parse = ft_gnl_strdup(nl_position + 1);
 	free(*line_parse);
 	*line_parse = new_line_parse;
 	return (line_return);

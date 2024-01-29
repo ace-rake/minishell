@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/23 11:25:14 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:39:33 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define EXECUTOR_H
 
 #include "minishell.h"
-//delete
 
 #define NOT_EXECUTABLE 129
 
@@ -40,5 +39,22 @@ int	exit_builtin(t_token *token, t_env_list *env);
 int	unset_builtin(t_token *token, t_env_list *env);
 int	export_builtin(t_token *token, t_env_list *env);
 
+int	exec_pipe(t_token *token);
+int	exec_redir_in(t_token *token);
+int	exec_redir_out(t_token *token);
+int	exec_redir_append(t_token *token);
+int	exec_redir_heredoc(t_token *token);
+
 char *get_env_val(t_env_list *env, char *var);
+void	free_ast_tree(t_token *token);
+bool	syntax_check(t_token *token);
+int	set_fd(t_token *token);
+
+bool	check_elder_parent(t_token *token);
+
+int	handle_1(t_env_list *env, t_env_list *node, char *var);
+int	handle_2(t_env_list *env, t_env_list *node, char *var, char *val);
+int	handle_3(t_env_list *node, char *val);
+int	print_export(t_token *token, t_env_list *env);
+
 #endif

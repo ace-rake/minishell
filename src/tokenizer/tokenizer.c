@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:52:18 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/25 14:14:33 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:39:06 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	free_tokens(t_token **tokens)
 	i = 0;
 	while (tokens[i] != NULL)
 	{
+		if (tokens[i]->output != 1)
+			close(tokens[i]->output);
+		if (tokens[i]->input != 0)
+			close(tokens[i]->input);
 		free(tokens[i]->value);
 		free(tokens[i]);
 		i++;

@@ -6,51 +6,16 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:05:51 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/22 14:42:21 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:10:27 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_env_node(t_env_list *env)
-{
-	if (!env)
-		return ;
-	if (env->val)
-		free(env->val);
-	if (env->var)
-		free(env->var);
-	free(env);
-}
-
-void	free_env(t_env_list *env)
-{
-	t_env_list *tmp;
-
-	while (env)
-	{
-		tmp = env->next;
-		free_env_node(env);
-		env = tmp;	
-	}
-}
-
-t_env_list	*get_env_node(t_env_list *head, char *var)
-{
-	while (head && ft_strcmp(head->var, var))
-		head = head->next;
-	return (head);
-}
-/* searches through env_list head until either head->var is equal to var
- * or until head == NULL
- * either way it return head
- * 		which will either be null or the found node
- */
-
 t_env_list	*del_node(t_env_list **head, t_env_list *to_del)
 {
-	t_env_list *tmp;
-	t_env_list *prev;
+	t_env_list	*tmp;
+	t_env_list	*prev;
 
 	if (!to_del || !head)
 		return (NULL);
@@ -67,13 +32,10 @@ t_env_list	*del_node(t_env_list **head, t_env_list *to_del)
 			prev = tmp;
 			tmp = tmp->next;
 		}
-		if (tmp == to_del)
-		{
-			prev->next = tmp->next;
-			free_env_node(tmp);
-		}
-		else
+		if (tmp != to_del)
 			return (NULL);
+		prev->next = tmp->next;
+		free_env_node(tmp);
 	}
 	return (*head);
 }
@@ -84,7 +46,7 @@ t_env_list	*del_node(t_env_list **head, t_env_list *to_del)
 
 t_env_list	*env_node_con(char *var, char *val, bool exported)
 {
-	t_env_list *new;
+	t_env_list	*new;
 
 	new = (t_env_list *)malloc((1) * (sizeof(t_env_list)));
 	if (!new)
@@ -93,7 +55,7 @@ t_env_list	*env_node_con(char *var, char *val, bool exported)
 	new->var = ft_strdup(var);
 	new->next = NULL;
 	new->exported = exported;
-	if (!new->val || !new->var)
+	if (!new->var)
 	{
 		free_env_node(new);
 		return (NULL);
@@ -103,10 +65,10 @@ t_env_list	*env_node_con(char *var, char *val, bool exported)
 
 t_env_list	*env_line_parser(char *env_line)
 {
-	t_env_list *new;
-	char *val;
-	char *var;
-	short index;
+	t_env_list	*new;
+	char		*val;
+	char		*var;
+	short		index;
 
 	val = ft_strchr(env_line, '=');
 	if (!val)
@@ -119,9 +81,9 @@ t_env_list	*env_line_parser(char *env_line)
 	return (new);
 }
 
-void env_add_back(t_env_list **head, t_env_list *to_add)
+void	env_add_back(t_env_list **head, t_env_list *to_add)
 {
-	t_env_list *tmp;
+	t_env_list	*tmp;
 
 	if (!to_add)
 		return ;
@@ -139,11 +101,11 @@ void env_add_back(t_env_list **head, t_env_list *to_add)
 /* similar to ft_lstadd_back
  */
 
-t_env_list *env_parser(char *env[])
+t_env_list	*env_parser(char *env[])
 {
-	t_env_list *head;
-	int iter;
-	
+	t_env_list	*head;
+	int			iter;
+
 	iter = 0;
 	head = NULL;
 	while (env[iter])

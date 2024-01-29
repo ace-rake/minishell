@@ -1,115 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/29 12:39:01 by vdenisse          #+#    #+#             */
+/*   Updated: 2024/01/29 12:56:19 by vdenisse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
+
 //long line arguments wil be given in a linked list of tokens
-//need to make sure to close fds if they would be overwritten
-//need to see what can go wrong, and what should happen if something does go wrong
-
-//TODO when to close fd's
-//1 = write
-//0 = read
-int	exec_pipe(t_token *token)
-{
-	int	filedes[2];
-	int retval;
-	t_token *tmp;
-	
-	retval = pipe(filedes);			//create pipe
-	if (retval == -1)
-		return (1);
-	tmp = token;
-	token = token->right;			//here we start with setting the right side input
-	while (token->type != COMMAND)	//we search for the command by always going left as the command cant be on the right of a token except if the token is already a command (meaning that we are on the right of a pipe)
-		token = token->left;
-	token->input = filedes[0];		//set the command of the right side of the syntax tree to use the read end of the pipe as input
-	token = tmp;
-	token = token->left;			//here we start with setting the output of the left side
-	if (token->type == PIPE)		//if we find a pipe, we need to set the output of the right side of that pipe to be the input of the first pipe
-		token = token->right;
-	while (token->type != COMMAND)	//here we can assume that there are no more pipes to the left, meaning we are in a single command, which we search for by going left
-		token = token->left;
-	token->output = filedes[1];		//we set the output side of this command to be the write end of the pipe
-	tmp->input = filedes[0];
-	tmp->output = filedes[1];
-	return (0);
-}
-/*	exec pipe
- *	RETURN VALUE
- *		the return value is equal to what the return value of the pipe() command was
-*/
-
-int	exec_redir_in(t_token *token)
-{
-	char *file;
-	t_token *redir;
-
-	redir = token;
-	file = token->right->value;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->input = open(file, O_RDONLY);
-	redir->input = token->input;
-	if (redir->output == -1)
-		return (-1);
-	return (0);
-}
-
-int	exec_redir_out(t_token *token)
-{
-	char *file;
-	t_token *redir;
-
-	redir = token;
-	file = token->right->value;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->output = open(file, O_WRONLY|O_CREAT|O_TRUNC, 00644);
-	redir->output = token->output;
-	if (redir->output == -1)
-		return (-1);
-	return (0);
-}
-
-int	exec_redir_append(t_token *token)
-{
-	char *file;
-	t_token *redir;
-
-	redir = token;
-	file = token->right->value;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->output = open(file, O_WRONLY|O_APPEND|O_CREAT);
-	redir->output = token->output;
-	if (redir->output == -1)
-		return (-1);
-	return (0);
-}
-
-/*
-int	exec_command_as_is(t_token *token)
-{
-	return (1);
-}
-*/
-int	exec_redir_heredoc(t_token *token)
-{
-	t_token *redir;
-
-	redir = token;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->input = redir->input;
-	return (0);
-}
-/*
- *	I think heredoc should be done before executing
- *	Reason : 
- *		if you run "cat << EOF > outfile"
- *		according to execution rules, outfile should be generated before the heredoc is initiated
- *		However
- *		If you cancel heredoc with control + c then you can see that the outfile is in fact not generated yet
- *
- *		if heredoc happens in a previous step, it would be logical to store the fd from which i need to reed inside of the heredoc token, so i can just copy that into the correct token
- */
 
 int	exec_command_builtin(t_token *token, t_env_list *env)
 {
@@ -127,33 +30,24 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 		return (env_builtin(token, env));
 	else if (strncmp(token->value, "exit\0", 5) == 0)
 		exit_builtin(token, env);
-	return (1);
+	return (420);
 }
-
-
-/*
- * this function will return a function pointer to the corresponding builtin that need to be executed
-*/
 
 int	exec_command(t_token *token, t_env_list *env)
 {
 	int	retval;
-/*	if (!exec_command_as_is(token))
-		return (0);
-	//try execute as is here
-	//if fail
-*/	retval = exec_command_builtin(token, env);
+
+	retval = exec_command_builtin(token, env);
 	if (!retval)
 		return (0);
-	else if (retval != 1)
+	else if (retval != 420)
 		return (retval);
-	//check built in here
-	//if fail
 	return (exec_command_file(token, env));
 }
 /*
  *	if no slashes
- * 		1. attempt to execute as is, ig to see if that executable just exists in working directory
+ * 		1. attempt to execute as is,
+			ig to see if that executable just exists in working directory
  * 		2. check if built in
  * 		3. look in $path
  * 	if any of prev = succes or contains slashes
@@ -169,17 +63,17 @@ int	exec_command(t_token *token, t_env_list *env)
 
 int	execute(t_token *token, t_env_list *env)
 {
-	if (token->type == PIPE)				// |
+	if (token->type == PIPE)
 		return (exec_pipe(token));
-	else if (token->type == REDIR_IN)		// <
+	else if (token->type == REDIR_IN)
 		return (exec_redir_in(token));
-	else if (token->type == REDIR_OUT)		// >
+	else if (token->type == REDIR_OUT)
 		return (exec_redir_out(token));
-	else if (token->type == REDIR_HEREDOC)	// <<
+	else if (token->type == REDIR_HEREDOC)
 		return (exec_redir_heredoc(token));
-	else if (token->type == REDIR_APPEND)	// >>
+	else if (token->type == REDIR_APPEND)
 		return (exec_redir_append(token));
-	else if (token->type == COMMAND)		// CMD
+	else if (token->type == COMMAND)
 		return (exec_command(token, env));
 	return (1);
 }
@@ -187,34 +81,22 @@ int	execute(t_token *token, t_env_list *env)
 int	exec_token(t_token *token, t_env_list *env)
 {
 	int	retval;
+
 	retval = execute(token, env);
 	if (token->output != 1)
 		close(token->output);
-	if (retval)
-		return (retval);
 	if (token->left && token->left->type != ARGUMENT)
 		retval = exec_token(token->left, env);
-	if (retval)
-		return (retval);
-	if (token->right && token->right->type != ARGUMENT) // this should only happen after a pipe, otherwise the token to the right will always be an argument
+	if (token->right && token->right->type != ARGUMENT)
 		retval = exec_token(token->right, env);
 	return (retval);
 }
 
-int	exec_heredocs(t_token *head)
-{
-	if (head->left)
-		exec_heredocs(head->left);
-	if (head->right)
-		exec_heredocs(head->right);
-	if (head->type == REDIR_HEREDOC)
-		read_heredoc(head);
-
-	return (0);
-}
-
 int	executor(t_token *token, t_env_list *env)
 {
+	int	retval;
+
 	exec_heredocs(token);
-	return (exec_token(token, env));
+	retval = exec_token(token, env);
+	return (retval);
 }

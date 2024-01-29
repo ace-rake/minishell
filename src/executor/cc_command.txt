@@ -1,1 +1,0 @@
-cc  -o executor built_in.c exec_file.c ../prep/read_input.c executor.c test_main.c utils.c ../prep/env_parser.c -lreadline  libft.a -g
