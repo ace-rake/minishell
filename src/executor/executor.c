@@ -127,7 +127,7 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 		return (env_builtin(token, env));
 	else if (strncmp(token->value, "exit\0", 5) == 0)
 		exit_builtin(token, env);
-	return (1);
+	return (420);
 }
 
 
@@ -145,7 +145,7 @@ int	exec_command(t_token *token, t_env_list *env)
 */	retval = exec_command_builtin(token, env);
 	if (!retval)
 		return (0);
-	else if (retval != 1)
+	else if (retval != 420)
 		return (retval);
 	//check built in here
 	//if fail
