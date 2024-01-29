@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/24 14:57:31 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:22:42 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	exec_child(t_token *token, char *cmd_path, char **args)
 	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output, STDOUT_FILENO) == -1 )
 		exit(errno);
 	execve(cmd_path, args,NULL);
-	exit(1);
+	exit(127);
 }
 
 
@@ -37,6 +37,7 @@ int check_child(int *child_status)
 int	exec_command_file(t_token *token, t_env_list *env)
 {
 	char *cmd_path;
+	int status;
 
 	//used for execve and child
 	if (ft_strchr(token->value, '/') == NULL)
@@ -64,18 +65,19 @@ int	exec_command_file(t_token *token, t_env_list *env)
 
 	g_in_command = 1;
 	child = fork();
+	status = 0;
 	if (child == 0)
 		exec_child(token, cmd_path, args);
 	else if (child > 0)
 	{
-		int status;
 		waitpid(child, &status, 0);
 		g_in_command = 0;
 		free(cmd_path);
 		free(args);
-		if (check_child(&status))
-			return (status);
+		check_child(&status);
 	}
-	return (0);
+	if (status == 14)
+		ft_printf("status : [%i]\n%s: command not found\n",status,  token->value);
+	return (status);
 }
 
