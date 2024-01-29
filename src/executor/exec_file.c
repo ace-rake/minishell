@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 10:28:42 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:37:50 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ int	exec_command_file(t_token *token, t_env_list *env)
 
 	pid_t child;
 
+	status = 127;
+	if (cmd_path)
+	{
 	g_in_command = 1;
 	child = fork();
 	status = 0;
@@ -76,8 +79,9 @@ int	exec_command_file(t_token *token, t_env_list *env)
 		free(args);
 		check_child(&status);
 	}
-	if (status == 127)
-		ft_printf("status : [%i]\n%s: command not found\n",status,  token->value);
+	}
+	else
+		ft_printf("%s: command not found\n", token->value);
 	return (status);
 }
 
