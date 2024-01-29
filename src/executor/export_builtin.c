@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:28:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/26 13:29:16 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/29 11:27:00 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,69 +34,6 @@ int	print_export(t_token *token, t_env_list *env)
 	return (0);
 }
 
-int	append_to_var(t_env_list *env,char *val_to_append, char *var)
-{
-	t_env_list *node;
-	char *tmp;
-
-	node = get_env_node(env, var);
-	tmp = node->val;
-	node->val = ft_strjoin(tmp, val_to_append);
-	free(tmp);
-	return (0);
-}
-
-int	old(t_token *token, t_env_list *env)
-{
-	t_token *tmp;
-	char *val;
-	char *var;
-	int	append;
-	t_env_list *node;
-
-	tmp = token;
-	while (tmp->parent)
-		tmp = tmp->parent;
-	if (tmp->type == PIPE)
-		return (0);
-	if (!token->right)
-		print_export(token, env);
-	else
-	{
-		while (token->right)
-		{
-			token = token->right;
-			val = ft_strchr(token->value, '=');
-			append = 0;
-			if (val - 1 && *(val - 1) == '+')
-				append = 1;
-			if (val)
-			{
-				var = ft_substr(token->value, 0, val - token->value - append);
-				val++;
-				node = get_env_node(env, var);
-				if (!node)
-					env_add_back(&env, env_node_con(var,val,true));
-				else if (append)
-					append_to_var(env, val, var);
-				else
-				{
-					free(node->val);
-					node->val = ft_strdup(val);
-				}
-				free(var);
-			}
-			else
-			{
-				node = get_env_node(env, token->value);
-				if (node)
-					node->exported = true;
-			}
-		}
-	}
-	return (0);
-}
-
 bool	check_elder_parent(t_token *token)
 {
 	while (token->parent)
@@ -108,9 +45,28 @@ bool	check_elder_parent(t_token *token)
 
 bool	syntax_check(t_token *token)
 {
-	(void)token;
+	char *valid;
+	int index;
+
+	if (!token)
+		return (false);
+	valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+	if (ft_strchr(valid, token->value[0]) == NULL)
+		return (true);
+	valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_123456789";
+	index = 0;
+	while (token->value[++index] && token->value[index] != '=')
+		if (ft_strchr(valid, token->value[index]) == NULL)
+			return (true);
 	return (false);
 }
+/*
+ * tings to shek
+ *		START with beeg or smoll letta or with undascore
+ *	after first
+ *		can be any letta, numba, undascore
+ *
+ */
 
 int	get_var_and_val(char **var, char **val, t_token *token)
 {
@@ -178,8 +134,15 @@ int	export_builtin(t_token *token, t_env_list *env, bool export)
 	int	type;
 	t_env_list *node;
 
-	if (check_elder_parent(token) | syntax_check(token))
+	if (check_elder_parent(token))
 		return (0);
+	if (syntax_check(token->right))
+	{
+		ft_putstr_fd("minishell: export: ", 2);
+		ft_putstr_fd(token->right->value, 2);
+		ft_putstr_fd(": not a valid identifier\n", 2);
+		return (1);
+	}
 	type = get_var_and_val(&var, &val, token->right);
 	if (type == 0)
 		return (print_export(token, env));
