@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:39:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 12:56:19 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/30 11:00:13 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 	else if (strncmp(token->value, "env\0", 4) == 0)
 		return (env_builtin(token, env));
 	else if (strncmp(token->value, "exit\0", 5) == 0)
-		exit_builtin(token, env);
+		return (exit_builtin(token, env));
 	return (420);
 }
 
@@ -83,7 +83,7 @@ int	exec_token(t_token *token, t_env_list *env)
 	int	retval;
 
 	retval = execute(token, env);
-	if (token->output != 1)
+	if (token->output != 1 && token->type != PIPE && token->type != REDIR_APPEND && token->type != REDIR_OUT)
 		close(token->output);
 	if (token->left && token->left->type != ARGUMENT)
 		retval = exec_token(token->left, env);

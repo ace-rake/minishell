@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:16:24 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 13:27:13 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/30 11:48:56 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	echo_builtin(t_token *token)
 	char	**token_chain;
 	int		iter;
 
-	set_fd(token);
 	option = false;
 	echo_check_option(&token, &option);
 	if (token->right)
@@ -57,7 +56,7 @@ int	echo_builtin(t_token *token)
 		free(token_chain);
 	}
 	if (!option)
-		write(1, "\n", token->output);
+		write(token->output, "\n", 1);
 	return (0);
 }
 //TODO token_chain_to_array can fail
