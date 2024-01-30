@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/30 11:09:19 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/30 16:38:10 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	cd_builtin(t_token *token, t_env_list *env)
 	if (chdir(path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(token->right->value, 2);
+		ft_putstr_fd(path, 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		return (1);
 	}
