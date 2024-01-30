@@ -92,7 +92,8 @@ typedef struct	s_expander_utils
 	int					i;
 	char				*original;
 	char				*result;
-	char				*variable;
+	char				*variable_name;
+	char				*variable_value;
 	char				*before;
 	char				*after;
 	char				*temp;
