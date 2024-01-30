@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/29 14:46:00 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/30 10:40:21 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	handle_dollar_sign(t_expander_utils *u)
 		u->temp = u->result;
 		u->result = ft_strjoin(u->result, u->after);
 		free(u->variable);
-		free(u->variable);
 		free(u->before);
 		free(u->after);
 		free(u->temp);
@@ -60,7 +59,7 @@ int	handle_dollar_sign(t_expander_utils *u)
 	}
 	else
 	{
-		//TODO: handle variable expansions
+		//TODO: toggle variable expansions
 	}
 	return (1);
 }
