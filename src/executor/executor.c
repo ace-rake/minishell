@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:39:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/30 10:54:57 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/30 11:00:13 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 	else if (strncmp(token->value, "env\0", 4) == 0)
 		return (env_builtin(token, env));
 	else if (strncmp(token->value, "exit\0", 5) == 0)
-		exit_builtin(token, env);
+		return (exit_builtin(token, env));
 	return (420);
 }
 

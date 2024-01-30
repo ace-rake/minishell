@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 13:33:18 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/30 10:42:45 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	get_args(token, env, &cmd_path, &args);
 	status = 127;
 	if (cmd_path)
-		create_child(token, args, cmd_path);
+		status = create_child(token, args, cmd_path);
 	else
 		ft_printf("%s: command not found\n", token->value);
 	return (status);
