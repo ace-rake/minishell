@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:09:40 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/22 11:30:53 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:56:07 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token *parse_commands(t_token **tokens)
 			command = tokens[i];
 			if (i >= 2 && tokens[i - 1]->type == ARGUMENT && token_is_redirection(tokens[i - 2]))
 			{
-				redirection = tokens[i];
+				redirection = tokens[i - 2];
 				redirection->left = command;
 				command->parent = redirection;
 			}
