@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/30 16:38:10 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:41:42 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	cd_builtin(t_token *token, t_env_list *env)
 {
 	char	*path;
 
-	set_fd(token);
 	if (token->right && token->right->right)
 	{
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
@@ -103,13 +102,12 @@ int	pwd_builtin(t_token *token)
 {
 	char	*retval;
 
-	set_fd(token);
 	retval = getcwd(NULL, 0);
 	if (!retval)
 	{
 		return (errno);
 	}
-	ft_printf("%s\n", retval);
+	ft_putendl_fd(retval, token->output);
 	free(retval);
 	return (0);
 }
@@ -118,7 +116,6 @@ int	env_builtin(t_token *token, t_env_list *env)
 {
 	if (get_env_node(env, "PATH") == NULL)
 		return (127);
-	set_fd(token);
 	while (env)
 	{
 		if (env->exported == true && env->val)
