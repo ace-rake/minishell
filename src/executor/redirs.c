@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:53:09 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 12:59:27 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:10:50 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,13 @@ int	exec_redir_in(t_token *token)
 		token = token->left;
 	token->input = open(file, O_RDONLY);
 	redir->input = token->input;
-	if (redir->output == -1)
+	if (redir->input == -1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (-1);
+	}
 	return (0);
 }
 

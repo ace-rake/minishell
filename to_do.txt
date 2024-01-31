@@ -6,13 +6,14 @@
 Victor
 
 
+< grep a somefile
 
 
 Warre
 
 TODO: ctrl-c needs to put exit code to 130
 
-cat | cat > file
+cat | cat > file && echo a | pwd > file1
 	pipe token has no *right
 
 ctrl-D in heredoc
@@ -20,3 +21,8 @@ ctrl-D in heredoc
 redir arg cmd
 	redir token has no *left to cmd
 
+<< l < file
+bash
+	opens heredoc, after heredoc closes just does nothing
+mini
+	syntax error near `|'
