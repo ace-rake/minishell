@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/30 13:58:58 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:13:36 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,27 @@ int	handle_dollar_sign(t_expander_utils *u)
 	return (1);
 }
 
+int	expand_variables(t_expander_utils *u)
+{
+	char	c;
+
+	u->i = -1;
+	while (u->original[++(u->i)])
+	{
+		c = u->original[u->i];
+		if (c == '$' && (u->quoting_status == UNQUOTED || u->quoting_status == DOUBLE_QUOTED))
+		{
+			if (!handle_dollar_sign(u))
+				return (0);
+		}
+		else if (c == '\'')
+			toggle_single_quote(u);
+		else if (c == '\"')
+			toggle_double_quote(u);
+	}
+	return (1);
+}
+
 int	remove_quotes(t_expander_utils *u, t_token *token)
 {
 	char	*no_quotes;
@@ -172,27 +193,6 @@ int	remove_quotes(t_expander_utils *u, t_token *token)
 	no_quotes[++j] = '\0';	
 	free(token->value);
 	token->value = no_quotes;
-	return (1);
-}
-
-int	expand_variables(t_expander_utils *u)
-{
-	char	c;
-
-	u->i = -1;
-	while (u->original[++(u->i)])
-	{
-		c = u->original[u->i];
-		if (c == '$' && (u->quoting_status == UNQUOTED || u->quoting_status == DOUBLE_QUOTED))
-		{
-			if (!handle_dollar_sign(u))
-				return (0);
-		}
-		else if (c == '\'')
-			toggle_single_quote(u);
-		else if (c == '\"')
-			toggle_double_quote(u);
-	}
 	return (1);
 }
 
