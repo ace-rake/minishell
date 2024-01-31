@@ -20,6 +20,7 @@ int	cmd_main(char *envs[])
     t_token *ast_head;
 	t_env_list *env;
 	char input[1024];
+	char *str;
 	int	exit_status;
 	int monitor;
 	FILE *file = fopen("commands.txt", "r" );
@@ -44,6 +45,10 @@ int	cmd_main(char *envs[])
 			exit_status = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
 		free_tokens(tokens);
+		str = readline("\nnext ? [q to stop]");
+		if (ft_strcmp(str, "q") == 0)
+			exit (0);
+		str = 0;
 	}
 	free_env(env);
 
