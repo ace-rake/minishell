@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 13:24:44 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/19 11:22:53 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:32:09 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_token *parse_redirections(t_token **tokens)
 				u.pipe->left = u.first_redirection;
 				u.first_redirection->parent = u.pipe;
 			}
+			u.pipe = tokens[i];
 			u.last_redirection = NULL;
 			u.first_redirection = NULL;
 		}
