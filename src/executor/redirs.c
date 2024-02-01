@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:53:09 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 12:46:42 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:59:39 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	exec_redir_append(t_token *token)
 
 	redir = token;
 	file = token->right->value;
-	fd = open(file, O_WRONLY | O_APPEND | O_CREAT);
+	fd = open(file, O_WRONLY | O_APPEND | O_CREAT, 00644);
 	if (fd == -1)
 		return (-1);
 	while (token && token->type != COMMAND)
