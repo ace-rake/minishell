@@ -62,10 +62,17 @@ int main(int argc, char **argv, char *envs[]) {
 	/* rl_catch_signals = 0; */
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	if (argc != 1)
+	printf("choices :\n1 : run all comands rapid fire\n2 : run all commands step by step\n3 : run non input commands rapid fire\n4 : run non input commands step by step\n");
+	char *str = readline("choice");
+	int option = ft_atoi(str);
+	if (option == 1)
+		cmd_main("commands.txt",envs, false);
+	if (option == 2)
+		cmd_main("commands.txt",envs, true);
+	if (option == 3)
 		cmd_main("commands_no_wait.txt",envs, false);
-	else
-		cmd_main("commands.txt", envs, true);
+	if (option == 4)
+		cmd_main("commands_no_wait.txt",envs, true);
 	(void)argc;
 	(void)argv;
 	(void)envs;
