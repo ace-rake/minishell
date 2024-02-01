@@ -1,0 +1,93 @@
+<< l < file
+| | | |
+nonexistent_cmd < file < nonexistent_file
+cat < file < nonexistent_file
+echo -nnnnn
+echo -n-n-n-n-n
+echo -n -n -n -n -n
+echo -nananana
+echo -n -a -n -a -n -a
+cd double args
+cd nonexistent_dir
+cd $PWD hi
+export
+echo "<3" >> "<3"
+cat < a > b
+cat < "file"
+unsert arg1 arg2
+echo < Makefile bonjour
+$EMPTY (must reset exit code)
+$EMPTY echo hi
+export HELLO=123 A- WORLD=456 (check exit code)
+echo txt > $var
+export ARG=PARAM
+export $ARG
+export var= "      world"
+echo $var
+echo bonsoir > file | cat < file
+ls > f | ls > f1
+ls | ls | ls | ls | ls | ls | ls | ls
+export var=salut > file
+exit | exit
+exit | ls
+echo a > out1| <<out2 >| cat
+echo a > out1| <<out2> | cat
+"'ec'ho" salut
+echo salut "" les "" ami
+grep echo < tests.txt > file2
+github ; Lucas Kuhn minishell tester
+file
+<>
+echo a > file1 <<
+cat > file1  < infile1  >>file2 <infile2
+echo a >| grep a
+/bin/ls
+../some_exec
+existing_file
+non_existing_file
+file1 >file2 -> create both files
+echo > file1 > file2 -> create both files and write in lastone
+
+
+THESE FUCK WITH THE ENV OR CWD
+
+unset HOME
+cd ~
+pwd
+cd /
+pwd
+cd -
+pwd
+cd ../../../../../
+pwd
+export HOME=/nfs/homes/vdenisse/Documents/git_collection/minishell
+cd ~
+pwd
+
+unset PATH
+ls
+cat file
+cat nonexistent_file
+ls | cat | ls | cat
+
+
+NOT IMPLEMENTED
+
+var="< file cat"
+var+=bonjour
+var=toi=moi
+$var="ec"
+var=salut
+var = "echo this" ; var1 = "c'est" ; var2 = 'c"est' ; $var $var $var
+
+export var="echo world"
+$var
+
+var="ec" ; $var"ho" a
+
+
+THESE FAIL
+
+
+echo a | pwd > file1
+exit

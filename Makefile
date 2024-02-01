@@ -39,7 +39,7 @@ $(NAME) : $(LIBFT_LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) -lreadline
 
 test : $(LIBFT_LIB) $(TEST_OBJ)
-	$(CC) $(CFLAGS) $(TEST_OBJ) $(LIBFT_LIB) -o test -lreadline
+	$(CC) $(CFLAGS) $(TEST_OBJ) $(LIBFT_LIB) -o test_dir/test -lreadline
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p $(@D)
