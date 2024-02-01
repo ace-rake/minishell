@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/01 15:43:29 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:45:31 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	handle_env_variable(t_expander_utils *u)
 	free(u->after);
 	free(u->temp);
 	free(u->variable_value);
+	free(u->variable_name);
 	return (1);
 }
 
