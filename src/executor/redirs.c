@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:53:09 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/31 11:10:50 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:46:42 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,24 @@ int	exec_redir_in(t_token *token)
 {
 	char	*file;
 	t_token	*redir;
+	int	fd;
 
 	redir = token;
 	file = token->right->value;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->input = open(file, O_RDONLY);
-	redir->input = token->input;
-	if (redir->input == -1)
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(file, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		return (-1);
+		return (1);
 	}
+	while (token &&token->type != COMMAND)
+		token = token->left;
+	if (!token)
+		return (0);
+	token->input = fd;
+	redir->input = token->input;
 	return (0);
 }
 
@@ -79,15 +83,19 @@ int	exec_redir_out(t_token *token)
 {
 	char	*file;
 	t_token	*redir;
+	int	fd;
 
 	redir = token;
 	file = token->right->value;
-	while (token->type != COMMAND)
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	if (fd == -1)
+		return (1);
+	while (token && token->type != COMMAND)
 		token = token->left;
-	token->output = open(file, O_WRONLY | O_CREAT | O_TRUNC, 00644);
+	if (!token)
+		return (0);
+	token->output = fd;
 	redir->output = token->output;
-	if (redir->output == -1)
-		return (-1);
 	return (0);
 }
 
@@ -95,15 +103,19 @@ int	exec_redir_append(t_token *token)
 {
 	char	*file;
 	t_token	*redir;
+	int	fd;
 
 	redir = token;
 	file = token->right->value;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->output = open(file, O_WRONLY | O_APPEND | O_CREAT);
-	redir->output = token->output;
-	if (redir->output == -1)
+	fd = open(file, O_WRONLY | O_APPEND | O_CREAT);
+	if (fd == -1)
 		return (-1);
+	while (token && token->type != COMMAND)
+		token = token->left;
+	if (!token)
+		return (0);
+	token->output = fd; 
+	redir->output = token->output;
 	return (0);
 }
 
@@ -112,8 +124,10 @@ int	exec_redir_heredoc(t_token *token)
 	t_token	*redir;
 
 	redir = token;
-	while (token->type != COMMAND)
+	while (token && token->type != COMMAND)
 		token = token->left;
+	if (!token)
+		return (0);
 	token->input = redir->input;
 	return (0);
 }
