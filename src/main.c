@@ -32,16 +32,17 @@ int	loop_main(char *envs[])
 		}
 		add_history(input);
 		monitor = tokenizer(input, &tokens);
+		free(input);
 		if (monitor)
 			monitor = lexer(tokens);
 		if (monitor)
 			monitor = parser(tokens, &ast_head);
 		if (monitor)
 			monitor = expander(tokens, env, exit_status);
+		free(tokens);
 		if (monitor)	
 			exit_status = executor(ast_head, env);
-		free(input);
-		free_tokens(tokens);
+		free_ast_tree(ast_head);
 	}
 	free_env(env);
 	rl_clear_history();
