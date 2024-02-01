@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:12 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/25 14:17:52 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:58:20 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,18 @@ static char	*check_syntax_errors(t_token **tokens)
 {
 	int		i;
 	bool	pipe_ok;
+	bool	command_present;
 
 	i = -1;
 	pipe_ok = false;
+	command_present = false;
 	while (tokens[++i])
 	{
 		if (tokens[i]->type == COMMAND)
+		{
 			pipe_ok = true;
+			command_present = true;
+		}
 		else if (tokens[i]->type == PIPE)
 		{
 			if (!pipe_ok)
@@ -39,7 +44,7 @@ static char	*check_syntax_errors(t_token **tokens)
 						+ 1] && tokens[i + 1]->type != ARGUMENT)))
 			return (tokens[i]->value);
 	}
-	if (!pipe_ok)
+	if (command_present && !pipe_ok)
 		return ("|");
 	return (NULL);
 }

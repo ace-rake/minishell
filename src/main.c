@@ -1,18 +1,7 @@
 #include "../inc/minishell.h"
 
+volatile sig_atomic_t g_exit_status = 0;
 volatile sig_atomic_t g_in_command = 0;
-
-void	sigint_handler(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	if (!g_in_command)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
 
 int	loop_main(char *envs[])
 {
@@ -20,8 +9,9 @@ int	loop_main(char *envs[])
     t_token *ast_head;
 	t_env_list *env;
 	char *input;
-	int	exit_status;
 	int monitor;
+	int exit_status;
+
 
 	exit_status = 0;
 	env = env_parser(envs);
@@ -50,11 +40,11 @@ int	loop_main(char *envs[])
 			monitor = expander(tokens, env, exit_status);
 		if (monitor)	
 			exit_status = executor(ast_head, env);
-		/* printf("retval main : [%i]\n",retval); */	
 		free(input);
 		free_tokens(tokens);
 	}
 	free_env(env);
+	rl_clear_history();
 	return (0);
 }
 

@@ -9,6 +9,7 @@
 #include "executor.h"
 #include "expander.h"
 #include "env_parser.h"
+#include "signals.h"
 #include "../libft/inc/libft.h"
 
 #include <stdbool.h>
@@ -20,6 +21,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+extern volatile sig_atomic_t g_exit_status;
 extern volatile sig_atomic_t g_in_command;
 
 #endif
