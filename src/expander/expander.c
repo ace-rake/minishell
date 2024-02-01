@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/01 15:45:31 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:47:50 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,15 @@ char	*get_variable(t_expander_utils *u)
 int	handle_env_variable(t_expander_utils *u)
 {
 	u->variable_value = get_variable(u);
-	if (!u->variable_value)
-		return (1);
-	u->before = ft_strndup(u->original, u->i);
-	u->after = (ft_strdup(u->original + u->i + ft_strlen(u->variable_name) + 1));
-	u->result = ft_strjoin(u->before, u->variable_value);
-	u->temp = u->result;
-	u->result = ft_strjoin(u->temp, u->after);
-	u->i += ft_strlen(u->variable_value - 1);
+	if (u->variable_value)
+	{
+		u->before = ft_strndup(u->original, u->i);
+		u->after = (ft_strdup(u->original + u->i + ft_strlen(u->variable_name) + 1));
+		u->result = ft_strjoin(u->before, u->variable_value);
+		u->temp = u->result;
+		u->result = ft_strjoin(u->temp, u->after);
+		u->i += ft_strlen(u->variable_value - 1);
+	}
 	free(u->before);
 	free(u->after);
 	free(u->temp);
