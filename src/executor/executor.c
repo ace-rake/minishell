@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:39:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/30 11:00:13 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:24:48 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,15 @@ int	exec_token(t_token *token, t_env_list *env)
 	int	retval;
 
 	retval = execute(token, env);
-	if (token->output != 1 && token->type != PIPE && token->type != REDIR_APPEND && token->type != REDIR_OUT)
+	if (token->output != 1 && token->type != PIPE
+		&& token->type != REDIR_APPEND && token->type != REDIR_OUT)
 		close(token->output);
+	if (retval)
+		return (retval);
 	if (token->left && token->left->type != ARGUMENT)
 		retval = exec_token(token->left, env);
+	if (retval)
+		return (retval);
 	if (token->right && token->right->type != ARGUMENT)
 		retval = exec_token(token->right, env);
 	return (retval);

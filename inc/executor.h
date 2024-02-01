@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 13:39:33 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:03:36 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ bool	syntax_check(t_token *token);
 int	set_fd(t_token *token);
 
 bool	check_elder_parent(t_token *token);
+bool is_dir(const char *str);
+int	print_error(char *file, char *error);
 
 int	handle_1(t_env_list *env, t_env_list *node, char *var);
 int	handle_2(t_env_list *env, t_env_list *node, char *var, char *val);

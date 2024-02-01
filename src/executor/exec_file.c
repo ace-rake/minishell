@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/30 10:42:45 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:06:33 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	get_args(t_token *token, t_env_list *env, char **cmd_path, char ***args)
 		*cmd_path = get_full_cmd_path(token->value, env);
 	else
 		*cmd_path = ft_strdup(token->value);
-	token_tmp.value = *cmd_path;
+	token_tmp.value = ft_strdup(*cmd_path);
 	token_tmp.right = token->right;
 	*args = token_chain_to_array(&token_tmp);
 	return (0);
@@ -74,14 +74,22 @@ int	create_child(t_token *token, char **args, char *cmd_path)
 
 int	exec_command_file(t_token *token, t_env_list *env)
 {
-	char	*cmd_path;
-	int		status;
-	char	**args;
+	char		*cmd_path;
+	int			status;
+	char		**args;
 
 	get_args(token, env, &cmd_path, &args);
 	status = 127;
 	if (cmd_path)
-		status = create_child(token, args, cmd_path);
+	{
+		if (is_dir(cmd_path))
+		{
+			print_error(token->value, ": Is a directory");
+			status = 126;
+		}
+		else
+			status = create_child(token, args, cmd_path);
+	}
 	else
 		ft_printf("%s: command not found\n", token->value);
 	return (status);
@@ -99,5 +107,5 @@ if so we must use that as the command as is
  * 	cuz we need that       
  * TMP_FIX: create tmp token with full path
  * 	to replace the actual command token
- *		 token doesnt need freeing ig
+ *			token doesnt need freeing ig
  */

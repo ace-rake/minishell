@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:36:10 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 13:36:59 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:05:51 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,22 @@ bool	syntax_check(t_token *token)
 		ft_putstr_fd("\': not a valid identifier\n", 2);
 	}
 	return (retval);
+}
+
+bool	is_dir(const char *str)
+{
+	struct stat	info;
+
+	stat(str, &info);
+	if (info.st_mode & 0040000)
+		return (true);
+	return (false);
+}
+
+int	print_error(char *file, char *error)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(file, 2);
+	ft_putendl_fd(error, 2);
+	return (1);
 }
