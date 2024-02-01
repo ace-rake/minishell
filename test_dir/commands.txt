@@ -1,4 +1,5 @@
 cat << l < file
+cat << l < file
 << l < file
 | | | |
 nonexistent_cmd < file < nonexistent_file
