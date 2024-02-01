@@ -14,7 +14,7 @@ void	sigint_handler(int signum)
 	}
 }
 
-int	cmd_main(char *envs[])
+int	cmd_main(char *file_name, char *envs[], bool wait)
 {
     t_token **tokens;
     t_token *ast_head;
@@ -23,7 +23,7 @@ int	cmd_main(char *envs[])
 	char *str;
 	int	exit_status;
 	int monitor;
-	FILE *file = fopen("commands.txt", "r" );
+	FILE *file = fopen(file_name, "r" );
 
 	exit_status = 0;
 	env = env_parser(envs);
@@ -45,10 +45,13 @@ int	cmd_main(char *envs[])
 			exit_status = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
 		free_tokens(tokens);
-		str = readline("\nnext ? [q to stop]");
-		if (ft_strcmp(str, "q") == 0)
-			exit (0);
-		str = 0;
+		if (wait)
+		{
+			str = readline("\nnext ? [q to stop]");
+			if (ft_strcmp(str, "q") == 0)
+				exit (0);
+			str = 0;
+		}
 	}
 	free_env(env);
 
@@ -59,7 +62,10 @@ int main(int argc, char **argv, char *envs[]) {
 	/* rl_catch_signals = 0; */
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	cmd_main(envs);
+	if (argc != 1)
+		cmd_main("commands_no_wait.txt",envs, false);
+	else
+		cmd_main("commands.txt", envs, true);
 	(void)argc;
 	(void)argv;
 	(void)envs;
