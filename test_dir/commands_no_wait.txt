@@ -1,4 +1,3 @@
-<< l < file
 | | | |
 nonexistent_cmd < file < nonexistent_file
 cat < file < nonexistent_file
