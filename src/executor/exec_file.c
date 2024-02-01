@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/30 10:42:45 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:03:40 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,22 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	char	*cmd_path;
 	int		status;
 	char	**args;
+	struct stat info;
 
 	get_args(token, env, &cmd_path, &args);
 	status = 127;
 	if (cmd_path)
-		status = create_child(token, args, cmd_path);
+	{
+		stat(cmd_path, &info);
+		if (info.st_mode & 0040000)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(token->value, 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+		}
+		else
+			status = create_child(token, args, cmd_path);
+	}
 	else
 		ft_printf("%s: command not found\n", token->value);
 	return (status);
