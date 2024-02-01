@@ -41,10 +41,11 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 			monitor = parser(tokens, &ast_head);
 		if (monitor)
 			monitor = expander(tokens, env, exit_status);
+		free(tokens);
 		if (monitor)	
 			exit_status = executor(ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
-		free_tokens(tokens);
+		free_ast_tree(ast_head);
 		if (wait)
 		{
 			str = readline("\nnext ? [q to stop]");
