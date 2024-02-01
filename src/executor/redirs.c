@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:53:09 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 12:59:39 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:04:46 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,14 @@ int	exec_redir_in(t_token *token)
 {
 	char	*file;
 	t_token	*redir;
-	int	fd;
+	int		fd;
 
 	redir = token;
 	file = token->right->value;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (1);
-	}
-	while (token &&token->type != COMMAND)
+		return (print_error(file, ": No such file or directory"));
+	while (token && token->type != COMMAND)
 		token = token->left;
 	if (!token)
 		return (0);
@@ -83,10 +78,12 @@ int	exec_redir_out(t_token *token)
 {
 	char	*file;
 	t_token	*redir;
-	int	fd;
+	int		fd;
 
 	redir = token;
 	file = token->right->value;
+	if (is_dir(file))
+		return (print_error(file, ": Is a directory"));
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	if (fd == -1)
 		return (1);
@@ -103,10 +100,12 @@ int	exec_redir_append(t_token *token)
 {
 	char	*file;
 	t_token	*redir;
-	int	fd;
+	int		fd;
 
 	redir = token;
 	file = token->right->value;
+	if (is_dir(file))
+		return (print_error(file, ": Is a directory"));
 	fd = open(file, O_WRONLY | O_APPEND | O_CREAT, 00644);
 	if (fd == -1)
 		return (-1);
@@ -114,7 +113,7 @@ int	exec_redir_append(t_token *token)
 		token = token->left;
 	if (!token)
 		return (0);
-	token->output = fd; 
+	token->output = fd;
 	redir->output = token->output;
 	return (0);
 }

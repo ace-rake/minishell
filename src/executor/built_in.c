@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/31 11:41:42 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:23:40 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,12 @@ int	cd_builtin(t_token *token, t_env_list *env)
 	if (token->right)
 		path = token->right->value;
 	else
-	{ 
+	{
 		path = get_env_val(env, "HOME");
 		if (!path)
-		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 1);
+		if (!path)
 			return (0);
-		}
 	}
 	if (chdir(path) == -1)
 	{
