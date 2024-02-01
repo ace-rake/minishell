@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 14:23:40 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:05:25 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ int	unset_builtin(t_token *token, t_env_list *env)
 	return (0);
 }
 
-int	exit_builtin(t_token *token, t_env_list *env)
+int	exit_builtin(t_token **tokens, t_token *token, t_env_list *env)
 {
 	while (token->parent)
 		token = token->parent;
 	if (token->type == PIPE)
 		return (0);
 	free_env(env);
-	free_ast_tree(token);
+	free_tokens(tokens);
 	if (!token->right)
 		exit(0);
 	exit(ft_atoi(token->right->value));

@@ -39,10 +39,9 @@ int	loop_main(char *envs[])
 			monitor = parser(tokens, &ast_head);
 		if (monitor)
 			monitor = expander(tokens, env, exit_status);
-		free(tokens);
 		if (monitor)	
-			exit_status = executor(ast_head, env);
-		free_ast_tree(ast_head);
+			exit_status = executor(tokens, ast_head, env);
+		free_tokens(tokens);
 	}
 	free_env(env);
 	rl_clear_history();

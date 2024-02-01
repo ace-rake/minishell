@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:39:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 14:24:48 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:09:23 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //long line arguments wil be given in a linked list of tokens
 
-int	exec_command_builtin(t_token *token, t_env_list *env)
+int	exec_command_builtin(t_token **tokens, t_token *token, t_env_list *env)
 {
 	if (strncmp(token->value, "echo\0", 5) == 0)
 		return (echo_builtin(token));
@@ -29,15 +29,15 @@ int	exec_command_builtin(t_token *token, t_env_list *env)
 	else if (strncmp(token->value, "env\0", 4) == 0)
 		return (env_builtin(token, env));
 	else if (strncmp(token->value, "exit\0", 5) == 0)
-		return (exit_builtin(token, env));
+		return (exit_builtin(tokens, token, env));
 	return (420);
 }
 
-int	exec_command(t_token *token, t_env_list *env)
+int	exec_command(t_token **tokens, t_token *token, t_env_list *env)
 {
 	int	retval;
 
-	retval = exec_command_builtin(token, env);
+	retval = exec_command_builtin(tokens, token, env);
 	if (!retval)
 		return (0);
 	else if (retval != 420)
@@ -61,7 +61,7 @@ int	exec_command(t_token *token, t_env_list *env)
  *		
 */
 
-int	execute(t_token *token, t_env_list *env)
+int	execute(t_token **tokens, t_token *token, t_env_list *env)
 {
 	if (token->type == PIPE)
 		return (exec_pipe(token));
@@ -74,34 +74,34 @@ int	execute(t_token *token, t_env_list *env)
 	else if (token->type == REDIR_APPEND)
 		return (exec_redir_append(token));
 	else if (token->type == COMMAND)
-		return (exec_command(token, env));
+		return (exec_command(tokens, token, env));
 	return (1);
 }
 
-int	exec_token(t_token *token, t_env_list *env)
+int	exec_token(t_token **tokens, t_token *token, t_env_list *env)
 {
 	int	retval;
 
-	retval = execute(token, env);
+	retval = execute(tokens, token, env);
 	if (token->output != 1 && token->type != PIPE
 		&& token->type != REDIR_APPEND && token->type != REDIR_OUT)
 		close(token->output);
 	if (retval)
 		return (retval);
 	if (token->left && token->left->type != ARGUMENT)
-		retval = exec_token(token->left, env);
+		retval = exec_token(tokens, token->left, env);
 	if (retval)
 		return (retval);
 	if (token->right && token->right->type != ARGUMENT)
-		retval = exec_token(token->right, env);
+		retval = exec_token(tokens, token->right, env);
 	return (retval);
 }
 
-int	executor(t_token *token, t_env_list *env)
+int	executor(t_token **tokens, t_token *token, t_env_list *env)
 {
 	int	retval;
 
 	exec_heredocs(token);
-	retval = exec_token(token, env);
+	retval = exec_token(tokens, token, env);
 	return (retval);
 }
