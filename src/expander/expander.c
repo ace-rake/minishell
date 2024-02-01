@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/30 14:13:36 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/01 15:43:29 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,11 @@ int	handle_env_variable(t_expander_utils *u)
 	u->result = ft_strjoin(u->before, u->variable_value);
 	u->temp = u->result;
 	u->result = ft_strjoin(u->temp, u->after);
+	u->i += ft_strlen(u->variable_value - 1);
 	free(u->before);
 	free(u->after);
 	free(u->temp);
-	u->i += ft_strlen(u->variable_value - 1);
+	free(u->variable_value);
 	return (1);
 }
 
