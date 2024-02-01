@@ -1,4 +1,3 @@
-cat << l < file
 << l < file
 | | | |
 nonexistent_cmd < file < nonexistent_file
@@ -15,8 +14,6 @@ export
 echo "<3" >> "<3"
 cat < a > b
 cat < "file"
-cat | cat | ls
-cat > f1 | cat > f2 | ls
 unsert arg1 arg2
 echo < Makefile bonjour
 $EMPTY (must reset exit code)
@@ -38,28 +35,18 @@ echo a > out1| <<out2> | cat
 "'ec'ho" salut
 echo salut "" les "" ami
 grep echo < tests.txt > file2
-cat | cat | ls
-cat | cat |
 github ; Lucas Kuhn minishell tester
 file
 <>
 echo a > file1 <<
 cat > file1  < infile1  >>file2 <infile2
-echo a > file1 | grep a
-grep a
-./minishell
-cat << "st""op"
-cat << "st"op
 echo a >| grep a
-cat |< file1
-cat | < file1
 /bin/ls
 ../some_exec
 existing_file
 non_existing_file
 file1 >file2 -> create both files
 echo > file1 > file2 -> create both files and write in lastone
-""<<123
 
 
 THESE FUCK WITH THE ENV OR CWD
@@ -102,11 +89,5 @@ var="ec" ; $var"ho" a
 THESE FAIL
 
 
-cat | cat > file
-cat << $HOME
-
-<< "<<" cat
-<< "stop" cat -> dont expand values in the heredoc
-<< stop cat -> expand values in the heredoc
 echo a | pwd > file1
 exit
