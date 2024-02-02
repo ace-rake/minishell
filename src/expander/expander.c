@@ -6,143 +6,13 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/01 15:47:50 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/02 12:20:38 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_expander_utils(t_expander_utils *u, t_env_list *env, int exit_status)
-{
-	u->quoting_status = UNQUOTED;
-	u->env = env;
-	u->exit_status = exit_status;
-	u->original = NULL;
-	u->result = NULL;
-	u->variable_name = NULL;
-	u->variable_value = NULL;
-	u->before = NULL;
-	u->after = NULL;
-	u->temp = NULL;
-}
-
-void	reset_expander_utils(t_expander_utils *u)
-{
-	u->quoting_status = UNQUOTED;
-	u->original = NULL;
-	u->result = NULL;
-	u->variable_name = NULL;
-	u->variable_value = NULL;
-	u->before = NULL;
-	u->after = NULL;
-	u->temp = NULL;
-}
-
-void	toggle_single_quote(t_expander_utils *u)
-{
-	if (u->quoting_status == SINGLE_QUOTED)
-		u->quoting_status = UNQUOTED;
-	else if (u->quoting_status == UNQUOTED)
-		u->quoting_status = SINGLE_QUOTED;
-}
-
-void	toggle_double_quote(t_expander_utils *u)
-{
-	if (u->quoting_status == DOUBLE_QUOTED)
-		u->quoting_status = UNQUOTED;
-	else if (u->quoting_status == UNQUOTED)
-		u->quoting_status = DOUBLE_QUOTED;
-}
-
-int	handle_questionmark(t_expander_utils *u)
-{
-	u->variable_value = ft_itoa(u->exit_status);
-	u->before = ft_strndup(u->original, u->i);
-	u->after = ft_strdup(u->original + u->i + 2);
-	u->result = ft_strjoin(u->before, u->variable_value);
-	u->temp = u->result;
-	u->result = ft_strjoin(u->temp, u->after);
-	free(u->variable_value);
-	free(u->before);
-	free(u->after);
-	free(u->temp);
-	u->i += ft_strlen(u->variable_value);
-	return (1);
-}
-
-int	is_valid_start(char c)
-{
-	return (ft_isalpha(c) || c == '_');
-}
-
-int	is_valid_char(char c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
-
-char	*get_variable_name(t_expander_utils *u)
-{
-	int	start;
-	int	len;
-
-	start = u->i + 1;
-	len = 0;
-	if (!is_valid_start(u->original[start]))
-		return (NULL);
-	while (u->original[start + len] && is_valid_char(u->original[start + len]))
-		len++;
-	return (ft_strndup(u->original + start, len));
-}
-
-char	*get_variable_value(t_expander_utils *u, char *variable_name)
-{
-	t_env_list	*current;
-
-	current = u->env;
-	while (current != NULL)
-	{
-		if (ft_strcmp(current->var, variable_name) == 0)
-		{
-			if (current->val)
-				return (ft_strdup(current->val));
-			else
-				return (ft_strdup(""));
-		}
-		current = current->next;
-	}
-	return (ft_strdup(""));
-}
-
-char	*get_variable(t_expander_utils *u)
-{
-	u->variable_name = get_variable_name(u);
-	if (!u->variable_name)
-		return (NULL);
-	return (get_variable_value(u, u->variable_name));
-
-}
-
-int	handle_env_variable(t_expander_utils *u)
-{
-	u->variable_value = get_variable(u);
-	if (u->variable_value)
-	{
-		u->before = ft_strndup(u->original, u->i);
-		u->after = (ft_strdup(u->original + u->i + ft_strlen(u->variable_name) + 1));
-		u->result = ft_strjoin(u->before, u->variable_value);
-		u->temp = u->result;
-		u->result = ft_strjoin(u->temp, u->after);
-		u->i += ft_strlen(u->variable_value - 1);
-	}
-	free(u->before);
-	free(u->after);
-	free(u->temp);
-	free(u->variable_value);
-	free(u->variable_name);
-	return (1);
-}
-
-int	handle_dollar_sign(t_expander_utils *u)
+static int	handle_dollar_sign(t_expander_utils *u)
 {
 	if (u->original[u->i + 1] && u->original[u->i + 1] == '?')
 		handle_questionmark(u);
@@ -151,7 +21,7 @@ int	handle_dollar_sign(t_expander_utils *u)
 	return (1);
 }
 
-int	expand_variables(t_expander_utils *u)
+static int	expand_variables(t_expander_utils *u)
 {
 	char	c;
 
@@ -172,7 +42,7 @@ int	expand_variables(t_expander_utils *u)
 	return (1);
 }
 
-int	remove_quotes(t_expander_utils *u, t_token *token)
+static int	remove_quotes(t_expander_utils *u, t_token *token)
 {
 	char	*no_quotes;
 	int	i;
@@ -204,12 +74,12 @@ int	expander(t_token **tokens, t_env_list *env, int exit_status)
 	t_expander_utils	u;
 	int		i;
 
-	init_expander_utils(&u, env, exit_status);
 	i = -1;
 	while (tokens[++i])
 	{
 		if (tokens[i]->type == ARGUMENT || tokens[i]->type == COMMAND)
 		{
+			init_expander_utils(&u, env, exit_status);
 			u.original = tokens[i]->value;
 			if (!expand_variables(&u))
 				return (0);
@@ -220,7 +90,6 @@ int	expander(t_token **tokens, t_env_list *env, int exit_status)
 			}
 			if (!remove_quotes(&u, tokens[i]))
 				return (0);
-			reset_expander_utils(&u);
 		}
 	}
 	return (1);
