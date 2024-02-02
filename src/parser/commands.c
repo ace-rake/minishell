@@ -12,12 +12,12 @@
 
 #include "parser.h"
 
-t_token *parse_commands(t_token **tokens)
+t_token	*parse_commands(t_token **tokens)
 {
 	t_token	*command;
 	t_token	*redirection;
 	t_token	*pipe;
-	int	i;
+	int		i;
 
 	command = NULL;
 	redirection = NULL;
@@ -28,7 +28,8 @@ t_token *parse_commands(t_token **tokens)
 		if (tokens[i]->type == COMMAND)
 		{
 			command = tokens[i];
-			if (i >= 2 && tokens[i - 1]->type == ARGUMENT && token_is_redirection(tokens[i - 2]))
+			if (i >= 2 && tokens[i - 1]->type == ARGUMENT
+				&& token_is_redirection(tokens[i - 2]))
 			{
 				redirection = tokens[i - 2];
 				redirection->left = command;

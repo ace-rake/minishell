@@ -12,10 +12,10 @@
 
 #include "parser.h"
 
-t_token *parse_pipes(t_token **tokens)
+t_token	*parse_pipes(t_token **tokens)
 {
-	t_token *pipe;
-	int	i;
+	t_token	*pipe;
+	int		i;
 
 	pipe = NULL;
 	i = -1;

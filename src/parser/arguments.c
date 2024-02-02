@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:34:57 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/22 12:09:46 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/02 10:56:15 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void	link_redirection_arguments(t_token **tokens)
 	i = -1;
 	while (tokens[++i])
 	{
-		if (token_is_redirection(tokens[i]) && tokens[i + 1] && tokens[i + 1]->type == ARGUMENT)
+		if (token_is_redirection(tokens[i]) && tokens[i + 1] && tokens[i
+				+ 1]->type == ARGUMENT)
 		{
 			tokens[i]->right = tokens[i + 1];
 			tokens[i + 1]->parent = tokens[i];
@@ -29,7 +30,7 @@ static void	link_redirection_arguments(t_token **tokens)
 
 static void	link_command_arguments(t_token **tokens)
 {
-	int	i;
+	int		i;
 	t_token	*parent;
 
 	i = -1;

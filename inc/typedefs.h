@@ -84,6 +84,14 @@ typedef struct s_parser_utils_redir
 	int		i;
 }					t_parser_utils_redir;
 
+typedef struct s_parser_utils_commands
+{
+	t_token	*command;
+	t_token	*redirection;
+	t_token	*pipe;
+	int		i;
+}					t_parser_utils_commands;
+
 typedef struct	s_expander_utils
 {
 	t_quoting_status	quoting_status;

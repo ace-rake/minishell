@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:05:58 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/25 14:19:15 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/02 10:35:16 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,3 @@ int	lexer(t_token **tokens)
 	mark_commands_and_arguments(tokens);
 	return (syntax_ok(tokens));
 }
-
