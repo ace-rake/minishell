@@ -6,73 +6,76 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:09:40 by wdevries          #+#    #+#             */
-/*   Updated: 2024/01/31 12:56:07 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/02 11:33:40 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_token	*parse_commands(t_token **tokens)
+static void	handle_pipe(t_token **tokens, t_parser_utils_commands *u)
 {
-	t_token	*command;
-	t_token	*redirection;
-	t_token	*pipe;
-	int		i;
-
-	command = NULL;
-	redirection = NULL;
-	pipe = NULL;
-	i = -1;
-	while (tokens[++i])
+	if (u->redirection)
 	{
-		if (tokens[i]->type == COMMAND)
+		u->redirection = NULL;
+		u->pipe = tokens[u->i];
+	}
+	else if (!u->pipe)
+	{
+		u->pipe = tokens[u->i];
+		u->pipe->left = u->command;
+		u->command->parent = tokens[u->i];
+	}
+	else if (u->pipe)
+	{
+		u->pipe->right = u->command;
+		u->command->parent = tokens[u->i];
+		u->pipe = tokens[u->i];
+	}
+}
+
+static void	handle_command(t_token **tokens, t_parser_utils_commands *u)
+{
+	u->command = tokens[u->i];
+	if (u->i >= 2 && tokens[u->i - 1]->type == ARGUMENT
+		&& token_is_redirection(tokens[u->i - 2]))
+	{
+		u->redirection = tokens[u->i - 2];
+		u->redirection->left = u->command;
+		u->command->parent = u->redirection;
+	}
+	else
+	{
+		while (tokens[u->i + 1] && tokens[++u->i]->type != PIPE)
 		{
-			command = tokens[i];
-			if (i >= 2 && tokens[i - 1]->type == ARGUMENT
-				&& token_is_redirection(tokens[i - 2]))
+			if (token_is_redirection(tokens[u->i]) && !tokens[u->i]->left)
 			{
-				redirection = tokens[i - 2];
-				redirection->left = command;
-				command->parent = redirection;
-			}
-			else
-			{
-				while (tokens[i + 1] && tokens[++i]->type != PIPE)
-				{
-					if (token_is_redirection(tokens[i]) && !tokens[i]->left)
-					{
-						redirection = tokens[i];
-						redirection->left = command;
-						command->parent = redirection;
-					}
-				}
-				if (tokens[i] && tokens[i]->type == PIPE)
-				{
-					if (redirection)
-					{
-						redirection = NULL;
-						pipe = tokens[i];
-					}
-					else if (!pipe)
-					{
-						pipe = tokens[i];
-						pipe->left = command;
-						command->parent = tokens[i];
-					}
-					else if (pipe)
-					{
-						pipe->right = command;
-						command->parent = tokens[i];
-						pipe = tokens[i];
-					}
-				}
+				u->redirection = tokens[u->i];
+				u->redirection->left = u->command;
+				u->command->parent = u->redirection;
 			}
 		}
+		if (tokens[u->i] && tokens[u->i]->type == PIPE)
+			handle_pipe(tokens, u);
 	}
-	if (pipe && command && !command->parent)
+}
+
+t_token	*parse_commands(t_token **tokens)
+{
+	t_parser_utils_commands	u;
+
+	u.command = NULL;
+	u.redirection = NULL;
+	u.pipe = NULL;
+	u.i = -1;
+	while (tokens[++(u.i)])
 	{
-		pipe->right = command;
-		command->parent = pipe;
+		if (tokens[u.i]->type == COMMAND)
+			handle_command(tokens, &u);
 	}
-	return (command);
+	if (u.pipe && u.command && !u.command->parent)
+	{
+		u.pipe->right = u.command;
+		u.command->parent = u.pipe;
+	}
+	return (u.command);
 }
