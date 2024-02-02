@@ -29,7 +29,8 @@ static int	expand_variables(t_expander_utils *u)
 	while (u->original[++(u->i)])
 	{
 		c = u->original[u->i];
-		if (c == '$' && (u->quoting_status == UNQUOTED || u->quoting_status == DOUBLE_QUOTED))
+		if (c == '$' && (u->quoting_status == UNQUOTED
+				|| u->quoting_status == DOUBLE_QUOTED))
 		{
 			if (!handle_dollar_sign(u))
 				return (0);
@@ -45,8 +46,8 @@ static int	expand_variables(t_expander_utils *u)
 static int	remove_quotes(t_expander_utils *u, t_token *token)
 {
 	char	*no_quotes;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	u->quoting_status = UNQUOTED;
 	no_quotes = (char *)malloc(sizeof(char) * ft_strlen(token->value));
@@ -63,7 +64,7 @@ static int	remove_quotes(t_expander_utils *u, t_token *token)
 		else
 			no_quotes[++j] = token->value[i];
 	}
-	no_quotes[++j] = '\0';	
+	no_quotes[++j] = '\0';
 	free(token->value);
 	token->value = no_quotes;
 	return (1);
@@ -72,7 +73,7 @@ static int	remove_quotes(t_expander_utils *u, t_token *token)
 int	expander(t_token **tokens, t_env_list *env, int exit_status)
 {
 	t_expander_utils	u;
-	int		i;
+	int					i;
 
 	i = -1;
 	while (tokens[++i])

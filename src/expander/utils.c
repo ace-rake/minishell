@@ -12,7 +12,8 @@
 
 #include "expander.h"
 
-void	init_expander_utils(t_expander_utils *u, t_env_list *env, int exit_status)
+void	init_expander_utils(t_expander_utils *u, t_env_list *env,
+		int exit_status)
 {
 	u->quoting_status = UNQUOTED;
 	u->env = env;
