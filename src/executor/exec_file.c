@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/05 15:53:50 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:07:55 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	get_args(t_token *token, t_env_list *env, char **cmd_path, char ***args)
 		*cmd_path = get_full_cmd_path(token->value, env);
 	else
 		*cmd_path = ft_strdup(token->value);
+	if (!*cmd_path)
+		return (1);
 	token_tmp.value = *cmd_path;
 	token_tmp.right = token->right;
 	*args = token_chain_to_array(&token_tmp);
@@ -78,6 +80,7 @@ int	exec_command_file(t_token *token, t_env_list *env)
 	int			status;
 	char		**args;
 
+	args = 0;
 	get_args(token, env, &cmd_path, &args);
 	status = 127;
 	if (cmd_path)

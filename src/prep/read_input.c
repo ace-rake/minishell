@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/05 15:27:46 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:07:17 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ int	read_heredoc(t_token *token)
 {
 	char	*str;
 	int		filedes[2];
-	/* bool	expand_variables; */
-	/* const char *deliminator; */
-
-
 	if (pipe(filedes) == -1)
 		return (1);
 	token->input = filedes[0];
