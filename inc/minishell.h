@@ -21,7 +21,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-extern volatile sig_atomic_t g_exit_status;
-extern volatile sig_atomic_t g_in_command;
+extern t_mini g_mini;
 
 #endif

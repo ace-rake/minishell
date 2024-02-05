@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 15:45:23 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:53:50 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	create_child(t_token *token, char **args, char *cmd_path)
 	int		status;
 	pid_t	child;
 
-	g_in_command = 1;
+	g_mini.in_command = 1;
 	child = fork();
 	status = 0;
 	if (child == 0)
@@ -64,7 +64,7 @@ int	create_child(t_token *token, char **args, char *cmd_path)
 	else if (child > 0)
 	{
 		waitpid(child, &status, 0);
-		g_in_command = 0;
+		g_mini.in_command = 0;
 		free(cmd_path);
 		free(args);
 		check_child(&status);

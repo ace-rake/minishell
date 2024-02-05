@@ -6,6 +6,10 @@ NAME = minishell
 INC_DIR = ./inc/
 INCLUDES = -I $(INC_DIR)
 
+# Header files
+HDR = $(INC_DIR)typedefs.h $(INC_DIR)executor.h $(INC_DIR)expander.h $(INC_DIR)lexer.h $(INC_DIR)minishell.h $(INC_DIR)parser.h $(INC_DIR)signals.h $(INC_DIR)tokenizer.h $(INC_DIR)env_parser.h
+
+
 # Libft settings
 LIBFT_DIR = ./libft/
 LIBFT_LIB = $(LIBFT_DIR)libft.a
@@ -42,7 +46,7 @@ $(NAME) : $(LIBFT_LIB) $(OBJ)
 test : $(LIBFT_LIB) $(TEST_OBJ)
 	$(CC) $(CFLAGS) $(TEST_OBJ) $(LIBFT_LIB) -o test_dir/test -lreadline
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HDR)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIBFT_INC) -c $< -o $@
 
