@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 16:05:25 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:22:18 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ int	pwd_builtin(t_token *token)
 int	env_builtin(t_token *token, t_env_list *env)
 {
 	if (get_env_node(env, "PATH") == NULL)
+	{
+		print_error("env", ": No such file or directory");
 		return (127);
+	}
 	while (env)
 	{
 		if (env->exported == true && env->val)
