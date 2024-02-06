@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 13:29:41 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:29:46 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static char	*expand_variables_heredoc(char *str, t_env_list *env)
 	init_expander_utils(&u, env);
 	u.original = str;
 	expand_variables(&u);
-	return (u.result);
+	if (u.result)
+		return (u.result);
+	else
+		return (u.original);
 }
 
 int	heredoc_prep(t_token *token, t_env_list *env, const char **del, bool *exp)
@@ -58,6 +61,13 @@ int	read_heredoc(t_token *token, t_env_list *env)
 	str = readline(">");
 	while (ft_strcmp(str, deliminator) != 0)
 	{
+		if (!str) //ctrl-D
+		{
+			ft_putstr_fd(" minishell: warning: here_document delimited by end-of-file (wanted `", 2);
+			ft_putstr_fd((char *)deliminator, 2);
+			ft_putendl_fd("')", 2);
+			break ;
+		}
 		if (expand_variables)
 			str = expand_variables_heredoc(str, env);
 		ft_putendl_fd(str, filedes[1]);

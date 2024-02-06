@@ -46,11 +46,10 @@ int	loop_main(char *envs[])
 }
 
 int main(int argc, char **argv, char *envs[]) {
-	/* rl_catch_signals = 0; */
-	g_mini.exit_status = 0;
-	g_mini.in_command = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
+	g_mini.exit_status = 0;
+	g_mini.in_command = 0;
 	return (loop_main(envs));
 	(void)argc;
 	(void)argv;
