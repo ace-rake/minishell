@@ -32,6 +32,8 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 		ast_head = NULL;
 		fscanf(file, "%[^\n]\n", input);
 		printf("\ntesting line [%s]\n", input);
+		if (ft_strcmp(input, "exit") == 0)
+			exit(0);
 		add_history(input);
 		monitor = tokenizer(input, &tokens);
 		if (monitor)
