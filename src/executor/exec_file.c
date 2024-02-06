@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/05 16:07:55 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:49:07 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	exec_command_file(t_token *token, t_env_list *env)
 		{
 			print_error(token->value, ": Is a directory");
 			status = 126;
+			free(cmd_path);
+			free(args);
 		}
 		else
 			status = create_child(token, args, cmd_path);
