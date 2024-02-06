@@ -14,6 +14,7 @@ int	loop_main(char *envs[])
 	env = env_parser(envs);
 	while (1)
 	{
+		signal(SIGINT, sigint_handler);
 		tokens = NULL;
 		ast_head = NULL;
 		input = readline("minishell: ");
@@ -46,7 +47,6 @@ int	loop_main(char *envs[])
 }
 
 int main(int argc, char **argv, char *envs[]) {
-	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	g_mini.exit_status = 0;
 	g_mini.in_command = 0;

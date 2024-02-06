@@ -7,6 +7,7 @@ typedef struct s_mini
 {
 	int	exit_status;
 	int	in_command;
+	int	in_heredoc;
 }					t_mini;
 
 typedef enum e_token_type
