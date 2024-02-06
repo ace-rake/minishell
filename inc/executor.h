@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 16:07:24 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:57:53 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,26 @@ char **token_chain_to_array(t_token *token);
 //this token is the cmd token
 int	exec_command_file(t_token *token, t_env_list *env);
 int check_child(int *child_status);
+
+
 int	executor(t_token **tokens, t_token *token, t_env_list *env);
 
 char *get_full_cmd_path(char *cmd, t_env_list *env);
 
-int	exec_token(t_token **tokens, t_token *token, t_env_list *env);
+int	exec_token(t_token **tokens, t_token *token, t_env_list *env, char **pipes);
 
 int	env_builtin(t_token *token, t_env_list *env);
 int	cd_builtin(t_token *token, t_env_list *env);
 int	pwd_builtin(t_token *token);
 int	echo_builtin(t_token *token);
-int	exit_builtin(t_token **tokens, t_token *token, t_env_list *env);
+int	exit_builtin(t_token **tokens, t_token *token, t_env_list *env, char **p);
 int	unset_builtin(t_token *token, t_env_list *env);
 int	export_builtin(t_token *token, t_env_list *env);
 
-int	exec_pipe(t_token *token);
+int	exec_pipe(t_token *token, char **pipes);
+int	create_pipes(t_token *token, char ***pipes);
+int	destroy_deez_nuts(char **pipes);
+
 int	exec_redir_in(t_token *token);
 int	exec_redir_out(t_token *token);
 int	exec_redir_append(t_token *token);

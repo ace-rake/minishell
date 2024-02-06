@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/05 15:22:18 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:58:23 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	unset_builtin(t_token *token, t_env_list *env)
 	return (0);
 }
 
-int	exit_builtin(t_token **tokens, t_token *token, t_env_list *env)
+int	exit_builtin(t_token **tokens, t_token *token, t_env_list *env, char **p)
 {
 	while (token->parent)
 		token = token->parent;
@@ -53,6 +53,7 @@ int	exit_builtin(t_token **tokens, t_token *token, t_env_list *env)
 		return (0);
 	free_env(env);
 	free_tokens(tokens);
+	destroy_deez_nuts(p);
 	if (!token->right)
 		exit(0);
 	exit(ft_atoi(token->right->value));
