@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 14:35:37 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:37:10 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	exec_heredocs(t_token *head, t_env_list *env)
 	if (head->right)
 		exec_heredocs(head->right, env);
 	if (head->type == REDIR_HEREDOC)
+	{
 		read_heredoc(head, env);
+	}
 	return (0);
 }
