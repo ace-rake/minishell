@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:33:40 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 12:33:41 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:18:12 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@
 int	exec_command_builtin(t_token **tokens, t_token *token, t_env_list *env,
 		char **p)
 {
-	if (strncmp(token->value, "echo\0", 5) == 0)
+	if (ft_strncmp(token->value, "echo\0", 5) == 0)
 		return (echo_builtin(token));
-	else if (strncmp(token->value, "cd\0", 3) == 0)
+	else if (ft_strncmp(token->value, "cd\0", 3) == 0)
 		return (cd_builtin(token, env));
-	else if (strncmp(token->value, "pwd\0", 4) == 0)
+	else if (ft_strncmp(token->value, "pwd\0", 4) == 0)
 		return (pwd_builtin(token));
-	else if (strncmp(token->value, "export\0", 7) == 0)
+	else if (ft_strncmp(token->value, "export\0", 7) == 0)
 		return (export_builtin(token, env));
-	else if (strncmp(token->value, "unset\0", 6) == 0)
+	else if (ft_strncmp(token->value, "unset\0", 6) == 0)
 		return (unset_builtin(token, env));
-	else if (strncmp(token->value, "env\0", 4) == 0)
+	else if (ft_strncmp(token->value, "env\0", 4) == 0)
 		return (env_builtin(token, env));
-	else if (strncmp(token->value, "exit\0", 5) == 0)
+	else if (ft_strncmp(token->value, "exit\0", 5) == 0)
 		return (exit_builtin(tokens, token, env, p));
 	return (420);
 }

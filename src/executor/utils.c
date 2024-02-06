@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:14 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/01/29 14:03:25 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:17:07 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**token_chain_to_array(t_token *token)
 
 char	*get_env_val(t_env_list *env, char *var)
 {
-	while (env && strcmp(env->var, var) != 0)
+	while (env && ft_strcmp(env->var, var) != 0)
 		env = env->next;
 	if (!env)
 		return (NULL);
