@@ -41,7 +41,6 @@ echo salut "" les "" ami
 grep echo < tests.txt > file2
 cat | cat | ls
 cat | cat |
-github ; Lucas Kuhn minishell tester
 file
 <>
 echo a > file1 <<

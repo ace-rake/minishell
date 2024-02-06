@@ -1,0 +1,17 @@
+export var=salut > file
+exit | exit
+exit | ls
+echo a > out1| <<out2 >| cat
+echo a > out1| <<out2> | cat
+asd asdff
+"'ec'ho" salut
+echo salut "" les "" ami
+grep echo < tests.txt > file2
+file
+<>
+echo a > file1 <<
+cat > file1  < infile1  >>file2 <infile2
+echo a >| grep a
+/bin/ls
+../some_exec
+exit
