@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:33:40 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 15:05:52 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:10:29 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,20 @@ int	executor(t_token **tokens, t_token *token, t_env_list *env)
 {
 	int		retval;
 	char	**pipes;
+	pid_t child;
 
 	retval = 0;
 	pipes = NULL;
-	if (exec_heredocs(token, env) == 3)
-		return (130);
+	child = fork();
+	if (child == 0)
+	{
+	exec_heredocs(token, env);
+	exit (0);
+	}
+	waitpid(child, &retval, 0);
+	check_child(&retval);
+	if (retval)
+		return(retval);
 	create_pipes(token, &pipes);
 	retval = exec_token(tokens, token, env, pipes);
 	destroy_deez_nuts(pipes);
