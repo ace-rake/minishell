@@ -6,38 +6,11 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:30:33 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 12:25:04 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:21:25 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
-int	exec_pipe_old(t_token *token)
-{
-	int		filedes[2];
-	int		retval;
-	t_token	*tmp;
-
-	retval = pipe(filedes);
-	if (retval == -1)
-		return (1);
-	tmp = token;
-	token = token->right;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->input = filedes[0];
-	token = tmp;
-	token = token->left;
-	if (token->type == PIPE)
-		token = token->right;
-	while (token->type != COMMAND)
-		token = token->left;
-	token->output = filedes[1];
-	tmp->input = filedes[0];
-	tmp->output = filedes[1];
-	return (0);
-}
 
 //exec pipe
 //	RETURN VALUE
@@ -79,7 +52,7 @@ int	create_pipes(t_token *token, char ***pipes)
 	iter = 0;
 	while (iter < pipe_no)
 	{
-		(*pipes)[iter] = ft_strjoin("/tmp/deez_nuts_", ft_itoa(iter)); 
+		(*pipes)[iter] = ft_strjoin("/tmp/deez_nuts_", ft_itoa(iter));
 		iter++;
 	}
 	(*pipes)[iter] = NULL;
@@ -100,12 +73,13 @@ int	count_strs(char **strs)
 
 int	open_fds(int filedes[2], char **pipes)
 {
-	static int iter = 0;
-	int	pipe_no;
+	static int	iter;
+	int			pipe_no;
 
+	iter = 0;
 	pipe_no = count_strs(pipes);
 	filedes[0] = open(pipes[iter], O_RDONLY | O_CREAT | O_TRUNC);
-	filedes[1] = open(pipes[iter], O_WRONLY|O_CREAT|O_TRUNC);
+	filedes[1] = open(pipes[iter], O_WRONLY | O_CREAT | O_TRUNC);
 	iter++;
 	if (iter >= pipe_no)
 		iter = 0;
@@ -116,8 +90,8 @@ int	open_fds(int filedes[2], char **pipes)
 //1 is write
 int	exec_pipe(t_token *token, char **pipes)
 {
-	t_token *tmp;
-	int	filedes[2];
+	t_token	*tmp;
+	int		filedes[2];
 
 	open_fds(filedes, pipes);
 	tmp = token;
@@ -134,20 +108,5 @@ int	exec_pipe(t_token *token, char **pipes)
 	token->output = filedes[1];
 	tmp->input = filedes[0];
 	tmp->output = filedes[1];
-	return (0);
-}
-
-int	destroy_deez_nuts(char **pipes)
-{
-	int	iter;
-
-	iter = 0;
-	while (pipes[iter])
-	{
-		unlink(pipes[iter]);
-		free(pipes[iter]);
-		iter++;
-	}
-	free(pipes);
 	return (0);
 }

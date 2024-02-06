@@ -76,9 +76,9 @@ int	create_child(t_token *token, char **args, char *cmd_path)
 
 int	exec_command_file(t_token *token, t_env_list *env)
 {
-	char		*cmd_path;
-	int			status;
-	char		**args;
+	char	*cmd_path;
+	int		status;
+	char	**args;
 
 	args = 0;
 	get_args(token, env, &cmd_path, &args);

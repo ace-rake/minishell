@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:36:10 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/01 15:05:51 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:21:25 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,19 @@ int	print_error(char *file, char *error)
 	ft_putstr_fd(file, 2);
 	ft_putendl_fd(error, 2);
 	return (1);
+}
+
+int	destroy_deez_nuts(char **pipes)
+{
+	int	iter;
+
+	iter = 0;
+	while (pipes[iter])
+	{
+		unlink(pipes[iter]);
+		free(pipes[iter]);
+		iter++;
+	}
+	free(pipes);
+	return (0);
 }

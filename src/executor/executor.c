@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../inc/minishell.h"
 
 //long line arguments wil be given in a linked list of tokens
 
-int	exec_command_builtin(t_token **tokens, t_token *token, t_env_list *env, char **p)
+int	exec_command_builtin(t_token **tokens, t_token *token, t_env_list *env,
+		char **p)
 {
 	if (strncmp(token->value, "echo\0", 5) == 0)
 		return (echo_builtin(token));
@@ -34,7 +34,8 @@ int	exec_command_builtin(t_token **tokens, t_token *token, t_env_list *env, char
 	return (420);
 }
 
-int	exec_command(t_token **tokens, t_token *token, t_env_list *env, char **pipes)
+int	exec_command(t_token **tokens, t_token *token, t_env_list *env,
+		char **pipes)
 {
 	int	retval;
 
@@ -86,8 +87,8 @@ int	exec_token(t_token **tokens, t_token *token, t_env_list *env, char **pipes)
 	retval = 0;
 	if (token->value[0])
 		retval = execute(tokens, token, env, pipes);
-	if (token->output != 1 && token->type != PIPE
-		&& token->type != REDIR_APPEND && token->type != REDIR_OUT)
+	if (token->output != 1 && token->type != PIPE && token->type != REDIR_APPEND
+		&& token->type != REDIR_OUT)
 		close(token->output);
 	if (retval)
 		return (retval);
@@ -102,12 +103,12 @@ int	exec_token(t_token **tokens, t_token *token, t_env_list *env, char **pipes)
 
 int	executor(t_token **tokens, t_token *token, t_env_list *env)
 {
-	int	retval = 0;
-	char **pipes;
+	int		retval;
+	char	**pipes;
 
+	retval = 0;
 	pipes = NULL;
 	create_pipes(token, &pipes);
-
 	exec_heredocs(token, env);
 	retval = exec_token(tokens, token, env, pipes);
 	destroy_deez_nuts(pipes);
