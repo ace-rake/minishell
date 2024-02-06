@@ -73,6 +73,10 @@ int main(int argc, char **argv, char *envs[]) {
 		cmd_main("commands_no_wait.txt",envs, false);
 	if (option == 4)
 		cmd_main("commands_no_wait.txt",envs, true);
+	if (option == 5)
+		cmd_main("new_commands.txt", envs, false);
+	if (option == 6)
+		cmd_main("new_commands.txt", envs, true);
 	(void)argc;
 	(void)argv;
 	(void)envs;
