@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 11:19:18 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:40:12 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	read_heredoc(t_token *token, t_env_list *env)
 		if (expand_variables)
 			str = expand_variables_heredoc(str, env);
 		ft_putendl_fd(str, filedes[1]);
+		if (expand_variables)
+			free(str);
 		str = readline(">");
 	}
 	ft_putchar_fd('\0', filedes[1]);
