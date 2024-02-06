@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:33:40 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 14:18:12 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:05:52 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,9 @@ int	executor(t_token **tokens, t_token *token, t_env_list *env)
 
 	retval = 0;
 	pipes = NULL;
+	if (exec_heredocs(token, env) == 3)
+		return (130);
 	create_pipes(token, &pipes);
-	exec_heredocs(token, env);
 	retval = exec_token(tokens, token, env, pipes);
 	destroy_deez_nuts(pipes);
 	return (retval);
