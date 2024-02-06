@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 12:39:01 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/05 14:59:16 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:15:50 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	executor(t_token **tokens, t_token *token, t_env_list *env)
 {
 	int	retval;
 
-	exec_heredocs(token);
+	exec_heredocs(token, env);
 	retval = exec_token(tokens, token, env);
 	return (retval);
 }

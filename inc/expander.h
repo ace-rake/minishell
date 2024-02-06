@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:41 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/05 15:53:20 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:16:45 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 //expander
 int	expander(t_token **tokens, t_env_list *env);
+int	remove_quotes(t_expander_utils *u, t_token *token);
+int	expand_variables(t_expander_utils *u);
 //utils
 void	init_expander_utils(t_expander_utils *u, t_env_list *env);
 void	toggle_single_quote(t_expander_utils *u);

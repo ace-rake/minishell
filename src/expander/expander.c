@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/05 15:28:57 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:16:45 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	handle_dollar_sign(t_expander_utils *u)
 	return (1);
 }
 
-static int	expand_variables(t_expander_utils *u)
+int	expand_variables(t_expander_utils *u)
 {
 	char	c;
 
@@ -43,7 +43,7 @@ static int	expand_variables(t_expander_utils *u)
 	return (1);
 }
 
-static int	remove_quotes(t_expander_utils *u, t_token *token)
+int	remove_quotes(t_expander_utils *u, t_token *token)
 {
 	char	*no_quotes;
 	int		i;
