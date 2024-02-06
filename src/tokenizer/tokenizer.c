@@ -6,11 +6,24 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:52:18 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/02 12:32:40 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:36:05 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+
+static int	only_whitespaces(const char *input)
+{
+	int	i;
+
+	i = -1;
+	while (input[++i])
+	{
+		if (input[i] != ' ')
+			return (0);
+	}
+	return (1);
+}
 
 t_token	*create_token(char *token_value)
 {
@@ -79,6 +92,8 @@ int	tokenizer(const char *input, t_token ***tokens)
 {
 	t_tokenizer_utils	u;
 
+	if (only_whitespaces(input))
+			return (0);
 	if (!init_tokenizer_utils(&u))
 		return (0);
 	while (input[u.current])
