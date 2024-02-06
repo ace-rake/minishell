@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/02 12:20:38 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:28:57 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	remove_quotes(t_expander_utils *u, t_token *token)
 	return (1);
 }
 
-int	expander(t_token **tokens, t_env_list *env, int exit_status)
+int	expander(t_token **tokens, t_env_list *env)
 {
 	t_expander_utils	u;
 	int					i;
@@ -78,9 +78,9 @@ int	expander(t_token **tokens, t_env_list *env, int exit_status)
 	i = -1;
 	while (tokens[++i])
 	{
-		if (tokens[i]->type == ARGUMENT || tokens[i]->type == COMMAND)
+		if ((tokens[i]->type == ARGUMENT && !((tokens[i - 1] && ft_strcmp(tokens[i - 1]->value, "<<") == 0))) || tokens[i]->type == COMMAND)
 		{
-			init_expander_utils(&u, env, exit_status);
+			init_expander_utils(&u, env);
 			u.original = tokens[i]->value;
 			if (!expand_variables(&u))
 				return (0);

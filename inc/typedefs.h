@@ -3,15 +3,12 @@
 
 #include <stdbool.h>
 
-//// TYPES OF TOKENS
-// @UNDEFINED		not yet set
-// @PIPE			|
-// @REDIR_IN		<
-// @REDIR_OUT		>
-// @REDIR_HEREDOC	<<
-// @REDIC_APPEND	>>
-// @COMMAND			builtin or PATH
-// @ARGUMENT		all other
+typedef struct s_mini
+{
+	int	exit_status;
+	int	in_command;
+}					t_mini;
+
 typedef enum e_token_type
 {
 	UNDEFINED,
@@ -24,10 +21,6 @@ typedef enum e_token_type
 	ARGUMENT
 }					t_token_type;
 
-//// QUOTING STATUS
-// @UNQUOTED		default
-// @SINGLE_QUOTED	no metacharacters interpreted
-// @DOUBLE QUOTED	no metacharacters interpreted except for $
 typedef enum e_quoting_status
 {
 	UNQUOTED,
@@ -35,22 +28,13 @@ typedef enum e_quoting_status
 	DOUBLE_QUOTED,
 }					t_quoting_status;
 
-//// TOKEN STRUCT
-// @type		pipe/redic(*)/cmd/arg	
-// @status		unquoted/''/""
-// @value		string
-// @left		left child node
-// @right		right child node
-// @parent		parent node
-// @input		takes input from..
-// @output		sends output to..
 typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
 	struct s_token	*left;
 	struct s_token	*right;
-	struct s_token	*parent;// im using this one for exit
+	struct s_token	*parent;
 	short			input;
 	short			output;
 }					t_token;

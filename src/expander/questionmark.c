@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:14:50 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/02 12:15:15 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:40:03 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	handle_questionmark(t_expander_utils *u)
 {
-	u->variable_value = ft_itoa(u->exit_status);
+	u->variable_value = ft_itoa(g_mini.exit_status);
 	u->before = ft_strndup(u->original, u->i);
 	u->after = ft_strdup(u->original + u->i + 2);
 	u->result = ft_strjoin(u->before, u->variable_value);

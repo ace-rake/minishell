@@ -6,18 +6,16 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:11:13 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/02 12:12:00 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:28:31 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void	init_expander_utils(t_expander_utils *u, t_env_list *env,
-		int exit_status)
+void	init_expander_utils(t_expander_utils *u, t_env_list *env)
 {
 	u->quoting_status = UNQUOTED;
 	u->env = env;
-	u->exit_status = exit_status;
 	u->original = NULL;
 	u->result = NULL;
 	u->variable_name = NULL;

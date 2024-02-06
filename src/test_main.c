@@ -1,12 +1,13 @@
 #include "../inc/minishell.h"
 
-volatile sig_atomic_t g_in_command = 0;
+t_mini	g_mini;
 
 void	sigint_handler(int signum)
 {
 	(void)signum;
 	write(STDOUT_FILENO, "\n", 1);
-	if (!g_in_command)
+	g_mini.exit_status = 130;
+	if (!g_mini.in_command)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -19,13 +20,11 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
     t_token **tokens;
     t_token *ast_head;
 	t_env_list *env;
+	int monitor;
 	char input[1024];
 	char *str;
-	int	exit_status;
-	int monitor;
 	FILE *file = fopen(file_name, "r" );
 
-	exit_status = 0;
 	env = env_parser(envs);
 	while (1)
 	{
@@ -40,9 +39,9 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 		if (monitor)
 			monitor = parser(tokens, &ast_head);
 		if (monitor)
-			monitor = expander(tokens, env, exit_status);
+			monitor = expander(tokens, env);
 		if (monitor)	
-			exit_status = executor(tokens, ast_head, env);
+			g_mini.exit_status = executor(tokens, ast_head, env);
 		/* printf("retval main : [%i]\n",retval); */	
 		free_tokens(tokens);
 		if (wait)
