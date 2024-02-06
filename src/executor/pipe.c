@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:30:33 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 13:21:25 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:35:38 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ void	count_pipes(t_token *token, int *pipes)
 
 int	create_pipes(t_token *token, char ***pipes)
 {
-	int	pipe_no;
-	int	iter;
+	int		pipe_no;
+	int		iter;
+	char	*num;
 
 	pipe_no = 0;
 	count_pipes(token, &pipe_no);
@@ -52,7 +53,9 @@ int	create_pipes(t_token *token, char ***pipes)
 	iter = 0;
 	while (iter < pipe_no)
 	{
-		(*pipes)[iter] = ft_strjoin("/tmp/deez_nuts_", ft_itoa(iter));
+		num = ft_itoa(iter);
+		(*pipes)[iter] = ft_strjoin("/tmp/deez_nuts_", num);
+		free(num);
 		iter++;
 	}
 	(*pipes)[iter] = NULL;
