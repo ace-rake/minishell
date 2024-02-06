@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 13:20:02 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/05 15:54:14 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:32:20 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,12 @@ void	sigint_handler(int signum)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+}
+
+void	sigint_handler_heredoc(int signum)
+{
+	(void)signum;
+	write(STDOUT_FILENO, "\n", 1);
+	g_mini.exit_status = 130;
+	exit(130);
 }
