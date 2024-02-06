@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_input.c                                       :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 12:40:12 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:29:41 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static const char	*remove_quotes_heredoc(t_token *token, t_env_list *env)
 	t_expander_utils	u;
 
 	init_expander_utils(&u, env);
-	u.original = token->value;	
-	remove_quotes(&u, token); 
+	u.original = token->value;
+	remove_quotes(&u, token);
 	return (token->value);
 }
 
 static char	*expand_variables_heredoc(char *str, t_env_list *env)
 {
-	t_expander_utils u;
+	t_expander_utils	u;
 
 	init_expander_utils(&u, env);
 	u.original = str;
@@ -32,27 +32,29 @@ static char	*expand_variables_heredoc(char *str, t_env_list *env)
 	return (u.result);
 }
 
+int	heredoc_prep(t_token *token, t_env_list *env, const char **del, bool *exp)
+{
+	*exp = false;
+	if (!ft_strchr((const char *)token->right->value, '\"')
+		&& !ft_strchr((const char *)token->right->value, '\''))
+		*exp = true;
+	else
+		remove_quotes_heredoc(token->right, env);
+	*del = (const char *)token->right->value;
+	return (0);
+}
+
 int	read_heredoc(t_token *token, t_env_list *env)
 {
-	char	*str;
-	int		filedes[2];
-	const char *deliminator;
-	bool	expand_variables;
+	char		*str;
+	int			filedes[2];
+	const char	*deliminator;
+	bool		expand_variables;
 
 	if (pipe(filedes) == -1)
 		return (1);
 	token->input = filedes[0];
-	if (!ft_strchr((const char *)token->right->value, '\"') && !ft_strchr((const char *)token->right->value, '\''))
-	{
-		deliminator = (const char *)token->right->value;
-		expand_variables = true;
-	}
-	else
-	{
-		remove_quotes_heredoc(token->right, env);
-		deliminator = (const char *)token->right->value;
-		expand_variables = false;
-	}
+	heredoc_prep(token, env, &deliminator, &expand_variables);
 	str = readline(">");
 	while (ft_strcmp(str, deliminator) != 0)
 	{
@@ -78,11 +80,3 @@ int	exec_heredocs(t_token *head, t_env_list *env)
 		read_heredoc(head, env);
 	return (0);
 }
-
-/*
- * read line
- * check if VALUE
- * if not value
- * 		write \n for prev line 
- * 		and write own line
- */
