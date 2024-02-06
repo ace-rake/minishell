@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:12 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/02 10:55:18 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:10:48 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	syntax_ok(t_token **tokens)
 	{
 		printf("minishell: syntax error near unexpected token `%s\'\n",
 			error_string);
+		g_mini.exit_status = 2;
 		return (0);
 	}
 	return (1);

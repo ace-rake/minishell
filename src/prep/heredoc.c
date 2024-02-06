@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 15:37:10 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:45:48 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	read_heredoc(t_token *token, t_env_list *env)
 	str = readline(">");
 	while (ft_strcmp(str, deliminator) != 0)
 	{
-		if (!str) //ctrl-D
+		if (!str)
 		{
 			ft_putstr_fd(" minishell: warning: here-document delimited by end-of-file (wanted `", 2);
 			ft_putstr_fd((char *)deliminator, 2);
