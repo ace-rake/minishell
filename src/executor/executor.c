@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:33:40 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 12:20:42 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:27:41 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,30 +101,6 @@ int	exec_token(t_token **tokens, t_token *token, t_env_list *env, char **pipes)
 	return (retval);
 }
 
-int	set_single_here_filedes(t_token *token)
-{
-	int	filedes[2];
-
-	if (pipe(filedes) == -1)
-		return (1);
-	token->input = filedes[0];
-	token->output = filedes[1];
-	return (0);
-}
-
-int	set_here_filedes(t_token *token)
-{
-	if (token->type == REDIR_HEREDOC)
-		if (set_single_here_filedes(token))
-			return (1);
-	if (token->right)
-		if (set_here_filedes(token->right))
-			return (1);
-	if (token->left)
-		if (set_here_filedes(token->left))
-			return (1);
-	return (0);
-}
 
 int	executor(t_token **tokens, t_token *token, t_env_list *env)
 {
