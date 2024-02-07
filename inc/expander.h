@@ -13,21 +13,21 @@
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
-# include "typedefs.h"
-# include "minishell.h"
 # include "../libft/inc/libft.h"
+# include "minishell.h"
+# include "typedefs.h"
 
 //expander
-int	expander(t_token **tokens, t_env_list *env);
-int	remove_quotes(t_expander_utils *u, t_token *token);
-int	expand_variables(t_expander_utils *u);
+int		expander(t_token **tokens, t_env_list *env);
+int		remove_quotes(t_expander_utils *u, t_token *token);
+int		expand_variables(t_expander_utils *u);
 //utils
 void	init_expander_utils(t_expander_utils *u, t_env_list *env);
 void	toggle_single_quote(t_expander_utils *u);
 void	toggle_double_quote(t_expander_utils *u);
 //questionmark
-int	handle_questionmark(t_expander_utils *u);
+int		handle_questionmark(t_expander_utils *u);
 //environment
-int	handle_env_variable(t_expander_utils *u);
+int		handle_env_variable(t_expander_utils *u);
 
 #endif
