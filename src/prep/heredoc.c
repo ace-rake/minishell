@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 15:45:48 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:22:12 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,9 @@ int	heredoc_prep(t_token *token, t_env_list *env, const char **del, bool *exp)
 int	read_heredoc(t_token *token, t_env_list *env)
 {
 	char		*str;
-	int			filedes[2];
 	const char	*deliminator;
 	bool		expand_variables;
 
-	if (pipe(filedes) == -1)
-		return (1);
-	token->input = filedes[0];
 	heredoc_prep(token, env, &deliminator, &expand_variables);
 	str = readline(">");
 	while (ft_strcmp(str, deliminator) != 0)
@@ -70,13 +66,13 @@ int	read_heredoc(t_token *token, t_env_list *env)
 		}
 		if (expand_variables)
 			str = expand_variables_heredoc(str, env);
-		ft_putendl_fd(str, filedes[1]);
+		ft_putendl_fd(str, token->output);
 		if (expand_variables)
 			free(str);
 		str = readline(">");
 	}
-	ft_putchar_fd('\0', filedes[1]);
-	close(filedes[1]);
+	ft_putchar_fd('\0', token->output);
+	close(token->output);
 	return (0);
 }
 
