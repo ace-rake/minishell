@@ -13,7 +13,7 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 int	lexer(t_token **tokens);
 int	syntax_ok(t_token **tokens);
