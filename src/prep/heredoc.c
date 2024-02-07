@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 13:41:42 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:59:58 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	read_heredoc(t_token *token, t_env_list *env)
 	{
 		if (!str)
 		{
-			ft_putstr_fd(" minishell: warning: here-document delimited by end-of-file (wanted `", 2);
+			ft_putstr_fd(" minishell: warning: here-document delimited by end-\
+of-file (wanted `", 2);
 			ft_putstr_fd((char *)deliminator, 2);
 			ft_putendl_fd("')", 2);
 			break ;
@@ -88,5 +89,7 @@ int	exec_heredocs(t_token *head, t_env_list *env)
 	{
 		read_heredoc(head, env);
 	}
+	if (!head->parent)
+		exit (0);
 	return (0);
 }

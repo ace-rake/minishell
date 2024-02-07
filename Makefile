@@ -17,7 +17,7 @@ LIBFT_INC = -I $(LIBFT_DIR)inc/
 
 # Source files
 SRC_DIR = ./src/
-PREP_SRC = $(addprefix $(SRC_DIR)prep/, env_parser.c heredoc.c env_utils.c)
+PREP_SRC = $(addprefix $(SRC_DIR)prep/, env_parser.c heredoc.c heredoc_2.c env_utils.c)
 TOKENIZER_SRC = $(addprefix $(SRC_DIR)tokenizer/, tokenizer.c tokenizer_handlers.c utils.c)
 LEXER_SRC = $(addprefix $(SRC_DIR)lexer/, lexer.c syntax_checker.c)
 PARSER_SRC = $(addprefix $(SRC_DIR)parser/, parser.c pipes.c redirections.c commands.c arguments.c)
@@ -29,7 +29,7 @@ TEST_MAIN_SRC = $(SRC_DIR)test_main.c
 
 # All source files combined
 SRC = $(PREP_SRC) $(TOKENIZER_SRC) $(PARSER_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(EXECUTOR_SRC) $(SIGNALS_SRC) $(MAIN_SRC)
-TEST_SRC = $(PREP_SRC) $(TOKENIZER_SRC) $(PARSER_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(EXECUTOR_SRC) $(TEST_MAIN_SRC)
+TEST_SRC = $(PREP_SRC) $(TOKENIZER_SRC) $(PARSER_SRC) $(LEXER_SRC) $(EXPANDER_SRC) $(EXECUTOR_SRC) $(SIGNALS_SRC) $(TEST_MAIN_SRC)
 
 # Object directory
 OBJ_DIR = ./obj/
@@ -38,7 +38,7 @@ OBJ_DIR = ./obj/
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 TEST_OBJ = $(TEST_SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
-all : $(NAME) test
+all : $(NAME)
 
 $(NAME) : $(LIBFT_LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) -lreadline

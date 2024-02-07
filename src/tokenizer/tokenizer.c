@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:52:18 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/06 14:36:05 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:11:11 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	tokenizer(const char *input, t_token ***tokens)
 	t_tokenizer_utils	u;
 
 	if (only_whitespaces(input))
-			return (0);
+		return (0);
 	if (!init_tokenizer_utils(&u))
 		return (0);
 	while (input[u.current])

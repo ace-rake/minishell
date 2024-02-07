@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:33:40 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 13:37:42 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:00:17 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,36 +101,11 @@ int	exec_token(t_token **tokens, t_token *token, t_env_list *env, char **pipes)
 	return (retval);
 }
 
-int	set_single_here_filedes(t_token *token)
-{
-	int	filedes[2];
-
-	if (pipe(filedes) == -1)
-		return (1);
-	token->input = filedes[0];
-	token->output = filedes[1];
-	return (0);
-}
-
-int	set_here_filedes(t_token *token)
-{
-	if (token->type == REDIR_HEREDOC)
-		if (set_single_here_filedes(token))
-			return (1);
-	if (token->right)
-		if (set_here_filedes(token->right))
-			return (1);
-	if (token->left)
-		if (set_here_filedes(token->left))
-			return (1);
-	return (0);
-}
-
 int	executor(t_token **tokens, t_token *token, t_env_list *env)
 {
 	int		retval;
 	char	**pipes;
-	pid_t child;
+	pid_t	child;
 
 	retval = 0;
 	pipes = NULL;
@@ -142,13 +117,12 @@ int	executor(t_token **tokens, t_token *token, t_env_list *env)
 	{
 		/* signal(SIGINT, sigint_handler_heredoc); */
 		exec_heredocs(token, env);
-		exit (0);
 	}
 	waitpid(child, &retval, 0);
 	g_mini.in_heredoc = 0;
 	check_child(&retval);
 	if (retval)
-		return(retval);
+		return (retval);
 	create_pipes(token, &pipes);
 	retval = exec_token(tokens, token, env, pipes);
 	destroy_deez_nuts(pipes);

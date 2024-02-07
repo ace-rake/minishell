@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:03:07 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/06 11:16:45 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:12:45 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int	expander(t_token **tokens, t_env_list *env)
 	i = -1;
 	while (tokens[++i])
 	{
-		if ((tokens[i]->type == ARGUMENT && !((tokens[i - 1] && ft_strcmp(tokens[i - 1]->value, "<<") == 0))) || tokens[i]->type == COMMAND)
+		if ((tokens[i]->type == ARGUMENT && !((tokens[i - 1]
+						&& ft_strcmp(tokens[i - 1]->value, "<<") == 0)))
+			|| tokens[i]->type == COMMAND)
 		{
 			init_expander_utils(&u, env);
 			u.original = tokens[i]->value;

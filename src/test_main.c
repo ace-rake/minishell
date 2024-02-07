@@ -1,19 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/07 13:10:08 by vdenisse          #+#    #+#             */
+/*   Updated: 2024/02/07 13:10:53 by vdenisse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+/*
 #include "../inc/minishell.h"
 
 t_mini	g_mini;
 
-void	sigint_handler(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	g_mini.exit_status = 130;
-	if (!g_mini.in_command)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
 
 int	cmd_main(char *file_name, char *envs[], bool wait)
 {
@@ -33,7 +33,7 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 		fscanf(file, "%[^\n]\n", input);
 		printf("\ntesting line [%s]\n", input);
 		if (ft_strcmp(input, "exit") == 0)
-			exit(0);
+			break;
 		add_history(input);
 		monitor = tokenizer(input, &tokens);
 		if (monitor)
@@ -44,26 +44,29 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 			monitor = expander(tokens, env);
 		if (monitor)	
 			g_mini.exit_status = executor(tokens, ast_head, env);
-		/* printf("retval main : [%i]\n",retval); */	
+		 printf("retval main : [%i]\n",retval);
 		free_tokens(tokens);
 		if (wait)
 		{
 			str = readline("\nnext ? [q to stop]");
 			if (ft_strcmp(str, "q") == 0)
-				exit (0);
+				break ;
 			str = 0;
 		}
 	}
+	fclose(file);
 	free_env(env);
 
 	return (0);
 }
 
 int main(int argc, char **argv, char *envs[]) {
-	/* rl_catch_signals = 0; */
+	 rl_catch_signals = 0; 
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	printf("choices :\n1 : run all comands rapid fire\n2 : run all commands step by step\n3 : run non input commands rapid fire\n4 : run non input commands step by step\n");
+	printf("choices :\n1 : run all comands rapid fire\n2 : run all 
+	commands step by step\n3 : run non input commands rapid fire\n4 
+	: run non input commands step by step\n");
 	char *str = readline("choice");
 	int option = ft_atoi(str);
 	if (option == 1)
@@ -82,3 +85,4 @@ int main(int argc, char **argv, char *envs[]) {
 	(void)argv;
 	(void)envs;
 }
+*/

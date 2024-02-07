@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:30:33 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 15:44:53 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:39:42 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,9 @@ int	count_strs(char **strs)
 
 int	open_fds(int filedes[2], char **pipes)
 {
-	static int	iter;
+	static int	iter = 0;
 	int			pipe_no;
 
-	iter = 0;
 	pipe_no = count_strs(pipes);
 	filedes[0] = open(pipes[iter], O_RDONLY | O_CREAT | O_TRUNC);
 	filedes[1] = open(pipes[iter], O_WRONLY | O_CREAT | O_TRUNC);
