@@ -2,18 +2,6 @@
 
 t_mini	g_mini;
 
-void	sigint_handler(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	g_mini.exit_status = 130;
-	if (!g_mini.in_command)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
 
 int	cmd_main(char *file_name, char *envs[], bool wait)
 {
@@ -33,7 +21,7 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 		fscanf(file, "%[^\n]\n", input);
 		printf("\ntesting line [%s]\n", input);
 		if (ft_strcmp(input, "exit") == 0)
-			exit(0);
+			break;
 		add_history(input);
 		monitor = tokenizer(input, &tokens);
 		if (monitor)
@@ -50,10 +38,11 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 		{
 			str = readline("\nnext ? [q to stop]");
 			if (ft_strcmp(str, "q") == 0)
-				exit (0);
+				break ;
 			str = 0;
 		}
 	}
+	fclose(file);
 	free_env(env);
 
 	return (0);
