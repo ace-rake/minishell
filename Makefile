@@ -38,7 +38,7 @@ OBJ_DIR = ./obj/
 OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 TEST_OBJ = $(TEST_SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
-all : $(NAME) test
+all : $(NAME)
 
 $(NAME) : $(LIBFT_LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) -lreadline

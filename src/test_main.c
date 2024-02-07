@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/07 13:10:08 by vdenisse          #+#    #+#             */
+/*   Updated: 2024/02/07 13:10:53 by vdenisse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+/*
 #include "../inc/minishell.h"
 
 t_mini	g_mini;
@@ -32,7 +44,7 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 			monitor = expander(tokens, env);
 		if (monitor)	
 			g_mini.exit_status = executor(tokens, ast_head, env);
-		/* printf("retval main : [%i]\n",retval); */	
+		 printf("retval main : [%i]\n",retval);
 		free_tokens(tokens);
 		if (wait)
 		{
@@ -49,10 +61,12 @@ int	cmd_main(char *file_name, char *envs[], bool wait)
 }
 
 int main(int argc, char **argv, char *envs[]) {
-	/* rl_catch_signals = 0; */
+	 rl_catch_signals = 0; 
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	printf("choices :\n1 : run all comands rapid fire\n2 : run all commands step by step\n3 : run non input commands rapid fire\n4 : run non input commands step by step\n");
+	printf("choices :\n1 : run all comands rapid fire\n2 : run all 
+	commands step by step\n3 : run non input commands rapid fire\n4 
+	: run non input commands step by step\n");
 	char *str = readline("choice");
 	int option = ft_atoi(str);
 	if (option == 1)
@@ -71,3 +85,4 @@ int main(int argc, char **argv, char *envs[]) {
 	(void)argv;
 	(void)envs;
 }
+*/
