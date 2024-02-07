@@ -13,15 +13,14 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "typedefs.h"
 # include "lexer.h"
+# include "typedefs.h"
 # include <stdio.h>
 
-
-int	parser(t_token **tokens, t_token **ast_head);
+int		parser(t_token **tokens, t_token **ast_head);
 t_token	*parse_pipes(t_token **tokens);
 t_token	*parse_redirections(t_token **tokens);
 t_token	*parse_commands(t_token **tokens);
 t_token	*parse_arguments(t_token **tokens);
 
-# endif
+#endif
