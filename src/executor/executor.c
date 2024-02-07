@@ -101,12 +101,11 @@ int	exec_token(t_token **tokens, t_token *token, t_env_list *env, char **pipes)
 	return (retval);
 }
 
-
 int	executor(t_token **tokens, t_token *token, t_env_list *env)
 {
 	int		retval;
 	char	**pipes;
-	pid_t child;
+	pid_t	child;
 
 	retval = 0;
 	pipes = NULL;
@@ -116,12 +115,12 @@ int	executor(t_token **tokens, t_token *token, t_env_list *env)
 	if (child == 0)
 	{
 		exec_heredocs(token, env);
-		exit (0);
+		exit(0);
 	}
 	waitpid(child, &retval, 0);
 	check_child(&retval);
 	if (retval)
-		return(retval);
+		return (retval);
 	create_pipes(token, &pipes);
 	retval = exec_token(tokens, token, env, pipes);
 	destroy_deez_nuts(pipes);
