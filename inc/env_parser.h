@@ -6,18 +6,14 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:02:08 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 13:02:10 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:05:22 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_PARSER_H
 # define ENV_PARSER_H
 
-# include "executor.h"
-# include "typedefs.h"
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+# include "minishell.h"
 
 t_env_list	*env_parser(char *env[]);
 void		free_env_node(t_env_list *env);
