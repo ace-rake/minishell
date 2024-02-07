@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 12:22:12 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:41:42 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	read_heredoc(t_token *token, t_env_list *env)
 
 int	exec_heredocs(t_token *head, t_env_list *env)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	if (head->left)
 		exec_heredocs(head->left, env);
 	if (head->right)

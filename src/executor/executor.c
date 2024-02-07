@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:33:40 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 12:36:46 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:37:42 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,16 +136,15 @@ int	executor(t_token **tokens, t_token *token, t_env_list *env)
 	pipes = NULL;
 	if (set_here_filedes(token))
 		return (1);
+	g_mini.in_heredoc = 1;
 	child = fork();
 	if (child == 0)
 	{
-		signal(SIGINT, sigint_handler_heredoc);
-		g_mini.in_heredoc = 1;
+		/* signal(SIGINT, sigint_handler_heredoc); */
 		exec_heredocs(token, env);
 		exit (0);
 	}
 	waitpid(child, &retval, 0);
-	signal(SIGINT, sigint_handler);
 	g_mini.in_heredoc = 0;
 	check_child(&retval);
 	if (retval)

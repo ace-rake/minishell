@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 13:20:02 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/06 15:32:20 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:43:49 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sigint_handler(int signum)
 	(void)signum;
 	write(STDOUT_FILENO, "\n", 1);
 	g_mini.exit_status = 130;
-	if (!g_mini.in_command)
+	if (!g_mini.in_command && !g_mini.in_heredoc)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -25,10 +25,3 @@ void	sigint_handler(int signum)
 	}
 }
 
-void	sigint_handler_heredoc(int signum)
-{
-	(void)signum;
-	write(STDOUT_FILENO, "\n", 1);
-	g_mini.exit_status = 130;
-	exit(130);
-}
