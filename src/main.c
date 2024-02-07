@@ -50,6 +50,7 @@ int main(int argc, char **argv, char *envs[]) {
 	signal(SIGQUIT, SIG_IGN);
 	g_mini.exit_status = 0;
 	g_mini.in_command = 0;
+	g_mini.in_heredoc = 0;
 	return (loop_main(envs));
 	(void)argc;
 	(void)argv;
