@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:06:54 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 12:33:11 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:59:56 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,7 @@ int	exec_heredocs(t_token *head, t_env_list *env)
 	{
 		read_heredoc(head, env);
 	}
+	if (!head->parent)
+		exit (0);
 	return (0);
 }
