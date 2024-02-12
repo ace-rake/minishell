@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:16 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 13:03:46 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:44:27 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		set_fd(t_token *token);
 bool	check_elder_parent(t_token *token);
 bool	is_dir(const char *str);
 int		print_error(char *file, char *error);
+int		ft_isnumber(char *str);
 
 int		handle_1(t_env_list *env, t_env_list *node, char *var);
 int		handle_2(t_env_list *env, t_env_list *node, char *var, char *val);

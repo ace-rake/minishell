@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 13:20:02 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/12 10:10:56 by wdevries         ###   ########.fr       */
+/*   Created: 2024/02/07 17:25:41 by vdenisse          #+#    #+#             */
+/*   Updated: 2024/02/07 17:26:32 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
-
-void	sigint_handler(int signum)
+int	ft_isnumber(char *str)
 {
-	(void)signum;
-	write(2, "\n", 1);
-	g_mini.exit_status = 130;
-	if (!g_mini.in_command && !g_mini.in_heredoc)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	int	i;
+
+	i = 0;
+	if (str[0] == '+' || str[0] == '-')
+		i++;
+	while ('0' <= str[i] && str[i] <= '9')
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
 }

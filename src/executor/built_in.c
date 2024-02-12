@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 14:30:19 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/06 11:58:23 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:08:50 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,31 @@ int	unset_builtin(t_token *token, t_env_list *env)
 
 int	exit_builtin(t_token **tokens, t_token *token, t_env_list *env, char **p)
 {
-	while (token->parent)
-		token = token->parent;
-	if (token->type == PIPE)
+	int	atoi;
+
+	if (check_elder_parent(token))
 		return (0);
-	free_env(env);
-	free_tokens(tokens);
+	if (token->right && token->right->right)
+	{
+		ft_putstr_fd("minishell: exit: Too many arguments\n", 2);
+		return (2);
+	}
 	destroy_deez_nuts(p);
+	free_env(env);
+	if (token->right && !ft_isnumber(token->right->value))
+	{
+		ft_putstr_fd("minishell: exit: Non numeric argument\n", 2);
+		free_tokens(tokens);
+		exit(1);
+	}
 	if (!token->right)
+	{
+		free_tokens(tokens);
 		exit(0);
-	exit(ft_atoi(token->right->value));
+	}
+	atoi = ft_atoi(token->right->value);
+	free_tokens(tokens);
+	exit(atoi);
 }
 //it doesnt matter if im on the left or right side,
 //	if i just go up until im at the origin token
