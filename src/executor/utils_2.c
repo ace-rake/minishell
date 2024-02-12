@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:36:10 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/12 09:54:24 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/12 10:19:13 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	syntax_check(t_token *token)
 	}
 	return (retval);
 }
-
+/*
 bool	is_dir_old(const char *str)
 {
 	struct stat	info;
@@ -58,6 +58,7 @@ bool	is_dir_old(const char *str)
 		return (true);
 	return (false);
 }
+*/
 
 bool	is_dir(const char *str)
 {
