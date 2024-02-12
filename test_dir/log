@@ -1,5 +1,0 @@
-809==    definitely lost: 16 bytes in 1 blocks
-==1164809==    indirectly lost: 13 bytes in 1 blocks
-==1164809==      possibly lost: 0 bytes in 0 blocks
-==1164809==    still reachable: 472 bytes in 1 blocks
-==1164809==         suppressed: 207,891 bytes in 396
