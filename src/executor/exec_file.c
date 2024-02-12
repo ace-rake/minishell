@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:23:49 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 13:42:02 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:15:14 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	exec_child(t_token *token, char *cmd_path, char **args)
 {
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_DFL);
 	if (dup2(token->input, STDIN_FILENO) == -1 || dup2(token->output,
 			STDOUT_FILENO) == -1)
 		exit(errno);

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 13:40:02 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/08 11:19:49 by wdevries         ###   ########.fr       */
+/*   Created: 2024/02/07 17:25:41 by vdenisse          #+#    #+#             */
+/*   Updated: 2024/02/07 17:26:32 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
-# define SIGNALS_H
+int	ft_isnumber(char *str)
+{
+	int	i;
 
-void	sigint_handler(int signum);
-
-#endif
+	i = 0;
+	if (str[0] == '+' || str[0] == '-')
+		i++;
+	while ('0' <= str[i] && str[i] <= '9')
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
+}

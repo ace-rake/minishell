@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 12:34:46 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 12:43:40 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/08 10:47:37 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	loop_main(char *envs[])
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
 		input = readline("minishell: ");
 		if (!input)
 		{
@@ -66,7 +67,6 @@ int	loop_main(char *envs[])
 
 int	main(int argc, char **argv, char *envs[])
 {
-	signal(SIGQUIT, SIG_IGN);
 	g_mini.exit_status = 0;
 	g_mini.in_command = 0;
 	g_mini.in_heredoc = 0;
