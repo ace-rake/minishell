@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:30:33 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/15 15:55:45 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:34:29 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ int	open_fds(int filedes[2], char **pipes)
 	int			pipe_no;
 
 	pipe_no = count_strs(pipes);
-	filedes[0] = open(pipes[iter], O_RDONLY | O_CREAT | O_TRUNC);
-	filedes[1] = open(pipes[iter], O_WRONLY | O_CREAT | O_TRUNC);
+	filedes[0] = open(pipes[iter], O_RDONLY | O_CREAT | O_TRUNC, 00644);
+	filedes[1] = open(pipes[iter], O_WRONLY | O_CREAT | O_TRUNC, 00644);
 	iter++;
 	if (iter >= pipe_no)
 		iter = 0;
+	if (filedes[0] == -1 || filedes[1] == -1)
+		return (1);
 	return (0);
 }
 
@@ -95,7 +97,8 @@ int	exec_pipe(t_token *token, char **pipes)
 	t_token	*tmp;
 	int		filedes[2];
 
-	open_fds(filedes, pipes);
+	if (open_fds(filedes, pipes))
+		return (1);
 	tmp = token;
 	token = token->right;
 	while (token && token->type != COMMAND)
