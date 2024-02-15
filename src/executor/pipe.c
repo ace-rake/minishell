@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:30:33 by vdenisse          #+#    #+#             */
-/*   Updated: 2024/02/07 13:39:42 by vdenisse         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:55:45 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,18 @@ int	exec_pipe(t_token *token, char **pipes)
 	open_fds(filedes, pipes);
 	tmp = token;
 	token = token->right;
-	while (token->type != COMMAND)
+	while (token && token->type != COMMAND)
 		token = token->left;
-	token->input = filedes[0];
+	if (token)
+		token->input = filedes[0];
 	token = tmp;
 	token = token->left;
 	if (token->type == PIPE)
 		token = token->right;
-	while (token->type != COMMAND)
+	while (token && token->type != COMMAND)
 		token = token->left;
-	token->output = filedes[1];
+	if (token)
+		token->output = filedes[1];
 	tmp->input = filedes[0];
 	tmp->output = filedes[1];
 	return (0);
