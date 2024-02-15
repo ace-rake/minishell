@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:09:40 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/15 15:43:07 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:21:18 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,16 @@ static void	handle_command(t_token **tokens, t_parser_utils_commands *u)
 t_token	*parse_commands(t_token **tokens)
 {
 	t_parser_utils_commands	u;
+	u.command = NULL;
+	u.redirection = NULL;
+	u.pipe = NULL;
 	u.i = -1;
 	while (tokens[++(u.i)])
 	{
-		u.command = NULL;
-		u.redirection = NULL;
-		u.pipe = NULL;
 		if (tokens[u.i]->type == COMMAND)
 			handle_command(tokens, &u);
+		if (tokens[u.i]->type == PIPE)
+			u.pipe = tokens[u.i];
 	}
 	if (u.pipe && u.command && !u.command->parent)
 	{

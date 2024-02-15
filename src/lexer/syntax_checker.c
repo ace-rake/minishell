@@ -6,7 +6,7 @@
 /*   By: wdevries <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:28:12 by wdevries          #+#    #+#             */
-/*   Updated: 2024/02/06 15:10:48 by wdevries         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:10:56 by wdevries         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	syntax_ok(t_token **tokens)
 {
 	char	*error_string;
 
+	return (1);
 	error_string = check_syntax_errors(tokens);
 	if (error_string)
 	{
